@@ -22,6 +22,8 @@
 
 #include <string>
 
+#include "entity.h"
+
 using namespace std;
 
 class Scene17 : public Scene
@@ -37,11 +39,15 @@ class Scene17 : public Scene
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_COORDS,			//debug for position
+		GEO_TIME,
+		GEO_DOLLARS,
 
+		//worker body
 		GEO_SKINNED,
 		GEO_SHIRT1,
 		GEO_PANTS,
 
+		//objs
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -105,15 +111,23 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
-
-	bool flashlighttoggle = false;
-	bool frametoggle = false;
-	int randomtrees[100][2];
+	//automated render functions
+	void renderworker(int x, int y, int z);
 
 	//mouse input
 	double x, y;
 	float posX, posY;
 	string mousestate;
+
+	//time system
+	int day = 0;
+	int totalframe = 0;
+	string time;
+
+	//entities
+	entity* entities[10] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+	float dollars = 0;
+	float policemeter = 0;		//0-100% 
 	
 
 	float debugRot;

@@ -113,6 +113,10 @@ void Scene17::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_COORDS] = MeshBuilder::GenerateText("coordinates", 16, 16);
 		meshList[GEO_COORDS]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_TIME] = MeshBuilder::GenerateText("time", 16, 16);
+		meshList[GEO_TIME]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_DOLLARS] = MeshBuilder::GenerateText("dollars", 16, 16);
+		meshList[GEO_DOLLARS]->textureID = LoadTGA("Image//calibri.tga");
 	}
 
 	{
@@ -144,16 +148,6 @@ void Scene17::Init()
 
 
 	debugRot = 20;
-	for (int i = 0; i < 100; i++) {
-		int randx = rand() % 500 - 250;
-		int randz = rand() % 500 - 250;
-		while ((randx<75 && randx>-75) && (randz<75 && randz>-75)) {
-			randx = rand() % 500 - 250;
-			randz = rand() % 500 - 250;
-		}
-		randomtrees[i][0] = randx;
-		randomtrees[i][1] = randz;
-	}
 }
 
 void Scene17::Update(double dt)
@@ -165,21 +159,21 @@ void Scene17::Update(double dt)
 	light[0].position.z = camera.position.z;
 	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
 	
-	if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-		flashlighttoggle = true;							//flashlight toggle
-		if (light[0].power == 1.f) {
-			light[0].power = 0.f;
-			glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-		}
-		else if (light[0].power == 0.f) {
-			light[0].power = 1.f;
-			glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-		}
-	}
-	else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-		flashlighttoggle = false;
-	}
-	else {}
+	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = true;							//flashlight toggle
+	//	if (light[0].power == 1.f) {
+	//		light[0].power = 0.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//	else if (light[0].power == 0.f) {
+	//		light[0].power = 1.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//}
+	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = false;
+	//}
+	//else {}
 
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -187,6 +181,7 @@ void Scene17::Update(double dt)
 	unsigned h = Application::GetWindowHeight();
 	posX = x / w * 80; //convert (0,800) to (0,80)
 	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
+
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
@@ -196,6 +191,7 @@ void Scene17::Update(double dt)
 		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
 		{
 			//trigger user action or function
+			mousestate = "shop click";
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -218,6 +214,18 @@ void Scene17::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+	entities[0] = new entity();
+	totalframe++;
+	if (totalframe >= 1440) {
+		totalframe = 0;
+		day++;
+		for (int i = 0; i < size(entities); i++) {
+			if (entities[i] != NULL) {
+				dollars += entities[i]->getprofit();
+			}
+		}
+	}
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
 
 	debugRot += (float)(20 * dt);
 
@@ -260,64 +268,7 @@ void Scene17::Render()
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
-	
-	modelStack.PushMatrix(); {
-		modelStack.Translate(0, 12, 0); modelStack.Scale(1, 1.3, 1);
-		RenderMesh(meshList[GEO_SKINNED], true);
-		modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
-		RenderMesh(meshList[GEO_SHIRT1], true);
-
-
-		modelStack.PushMatrix();{
-
-		modelStack.Rotate(20, 1, 0, 0);
-		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
-		modelStack.Scale(0.5,1,0.5);
-		RenderMesh(meshList[GEO_SHIRT1], true);
-
-		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
-		RenderMesh(meshList[GEO_SKINNED], true);
-
-		modelStack.PopMatrix(); }
-
-		modelStack.PushMatrix(); {
-
-			modelStack.Rotate(-20, 1, 0, 0);
-			modelStack.Translate(0, -0.3, 1); modelStack.Scale(0.833, 0.666, 0.833);
-			modelStack.Scale(0.5, 1, 0.5);
-			RenderMesh(meshList[GEO_SHIRT1], true);
-
-			modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
-			RenderMesh(meshList[GEO_SKINNED], true);
-
-		modelStack.PopMatrix(); }
-
-
-		modelStack.PushMatrix(); {
-
-			modelStack.Rotate(-20, 1, 0, 0);
-			modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
-			modelStack.Scale(0.6, 1, 0.6);
-			RenderMesh(meshList[GEO_PANTS], true);
-
-		modelStack.PopMatrix(); }
-
-		modelStack.PushMatrix(); {
-
-			modelStack.Rotate(20, 1, 0, 0);
-			modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
-			modelStack.Scale(0.6, 1, 0.6);
-			RenderMesh(meshList[GEO_PANTS], true);
-
-		modelStack.PopMatrix(); }
-
-		modelStack.PushMatrix(); {
-
-
-		modelStack.PopMatrix(); }
-
-		modelStack.PopMatrix(); }
-
+	renderworker(10, 12, 10);
 
 	//text render
 	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
@@ -330,10 +281,12 @@ void Scene17::Render()
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
+	RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
-
 
 void Scene17::RenderText(Mesh* mesh, std::string text, Color color)
 {
@@ -400,6 +353,11 @@ void Scene17::Exit()
 			delete meshList[i];
 		}
 	}
+
+	for (int i = 0; i < size(entities); i++) {
+		delete entities[i];
+	}
+
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
@@ -460,4 +418,46 @@ void Scene17::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 	viewStack.PopMatrix();
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
+}
+
+void Scene17::renderworker(int x, int y, int z) {
+	modelStack.PushMatrix(); 
+	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
+	RenderMesh(meshList[GEO_SKINNED], true);
+	modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
+	RenderMesh(meshList[GEO_SHIRT1], true);
+
+		modelStack.PushMatrix(); 
+		modelStack.Rotate(20, 1, 0, 0);
+		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
+		modelStack.Scale(0.5, 1, 0.5);
+		RenderMesh(meshList[GEO_SHIRT1], true);
+		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		RenderMesh(meshList[GEO_SKINNED], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Rotate(-20, 1, 0, 0);
+		modelStack.Translate(0, -0.3, 1); modelStack.Scale(0.833, 0.666, 0.833);
+		modelStack.Scale(0.5, 1, 0.5);
+		RenderMesh(meshList[GEO_SHIRT1], true);
+		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		RenderMesh(meshList[GEO_SKINNED], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix(); 
+		modelStack.Rotate(-20, 1, 0, 0);
+		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		modelStack.Scale(0.6, 1, 0.6);
+		RenderMesh(meshList[GEO_PANTS], true);
+		modelStack.PopMatrix(); 
+
+		modelStack.PushMatrix(); 
+		modelStack.Rotate(20, 1, 0, 0);
+		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		modelStack.Scale(0.6, 1, 0.6);
+		RenderMesh(meshList[GEO_PANTS], true);
+		modelStack.PopMatrix(); 
+
+	modelStack.PopMatrix();
 }
