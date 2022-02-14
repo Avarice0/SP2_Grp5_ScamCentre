@@ -38,6 +38,10 @@ class Scene17 : public Scene
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_COORDS,			//debug for position
 
+		GEO_SKINNED,
+		GEO_SHIRT1,
+		GEO_PANTS,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -111,6 +115,8 @@ private:
 	float posX, posY;
 	string mousestate;
 	
+
+	float debugRot;
 };
 
 

@@ -114,6 +114,27 @@ void Scene17::Init()
 		meshList[GEO_COORDS] = MeshBuilder::GenerateText("coordinates", 16, 16);
 		meshList[GEO_COORDS]->textureID = LoadTGA("Image//calibri.tga");
 	}
+
+	{
+		meshList[GEO_SKINNED] = MeshBuilder::GenerateSphere("sphere", Color(1, 0.8, 0.6), 5, 5, 1.f);
+		meshList[GEO_SKINNED]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_SKINNED]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_SKINNED]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_SKINNED]->material.kShininess = 1.f;
+
+		meshList[GEO_SHIRT1] = MeshBuilder::GenerateSphere("sphere", Color(1,0,1), 5, 5, 1.f);
+		meshList[GEO_SHIRT1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_SHIRT1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_SHIRT1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_SHIRT1]->material.kShininess = 1.f;
+
+		meshList[GEO_PANTS] = MeshBuilder::GenerateSphere("sphere", Color(0, 0, 0.4), 5, 5, 1.f);
+		meshList[GEO_PANTS]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PANTS]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PANTS]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PANTS]->material.kShininess = 1.f;
+	}
+	
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -121,6 +142,8 @@ void Scene17::Init()
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 
+
+	debugRot = 20;
 	for (int i = 0; i < 100; i++) {
 		int randx = rand() % 500 - 250;
 		int randz = rand() % 500 - 250;
@@ -195,6 +218,9 @@ void Scene17::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+
+	debugRot += (float)(20 * dt);
+
 }
 
 void Scene17::Render()
@@ -235,12 +261,70 @@ void Scene17::Render()
 	modelStack.PopMatrix();
 	
 	
+	modelStack.PushMatrix(); {
+		modelStack.Translate(0, 12, 0); modelStack.Scale(1, 1.3, 1);
+		RenderMesh(meshList[GEO_SKINNED], true);
+		modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
+		RenderMesh(meshList[GEO_SHIRT1], true);
+
+
+		modelStack.PushMatrix();{
+
+		modelStack.Rotate(20, 1, 0, 0);
+		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
+		modelStack.Scale(0.5,1,0.5);
+		RenderMesh(meshList[GEO_SHIRT1], true);
+
+		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		RenderMesh(meshList[GEO_SKINNED], true);
+
+		modelStack.PopMatrix(); }
+
+		modelStack.PushMatrix(); {
+
+			modelStack.Rotate(-20, 1, 0, 0);
+			modelStack.Translate(0, -0.3, 1); modelStack.Scale(0.833, 0.666, 0.833);
+			modelStack.Scale(0.5, 1, 0.5);
+			RenderMesh(meshList[GEO_SHIRT1], true);
+
+			modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
+			RenderMesh(meshList[GEO_SKINNED], true);
+
+		modelStack.PopMatrix(); }
+
+
+		modelStack.PushMatrix(); {
+
+			modelStack.Rotate(-20, 1, 0, 0);
+			modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
+			modelStack.Scale(0.6, 1, 0.6);
+			RenderMesh(meshList[GEO_PANTS], true);
+
+		modelStack.PopMatrix(); }
+
+		modelStack.PushMatrix(); {
+
+			modelStack.Rotate(20, 1, 0, 0);
+			modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
+			modelStack.Scale(0.6, 1, 0.6);
+			RenderMesh(meshList[GEO_PANTS], true);
+
+		modelStack.PopMatrix(); }
+
+		modelStack.PushMatrix(); {
+
+
+		modelStack.PopMatrix(); }
+
+		modelStack.PopMatrix(); }
+
+
 	//text render
 	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
 	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
 
 	//render mesh on screen
-	RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
+	//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
