@@ -54,30 +54,6 @@ void Scene17::Init()
 		m_parameters[U_LIGHT0_COSINNER] = glGetUniformLocation(m_programID, "lights[0].cosInner");
 		m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
-		m_parameters[U_LIGHT1_POSITION] = glGetUniformLocation(m_programID, "lights[1].position_cameraspace");
-		m_parameters[U_LIGHT1_COLOR] = glGetUniformLocation(m_programID, "lights[1].color");
-		m_parameters[U_LIGHT1_POWER] = glGetUniformLocation(m_programID, "lights[1].power");
-		m_parameters[U_LIGHT1_KC] = glGetUniformLocation(m_programID, "lights[1].kC");
-		m_parameters[U_LIGHT1_KL] = glGetUniformLocation(m_programID, "lights[1].kL");
-		m_parameters[U_LIGHT1_KQ] = glGetUniformLocation(m_programID, "lights[1].kQ");
-		m_parameters[U_LIGHT1_TYPE] = glGetUniformLocation(m_programID, "lights[1].type");
-		m_parameters[U_LIGHT1_SPOTDIRECTION] = glGetUniformLocation(m_programID, "lights[1].spotDirection");
-		m_parameters[U_LIGHT1_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[1].cosCutoff");
-		m_parameters[U_LIGHT1_COSINNER] = glGetUniformLocation(m_programID, "lights[1].cosInner");
-		m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
-
-		m_parameters[U_LIGHT2_POSITION] = glGetUniformLocation(m_programID, "lights[2].position_cameraspace");
-		m_parameters[U_LIGHT2_COLOR] = glGetUniformLocation(m_programID, "lights[2].color");
-		m_parameters[U_LIGHT2_POWER] = glGetUniformLocation(m_programID, "lights[2].power");
-		m_parameters[U_LIGHT2_KC] = glGetUniformLocation(m_programID, "lights[2].kC");
-		m_parameters[U_LIGHT2_KL] = glGetUniformLocation(m_programID, "lights[2].kL");
-		m_parameters[U_LIGHT2_KQ] = glGetUniformLocation(m_programID, "lights[2].kQ");
-		m_parameters[U_LIGHT2_TYPE] = glGetUniformLocation(m_programID, "lights[2].type");
-		m_parameters[U_LIGHT2_SPOTDIRECTION] = glGetUniformLocation(m_programID, "lights[2].spotDirection");
-		m_parameters[U_LIGHT2_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[2].cosCutoff");
-		m_parameters[U_LIGHT2_COSINNER] = glGetUniformLocation(m_programID, "lights[2].cosInner");
-		m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID, "lights[2].exponent");
-
 		m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
 		// Get a handle for our "colorTexture" uniform
 		m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
@@ -120,52 +96,6 @@ void Scene17::Init()
 		glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
 		glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
 	}
-	{
-		light[1].type = Light::LIGHT_POINT;
-		light[1].position.Set(0, 0, 20);
-		light[1].color.Set(1, 1, 0.1);
-		light[1].power = .0f;
-		light[1].kC = 1.f;
-		light[1].kL = 0.01f;
-		light[1].kQ = 0.001f;
-		light[1].cosCutoff = cos(Math::DegreeToRadian(45));
-		light[1].cosInner = cos(Math::DegreeToRadian(30));
-		light[1].exponent = 3.f;
-		light[1].spotDirection.Set(0.f, 1.f, 0.f);
-
-		glUniform1i(m_parameters[U_LIGHT1_TYPE], light[1].type);
-		glUniform3fv(m_parameters[U_LIGHT1_COLOR], 1, &light[1].color.r);
-		glUniform1f(m_parameters[U_LIGHT1_POWER], light[1].power);
-		glUniform1f(m_parameters[U_LIGHT1_KC], light[1].kC);
-		glUniform1f(m_parameters[U_LIGHT1_KL], light[1].kL);
-		glUniform1f(m_parameters[U_LIGHT1_KQ], light[1].kQ);
-		glUniform1f(m_parameters[U_LIGHT1_COSCUTOFF], light[1].cosCutoff);
-		glUniform1f(m_parameters[U_LIGHT1_COSINNER], light[1].cosInner);
-		glUniform1f(m_parameters[U_LIGHT1_EXPONENT], light[1].exponent);
-	}
-	{
-		light[2].type = Light::LIGHT_DIRECTIONAL;
-		light[2].position.Set(0, 1, 0);
-		light[2].color.Set(1, 1, 1);
-		light[2].power = 0.25f;
-		light[2].kC = 1.f;
-		light[2].kL = 0.01f;
-		light[2].kQ = 0.001f;
-		light[2].cosCutoff = cos(Math::DegreeToRadian(45));
-		light[2].cosInner = cos(Math::DegreeToRadian(30));
-		light[2].exponent = 3.f;
-		light[2].spotDirection.Set(0.f, 1.f, 0.f);
-
-		glUniform1i(m_parameters[U_LIGHT2_TYPE], light[2].type);
-		glUniform3fv(m_parameters[U_LIGHT2_COLOR], 1, &light[2].color.r);
-		glUniform1f(m_parameters[U_LIGHT2_POWER], light[2].power);
-		glUniform1f(m_parameters[U_LIGHT2_KC], light[2].kC);
-		glUniform1f(m_parameters[U_LIGHT2_KL], light[2].kL);
-		glUniform1f(m_parameters[U_LIGHT2_KQ], light[2].kQ);
-		glUniform1f(m_parameters[U_LIGHT2_COSCUTOFF], light[2].cosCutoff);
-		glUniform1f(m_parameters[U_LIGHT2_COSINNER], light[2].cosInner);
-		glUniform1f(m_parameters[U_LIGHT2_EXPONENT], light[2].exponent);
-	}
 	for (int i = 0; i < NUM_GEOMETRY; ++i) {
 		meshList[i] = nullptr;
 	}
@@ -173,50 +103,6 @@ void Scene17::Init()
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-	}
-	{
-		meshList[GEO_DAY_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_FRONT]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_ft.tga");
-		meshList[GEO_DAY_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_BACK]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_bk.tga");
-		meshList[GEO_DAY_LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_LEFT]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_lf.tga");
-		meshList[GEO_DAY_RIGHT] = MeshBuilder::GenerateQuad("right", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_RIGHT]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_rt.tga");
-		meshList[GEO_DAY_TOP] = MeshBuilder::GenerateQuad("top", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_TOP]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_up.tga");
-		meshList[GEO_DAY_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-		meshList[GEO_DAY_BOTTOM]->textureID = LoadTGA("OBJ//skyboxes//rainbow//rainbow_dn.tga");
-
-		meshList[GEO_NIGHT_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_FRONT]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_ft.tga");
-		meshList[GEO_NIGHT_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_BACK]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_bk.tga");
-		meshList[GEO_NIGHT_LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_LEFT]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_lf.tga");
-		meshList[GEO_NIGHT_RIGHT] = MeshBuilder::GenerateQuad("right", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_RIGHT]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_rt.tga");
-		meshList[GEO_NIGHT_TOP] = MeshBuilder::GenerateQuad("top", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_TOP]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_up.tga");
-		meshList[GEO_NIGHT_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
-		meshList[GEO_NIGHT_BOTTOM]->textureID = LoadTGA("OBJ//skyboxes//sunsetflat//sunsetflat_dn.tga");
-	}
-	{
-		meshList[GEO_BODY] = MeshBuilder::GenerateCube("cube", Color(1, 0.7, 0.8), 1);
-		meshList[GEO_CYLINDER] = MeshBuilder::GenerateCylinder("Cylinder", Color(1, 0.7, 0.8), 20, 2.5, 1);
-		meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("Sphere", Color(1, 0.7, 0.8), 20, 20, 1);
-	}
-	{
-		meshList[GEO_CAMPFIRE] = MeshBuilder::GenerateOBJMTL("campfire", "OBJ//survivalkit//campfire.obj", "OBJ//survivalkit//campfire.mtl");
-		meshList[GEO_BEDROLL] = MeshBuilder::GenerateOBJMTL("bedroll", "OBJ//survivalkit//bedroll.obj", "OBJ//survivalkit//bedroll.mtl");
-		meshList[GEO_TENT] = MeshBuilder::GenerateOBJMTL("tent", "OBJ//survivalkit//tentClosed.obj", "OBJ//survivalkit//tentClosed.mtl");
-		meshList[GEO_CART] = MeshBuilder::GenerateOBJMTL("cart", "OBJ//survivalkit//cart.obj", "OBJ//survivalkit//cart.mtl");
-		meshList[GEO_CARTHIGH] = MeshBuilder::GenerateOBJMTL("fullcart", "OBJ//survivalkit//cartHigh.obj", "OBJ//survivalkit//cartHigh.mtl");
-		meshList[GEO_TREE] = MeshBuilder::GenerateOBJMTL("tree", "OBJ//survivalkit//tree.obj", "OBJ//survivalkit//tree.mtl");
-		meshList[GEO_AXE] = MeshBuilder::GenerateOBJMTL("axe", "OBJ//survivalkit//toolAxe.obj", "OBJ//survivalkit//toolAxe.mtl");
-		meshList[GEO_CHEST] = MeshBuilder::GenerateOBJMTL("chest", "OBJ//survivalkit//chest.obj", "OBJ//survivalkit//chest.mtl");
-		meshList[GEO_WORKBENCH] = MeshBuilder::GenerateOBJMTL("workbench", "OBJ//survivalkit//workbench.obj", "OBJ//survivalkit//workbench.mtl");
-		meshList[GEO_ROCK] = MeshBuilder::GenerateOBJMTL("rockboundary", "OBJ//survivalkit//resourceStone.obj", "OBJ//survivalkit//resourceStone.mtl");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -227,14 +113,6 @@ void Scene17::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_COORDS] = MeshBuilder::GenerateText("coordinates", 16, 16);
 		meshList[GEO_COORDS]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_INTERACT] = MeshBuilder::GenerateText("interact", 16, 16);
-		meshList[GEO_INTERACT]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_TUTORIAL] = MeshBuilder::GenerateText("tutorial", 16, 16);
-		meshList[GEO_TUTORIAL]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_TASKLIST] = MeshBuilder::GenerateText("taskliat", 16, 16);
-		meshList[GEO_TASKLIST]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_DIALOGUE] = MeshBuilder::GenerateText("dialogue", 16, 16);
-		meshList[GEO_DIALOGUE]->textureID = LoadTGA("Image//calibri.tga");
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -279,99 +157,6 @@ void Scene17::Update(double dt)
 		flashlighttoggle = false;
 	}
 	else {}
-
-	//talk to npc, receive task
-	//pick up axe 
-	//cut tree
-	//fill cart
-	//talk to npc for firestarter
-	//light fire
-	//return to npc
-	//rest
-	
-	if (((camera.position.x < 5) && (camera.position.x > -5)) && ((camera.position.z < 5) && (camera.position.z > -5))) {		//npc location 0,-20
-		interact = true;
-		if (dialoguetoggle == false && Application::IsKeyPressed('E')) {
-			dialoguetoggle = true;
-			if (activetask == 0) {
-				dialogue = true;
-				activedialogue++;
-				if (activedialogue == 5) {		//go to pickup axe
-					activetask++;
-				}
-			}
-			if (activetask == 4) {								//filled cart, get fire starter
-				dialogue = true;
-				activedialogue++;
-				if (activedialogue == 6) {
-					activetask++;
-				}
-			}
-			if (activetask == 6) {								//lit fire, go bed
-				dialogue = true;
-				activedialogue++;
-				if (activedialogue == 8) {
-					activetask++;
-				}
-			}
-		}
-		else if (dialoguetoggle == true && !Application::IsKeyPressed('E')) {
-			dialoguetoggle = false;
-		}
-	}
-	else if (((camera.position.x < 55) && (camera.position.x > 45)) && ((camera.position.z < -5) && (camera.position.z > -15)) && activetask == 1) {		//axe
-		interact = true;
-		if (Application::IsKeyPressed('E')) {
-			activetask++;
-		}
-	}
-	else if (((camera.position.x < 165) && (camera.position.x > 135)) && ((camera.position.z < 15) && (camera.position.z > -15)) && activetask == 2) {		//tree
-		interact = true;
-		if (Application::IsKeyPressed('E')) {
-			activetask++;
-		}
-	}
-	else if (((camera.position.x < -25) && (camera.position.x > -35)) && ((camera.position.z < -20) && (camera.position.z > -30)) && activetask == 3) {		//cart
-		interact = true;
-		if (Application::IsKeyPressed('E')) {
-			activetask++;
-		}
-	}
-	else if (((camera.position.x < 5) && (camera.position.x > -5)) && ((camera.position.z < 25) && (camera.position.z > 15)) && activetask == 5) {		//campfire
-		interact = true;
-		if (Application::IsKeyPressed('E')) {
-			light[1].power = 1.0f;
-			glUniform1f(m_parameters[U_LIGHT1_POWER], light[1].power);
-			activetask++;
-		}
-	}
-	else if (((camera.position.x < 5) && (camera.position.x > -5)) && ((camera.position.z < 40) && (camera.position.z > 30)) && activetask == 7) {		//bed location
-		interact = true;
-		if (Application::IsKeyPressed('E')) {
-			time = "day";
-			light[2].power = 1.0f;
-			glUniform1f(m_parameters[U_LIGHT2_POWER], light[2].power);
-			activetask++;
-			activedialogue++;
-		}
-	}
-	else {
-		interact = false;
-	}
-
-	{
-		if (rrightarmx <= 0) {
-			rrightarmx += 70 * dt;
-			rrighthandx += 30 * dt;
-		}
-		if (thip <= 1.3) direction *= -1;
-		if (thip >= 1.7) direction *= -1;
-
-		thip += 0.5 * direction * dt;
-		rleftarmx += 20 * direction * dt;
-		rrightarmx -= 20 * direction * dt;
-	}
-
 
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -442,146 +227,17 @@ void Scene17::Render()
 		Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
 		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
 	}
-	{			//point light
-		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-	}
-	{
-		Vector3 lightDir(light[2].position.x, light[2].position.y, light[2].position.z);
-		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1, &lightDirection_cameraspace.x);
-	}
 	//----------------------------------------
-	{
-		RenderSkybox();
-		//RenderMesh(meshList[GEO_AXES], false);
-		modelStack.PushMatrix();
-		modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_FLOOR], true);
-		modelStack.PopMatrix();
-
-		RenderBody(0, 6, -20);
-	}
+	//RenderMesh(meshList[GEO_AXES], false);
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_FLOOR], true);
+	modelStack.PopMatrix();
 	
-	{
-		modelStack.PushMatrix();			//interact
-		modelStack.Translate(0, 0, 20); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(5, 5, 5);
-		RenderMesh(meshList[GEO_CAMPFIRE], true);
-
-			modelStack.PushMatrix();		//interact
-			modelStack.Translate(0, 0, 5); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(1, 1, 1);
-			RenderMesh(meshList[GEO_BEDROLL], true);
-				modelStack.PushMatrix();
-				modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(1, 1, 1);
-				RenderMesh(meshList[GEO_TENT], true);
-				modelStack.PopMatrix();
-			modelStack.PopMatrix();
-			{
-				modelStack.PushMatrix();
-				modelStack.Translate(4, 0, 4); modelStack.Rotate(-45, 0, 1, 0); modelStack.Scale(1, 1, 1);
-				RenderMesh(meshList[GEO_TENT], true);
-				modelStack.PopMatrix();
-
-				modelStack.PushMatrix();
-				modelStack.Translate(5, 0, 0); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(1, 1, 1);
-				RenderMesh(meshList[GEO_TENT], true);
-				modelStack.PopMatrix();
-
-				modelStack.PushMatrix();
-				modelStack.Translate(-4, 0, 4); modelStack.Rotate(45, 0, 1, 0); modelStack.Scale(1, 1, 1);
-				RenderMesh(meshList[GEO_TENT], true);
-				modelStack.PopMatrix();
-			}
-		modelStack.PopMatrix();
-	}
-
-	{
-		//big tree
-		if (activetask < 3) {
-			modelStack.PushMatrix();				//interact
-			modelStack.Translate(150, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(25, 25, 25);
-			RenderMesh(meshList[GEO_TREE], true);
-			modelStack.PopMatrix();
-		}
-		
-		//small trees 
-		for (int i = 0; i < 100; i++) {
-			modelStack.PushMatrix();				//interact
-			modelStack.Translate(randomtrees[i][0],0,randomtrees[i][1]); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(10, 10, 10);
-			RenderMesh(meshList[GEO_TREE], true);
-			modelStack.PopMatrix();
-		}
-	}
-
-	if (activetask == 4) {
-		//render the cart as cartHigh
-		modelStack.PushMatrix();				//interact
-		modelStack.Translate(-50, 0, -25); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(12.5, 12.5, 12.5);
-		RenderMesh(meshList[GEO_CARTHIGH], true);
-		modelStack.PopMatrix();
-	}
-	else {
-		//render cart
-		modelStack.PushMatrix();				//interact
-		modelStack.Translate(-50, 0, -25); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(12.5, 12.5, 12.5);
-		RenderMesh(meshList[GEO_CART], true);
-		modelStack.PopMatrix();
-	}
 	
-	{
-		//workbench+chest
-		modelStack.PushMatrix();				//interact
-		modelStack.Translate(40, 0, -20); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(5, 5, 5);
-		RenderMesh(meshList[GEO_WORKBENCH], true);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();				//interact
-		modelStack.Translate(50, 0, -20); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(5, 5, 5);
-		RenderMesh(meshList[GEO_CHEST], true);
-		modelStack.PopMatrix();
-	}
-
-	//rock boundary
-	for (int i = 0; i < 22; i++) {
-		modelStack.PushMatrix();
-		modelStack.Translate(-275, 0, -275 + (i * 25)); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(50, 50, 50);
-		RenderMesh(meshList[GEO_ROCK], true);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(275, 0, -275 + (i * 25)); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(50, 50, 50);
-		RenderMesh(meshList[GEO_ROCK], true);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(-275 + (i * 25), 0, -275); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(50, 50, 50);
-		RenderMesh(meshList[GEO_ROCK], true);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(-275 + (i * 25), 0, 275); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(50, 50, 50);
-		RenderMesh(meshList[GEO_ROCK], true);
-		modelStack.PopMatrix();
-	}
-
 	//text render
-	{
-		if (dialogue == true) {
-			modelStack.PushMatrix();
-			modelStack.Translate(-5, 15, -20); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(0.5, 1, 0.5);
-			RenderText(meshList[GEO_DIALOGUE], dialoguetext[activedialogue], Color(1, 1, 1));
-			modelStack.PopMatrix();
-		}
-
-		string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
-		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
-		if (interact == true) {
-			RenderTextOnScreen(meshList[GEO_INTERACT], "Press 'E' to Interact", Color(0.5, 0.5, 1), 3, 20, 25);
-		}
-
-		RenderTextOnScreen(meshList[GEO_TUTORIAL], "ACTIVE TASKS: ", Color(0.5, 0.5, 1), 2, 1, 50);
-		RenderTextOnScreen(meshList[GEO_TASKLIST], tasklisttext[activetask], Color(0.5, 0.5, 1), 2, 2, 48);
-	}
+	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
+	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
 
 	//render mesh on screen
 	RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
@@ -594,182 +250,6 @@ void Scene17::Render()
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
 
-void Scene17::RenderSkybox(void) {
-	if (time == "day") {
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 495, camera.position.y, camera.position.z + 0); modelStack.Rotate(-90, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_FRONT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x - 495, camera.position.y, camera.position.z + 0); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_BACK], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y, camera.position.z + 495); modelStack.Rotate(180, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_LEFT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y, camera.position.z - 495); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_RIGHT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y + 500, camera.position.z + 0); modelStack.Rotate(90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_TOP], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y - 500, camera.position.z + 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_DAY_BOTTOM], false);
-		modelStack.PopMatrix();
-	}
-	else if (time == "night") {
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 495, camera.position.y, camera.position.z + 0); modelStack.Rotate(-90, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_FRONT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x - 495, camera.position.y, camera.position.z + 0); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_BACK], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y, camera.position.z + 495); modelStack.Rotate(180, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_LEFT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y, camera.position.z - 495); modelStack.Rotate(0, 0, 1, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_RIGHT], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y + 500, camera.position.z + 0); modelStack.Rotate(90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_TOP], false);
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(camera.position.x + 0, camera.position.y - 500, camera.position.z + 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-		RenderMesh(meshList[GEO_NIGHT_BOTTOM], false);
-		modelStack.PopMatrix();
-	}
-}
-
-void Scene17::RenderBody(int x, int y, int z) {
-	modelStack.PushMatrix();		//hip
-	modelStack.Translate(x, y, z); modelStack.Scale(3.1, 1, 2.1);
-	modelStack.Rotate(0, 1, 0, 0); modelStack.Rotate(0, 0, 1, 0); modelStack.Rotate(0, 0, 0, 1);
-	RenderMesh(meshList[GEO_BODY], true);
-
-		modelStack.PushMatrix();
-		modelStack.Translate(0.25, 0, 0); modelStack.Scale(0.33, 1.3, 0.5);
-		modelStack.Rotate(rleftthighx, 1, 0, 0); modelStack.Rotate(rleftthighy, 0, 1, 0); modelStack.Rotate(rleftthighz, 0, 0, 1);
-		RenderMesh(meshList[GEO_SPHERE], true);
-			modelStack.PushMatrix();		//left thigh
-			modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-			RenderMesh(meshList[GEO_CYLINDER], true);
-				modelStack.PushMatrix();
-				modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-				modelStack.Rotate(rleftcalfx, 1, 0, 0); modelStack.Rotate(rleftcalfy, 0, 1, 0); modelStack.Rotate(rleftcalfz, 0, 0, 1);
-				RenderMesh(meshList[GEO_SPHERE], true);
-					modelStack.PushMatrix();		//left calf
-					modelStack.Translate(0, -1.2, 0); modelStack.Scale(0.9, 1.1, 0.9);
-					RenderMesh(meshList[GEO_CYLINDER], true);
-					modelStack.PopMatrix();
-				modelStack.PopMatrix();
-			modelStack.PopMatrix();
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();
-		modelStack.Translate(-0.25, 0, 0); modelStack.Scale(0.33, 1.3, 0.5);
-		modelStack.Rotate(rrightthighx, 1, 0, 0); modelStack.Rotate(rrightthighy, 0, 1, 0); modelStack.Rotate(rrightthighz, 0, 0, 1);
-		RenderMesh(meshList[GEO_SPHERE], true);
-			modelStack.PushMatrix();		//right thigh
-			modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-			RenderMesh(meshList[GEO_CYLINDER], true);
-				modelStack.PushMatrix();
-				modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-				modelStack.Rotate(rrightcalfx, 1, 0, 0); modelStack.Rotate(rrightcalfy, 0, 1, 0); modelStack.Rotate(rrightcalfz, 0, 0, 1);
-				RenderMesh(meshList[GEO_SPHERE], true);
-					modelStack.PushMatrix();		//right calf
-					modelStack.Translate(0, -1.2, 0); modelStack.Scale(0.9, 1.1, 0.9);
-					RenderMesh(meshList[GEO_CYLINDER], true);
-					modelStack.PopMatrix();
-				modelStack.PopMatrix();
-			modelStack.PopMatrix();
-		modelStack.PopMatrix();
-
-		modelStack.PushMatrix();		//hip joint
-		modelStack.Translate(0, thip, 0); modelStack.Scale(0.1, 0.1, 0.1);
-		modelStack.Rotate(rhipx, 1, 0, 0); modelStack.Rotate(rhipy, 0, 1, 0); modelStack.Rotate(0, 0, 0, 1);
-		RenderMesh(meshList[GEO_SPHERE], true);
-
-			modelStack.PushMatrix();		//chest
-			modelStack.Translate(0, 2.5, 0); modelStack.Scale(10, 40, 10);
-			RenderMesh(meshList[GEO_BODY], true);
-
-				modelStack.PushMatrix();		//backpack
-				modelStack.Translate(0, 0, -0.9); modelStack.Scale(0.9, 0.9, 0.9);
-				RenderMesh(meshList[GEO_BODY], true);
-				modelStack.PopMatrix();
-
-				modelStack.PushMatrix();		//neck
-				modelStack.Translate(0, 0.65, 0); modelStack.Scale(0.15, 0.15, 0.25);
-				modelStack.Rotate(0, 1, 0, 0); modelStack.Rotate(0, 0, 1, 0); modelStack.Rotate(0, 0, 0, 1);
-				RenderMesh(meshList[GEO_CYLINDER], true);
-					modelStack.PushMatrix();		//head
-					modelStack.Translate(0, 1.5, 0); modelStack.Scale(2.2, 1.7, 2);
-					modelStack.Rotate(0, 1, 0, 0); modelStack.Rotate(0, 0, 1, 0); modelStack.Rotate(0, 0, 0, 1);
-					RenderMesh(meshList[GEO_SPHERE], true);
-					modelStack.PopMatrix();
-				modelStack.PopMatrix();
-
-				modelStack.PushMatrix();
-				modelStack.Translate(0.5, 0.2, 0); modelStack.Scale(0.2, 0.3, 0.3);
-				modelStack.Rotate(rleftarmx, 1, 0, 0); modelStack.Rotate(rleftarmy, 0, 1, 0); modelStack.Rotate(rleftarmz, 0, 0, 1);
-				RenderMesh(meshList[GEO_SPHERE], true);
-					modelStack.PushMatrix();		//left arm
-					modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 0.9, 1);
-					RenderMesh(meshList[GEO_CYLINDER], true);
-						modelStack.PushMatrix();
-						modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-						modelStack.Rotate(rlefthandx, 1, 0, 0); modelStack.Rotate(rlefthandy, 0, 1, 0); modelStack.Rotate(rlefthandz, 0, 0, 1);
-						RenderMesh(meshList[GEO_SPHERE], true);
-							modelStack.PushMatrix();		//left hand
-							modelStack.Translate(0, -1.2, 0); modelStack.Scale(0.9, 1.2, 0.9);
-							RenderMesh(meshList[GEO_CYLINDER], true);
-							modelStack.PopMatrix();
-						modelStack.PopMatrix();
-					modelStack.PopMatrix();
-				modelStack.PopMatrix();
-
-				modelStack.PushMatrix();
-				modelStack.Translate(-0.5, 0.2, 0); modelStack.Scale(0.2, 0.3, 0.3);
-				modelStack.Rotate(rrightarmx, 1, 0, 0); modelStack.Rotate(rrightarmy, 0, 1, 0); modelStack.Rotate(rrightarmz, 0, 0, 1);
-				RenderMesh(meshList[GEO_SPHERE], true);
-					modelStack.PushMatrix();		//right arm
-					modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 0.9, 1);
-					RenderMesh(meshList[GEO_CYLINDER], true);
-						modelStack.PushMatrix();
-						modelStack.Translate(0, -1.2, 0); modelStack.Scale(1, 1, 1);
-						modelStack.Rotate(rrighthandx, 1, 0, 0); modelStack.Rotate(rrighthandy, 0, 1, 0); modelStack.Rotate(rrighthandz, 0, 0, 1);
-						RenderMesh(meshList[GEO_SPHERE], true);
-							modelStack.PushMatrix();		//right hand
-							modelStack.Translate(0, -1.2, 0); modelStack.Scale(0.9, 1.2, 0.9);
-							RenderMesh(meshList[GEO_CYLINDER], true);
-							modelStack.PopMatrix();
-						modelStack.PopMatrix();
-					modelStack.PopMatrix();
-				modelStack.PopMatrix();
-			modelStack.PopMatrix();
-
-		modelStack.PopMatrix();
-	modelStack.PopMatrix();
-}
 
 void Scene17::RenderText(Mesh* mesh, std::string text, Color color)
 {
