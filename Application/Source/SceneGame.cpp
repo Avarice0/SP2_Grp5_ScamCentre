@@ -105,11 +105,19 @@ void SceneGame::Init()
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	}
 	{
-		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADESHOPFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0, 0), 1.f);
-		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADEITEM1]->textureID = LoadTGA("Image//Coffee.tga"); 
+		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("shopbg", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADESHOPFG] = MeshBuilder::GenerateQuad("shopfg", Color(1, 0, 0), 1.f);
+		meshList[GEO_LOCKEDFG] = MeshBuilder::GenerateQuad("lockfg", Color(0.5, 0.5, 0.5), 1.f);
+		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("item1", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADEITEM1]->textureID = LoadTGA("Image//Coffee.tga");
+		meshList[GEO_UPGRADEITEM2] = MeshBuilder::GenerateQuad("item2", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADEITEM2]->textureID = LoadTGA("Image//PoliceCap.tga");
+		meshList[GEO_LOCK] = MeshBuilder::GenerateQuad("lock", Color(1, 1, 1), 1.f);
+		meshList[GEO_LOCK]->textureID = LoadTGA("Image//Lock.tga");
+		meshList[GEO_WORKERUPGRADE] = MeshBuilder::GenerateQuad("WorkerUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_WORKERUPGRADE]->textureID = LoadTGA("Image//WorkerUp.tga");
+		meshList[GEO_COMPUTERUPGRADE] = MeshBuilder::GenerateQuad("ComputerUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_COMPUTERUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -210,22 +218,6 @@ void SceneGame::Update(double dt)
 	light[0].position.y = camera.position.y;
 	light[0].position.z = camera.position.z;
 	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-	
-	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = true;							//flashlight toggle
-	//	if (light[0].power == 1.f) {
-	//		light[0].power = 0.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//	else if (light[0].power == 0.f) {
-	//		light[0].power = 1.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//}
-	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = false;
-	//}
-	//else {}
 
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -312,10 +304,52 @@ void SceneGame::Update(double dt)
 void SceneGame::RenderPermUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
 
-	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
-	RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
+	if(dollars >= 600){
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
 
-	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+	if(dollars >= 1000){
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+}
+
+void SceneGame::RenderUpgrade(){
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
+	}
 }
 
 void SceneGame::Render()
@@ -357,7 +391,8 @@ void SceneGame::Render()
 	
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i] != NULL) {
-			renderworker(i * 10, 12, 20, entities[i]->getworkertier());
+			renderworker(i * 10, 6, 20, entities[i]->getworkertier());
+			RenderTable(i * 10 - 5, 3, 20);
 		}
 	}
 
@@ -384,6 +419,9 @@ void SceneGame::Render()
 
 	if((camera.position.x < 98 && camera.position.x > 27) && (camera.position.z < 74 && camera.position.z > 20)){
 		RenderPermUpgrade();
+	}
+	else{
+		RenderUpgrade();
 	}
 
 	//---------------------------------------------------------
@@ -619,40 +657,26 @@ void SceneGame::RenderRoom()
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderTable()
+void SceneGame::RenderTable(int x, int y, int z)
 {
-	// table leg 1
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 2
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 3
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 4
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
 	// tabletop
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 1.1, 0);
-	modelStack.Scale(5, 0.2, 2.5);
+	modelStack.Translate(x, y, z);
+	modelStack.Scale(5, 0.2, 5);
 	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.Scale(0.1, 15, 0.1);
+	modelStack.Translate(4, -0.5, 4);
+
+	RenderMesh(meshList[GEO_TABLE], true);
+	
+	modelStack.Translate(0, 0, -8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(-8, 0, 0);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(0, 0, 8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
 	modelStack.PopMatrix();
 }
