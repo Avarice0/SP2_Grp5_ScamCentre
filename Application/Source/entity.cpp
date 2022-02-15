@@ -2,8 +2,8 @@
 
 entity::entity() {
     type = 0;
-    stationtier = 1;
-    workertier = 1;
+    stationtier = 0;
+    workertier = 0;
 }
 entity::~entity() {
 
