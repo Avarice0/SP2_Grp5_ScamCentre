@@ -1,5 +1,5 @@
-#ifndef SCENE_18_H
-#define SCENE_18_H
+#ifndef SCENE_PC_H
+#define SCENE_PC_H
 
 #include "Scene.h"
 #include "Camera3.h"
@@ -25,7 +25,7 @@
 
 using namespace std;
 
-class Scene18 : public Scene
+class ScenePC : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
@@ -36,6 +36,7 @@ class Scene18 : public Scene
 		GEO_PLAY,
 		GEO_QUIT,
 		GEO_SETTINGS,
+		GEO_COIN,
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
@@ -78,8 +79,8 @@ class Scene18 : public Scene
 	};
 
 public:
-	Scene18();
-	~Scene18();
+	ScenePC();
+	~ScenePC();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -88,7 +89,7 @@ public:
 
 private:
 	unsigned m_vertexArrayID;
-	Mesh *meshList[NUM_GEOMETRY];
+	Mesh* meshList[NUM_GEOMETRY];
 
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
@@ -97,8 +98,8 @@ private:
 
 	MS modelStack, viewStack, projectionStack;
 
-	Light light[1];	
-	
+	Light light[1];
+
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 
@@ -108,13 +109,13 @@ private:
 
 	bool flashlighttoggle = false;
 	bool frametoggle = false;
-	int randomtrees[100][2];
+
 
 	//mouse input
 	double x, y;
 	float posX, posY;
 	string mousestate;
-	
+
 };
 
 

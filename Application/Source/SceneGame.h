@@ -27,7 +27,7 @@
 
 using namespace std;
 
-class Scene17 : public Scene
+class SceneGame : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
@@ -55,10 +55,11 @@ class Scene17 : public Scene
 		GEO_PHONE,
 		GEO_COMPUTER,
 
-		//SHOP POP UP
-		GEO_UPGRADESHOPBG,
-		GEO_UPGRADESHOPBAR,
-		GEO_,
+		// for the room
+		GEO_TABLE,
+		GEO_ROOM,
+		GEO_OFFICE,
+		GEO_UPGRADEAREA,
 
 		//objs
 
@@ -98,8 +99,8 @@ class Scene17 : public Scene
 	};
 
 public:
-	Scene17();
-	~Scene17();
+	SceneGame();
+	~SceneGame();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -127,6 +128,10 @@ private:
 
 	//automated render functions
 	void renderworker(int x, int y, int z, int rarity);		//rarity 0-2
+	
+	// functions to render the room and indiv. tables 
+	void RenderRoom();
+	void RenderTable();
 
 	//mouse input
 	double x, y;

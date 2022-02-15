@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 //scene includes
-#include "Scene17.h"
-#include "Scene18.h"
-#include "PCScene.h"
+#include "SceneGame.h"
+#include "SceneMainMenu.h"
+#include "ScenePC.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -125,10 +125,12 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene1 = new Scene18();
-	Scene *scene2 = new Scene17();
+	Scene *scene1 = new SceneMainMenu();
+	Scene *scene2 = new SceneGame();
+	Scene* scene3 = new ScenePC();
 	scene1->Init();
 	scene2->Init();
+	scene3->Init();
 	Scene* scene = scene1;
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
@@ -139,6 +141,9 @@ void Application::Run()
 		}
 		if (scenenum == 2) {
 			scene = scene2;
+		}
+		if (scenenum == 3) {
+			scene = scene3;
 		}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();

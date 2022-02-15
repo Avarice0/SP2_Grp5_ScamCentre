@@ -1,14 +1,14 @@
-#include "Scene17.h"
+#include "SceneGame.h"
 
-Scene17::Scene17()
+SceneGame::SceneGame()
 {
 }
 
-Scene17::~Scene17()
+SceneGame::~SceneGame()
 {
 }
 
-void Scene17::Init()
+void SceneGame::Init()
 {
 	{
 		// Set background color to dark blue
@@ -156,6 +156,36 @@ void Scene17::Init()
 		shirtrarity[2] = meshList[GEO_SHIRT3]; 
 	}
 	
+	{
+		meshList[GEO_TABLE] = MeshBuilder::GenerateCube("table", Color(0.54, 0.27, 0.07), 1);
+		//meshList[GEO_TABLE]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_TABLE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_TABLE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_TABLE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_TABLE]->material.kShininess = 1.f;
+
+		meshList[GEO_ROOM] = MeshBuilder::GenerateQuad("room", Color(0.1, 0.1, 0.5), 1);
+		//meshList[GEO_ROOM]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_ROOM]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_ROOM]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_ROOM]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_ROOM]->material.kShininess = 1.f;
+
+		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
+		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_OFFICE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_OFFICE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_OFFICE]->material.kShininess = 1.f;
+
+		meshList[GEO_UPGRADEAREA] = MeshBuilder::GenerateQuad("room", Color(0.1, 0.1, 0.1), 1);
+		//meshList[GEO_UPGRADEAREA]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_UPGRADEAREA]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_UPGRADEAREA]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_UPGRADEAREA]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
+	}
+	
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -167,7 +197,7 @@ void Scene17::Init()
 	debugRot = 20;
 }
 
-void Scene17::Update(double dt)
+void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
 
@@ -274,7 +304,7 @@ void Scene17::Update(double dt)
 
 }
 
-void Scene17::Render()
+void SceneGame::Render()
 {
 	{
 		// Render VBO here
@@ -335,7 +365,7 @@ void Scene17::Render()
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
 
-void Scene17::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneGame::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -358,7 +388,7 @@ void Scene17::RenderText(Mesh* mesh, std::string text, Color color)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
 
-void Scene17::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
+void SceneGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
 	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
@@ -390,7 +420,7 @@ void Scene17::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
-void Scene17::Exit()
+void SceneGame::Exit()
 {
 	// Cleanup VBO here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -409,7 +439,7 @@ void Scene17::Exit()
 	glDeleteProgram(m_programID);
 }
 
-void Scene17::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -448,7 +478,7 @@ void Scene17::RenderMesh(Mesh* mesh, bool enableLight)
 	}
 }
 
-void Scene17::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
@@ -467,7 +497,7 @@ void Scene17::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Scene17::renderworker(int x, int y, int z, int rarity) {
+void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PushMatrix(); 
 	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
 	RenderMesh(meshList[GEO_SKINNED], true);
@@ -511,5 +541,93 @@ void Scene17::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix(); 
 
+	modelStack.PopMatrix();
+}
+
+void SceneTexture::RenderRoom()
+{
+	// room floor
+	modelStack.PushMatrix();
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(20, 15, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room left side
+	modelStack.PushMatrix();
+	modelStack.Translate(-10, 2.5, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(15, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room right side
+	modelStack.PushMatrix();
+	modelStack.Translate(10, 2.5, 0);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Scale(15, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room back side
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.5, -7.5);
+	modelStack.Rotate(0, 0, 1, 0);
+	modelStack.Scale(20, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// office area
+	modelStack.PushMatrix();
+	modelStack.Translate(6.25, 0.01, -5.5);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(7, 3.5, 1);
+	RenderMesh(meshList[GEO_OFFICE], true);
+	modelStack.PopMatrix();
+
+	// upgrade area
+	modelStack.PushMatrix();
+	modelStack.Translate(6.25, 0.01, 4.75);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(7, 5, 1);
+	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+	modelStack.PopMatrix();
+}
+
+void SceneTexture::RenderTable()
+{
+	// table leg 1
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 2
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 3
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 4
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// tabletop
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.1, 0);
+	modelStack.Scale(5, 0.2, 2.5);
+	RenderMesh(meshList[GEO_TABLE], true);
 	modelStack.PopMatrix();
 }
