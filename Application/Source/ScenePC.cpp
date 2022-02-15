@@ -70,6 +70,7 @@ void ScenePC::Init()
 		srand(time(NULL));
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
+		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(1, 1, 1), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);

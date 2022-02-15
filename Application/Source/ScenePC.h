@@ -35,6 +35,7 @@ class ScenePC : public Scene
 		GEO_QUAD,
 
 		GEO_COIN,
+		GEO_WALLPAPER,
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
