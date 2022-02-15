@@ -135,22 +135,6 @@ void SceneMainMenu::Init()
 void SceneMainMenu::Update(double dt)
 {
 	camera.TitleScreenUpdate(dt);
-	
-	if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-		flashlighttoggle = true;							//flashlight toggle
-		if (light[0].power == 1.f) {
-			light[0].power = 0.f;
-			glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-		}
-		else if (light[0].power == 0.f) {
-			light[0].power = 1.f;
-			glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-		}
-	}
-	else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-		flashlighttoggle = false;
-	}
-	else {}
 
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);

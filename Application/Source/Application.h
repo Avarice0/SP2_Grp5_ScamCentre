@@ -26,7 +26,7 @@ private:
 
 	//Declare a window object
 	StopWatch m_timer;
-	int scenenum = 3;
+	int scenenum = 2;
 };
 
 #endif

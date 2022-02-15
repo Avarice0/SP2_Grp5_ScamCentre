@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "Camera3.h"
+#include "Camera2.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -51,6 +52,7 @@ class SceneGame : public Scene
 
 		//workstation objs
 		GEO_MAIL,
+		//
 		GEO_PHONE,
 		GEO_COMPUTER,
 
@@ -60,6 +62,9 @@ class SceneGame : public Scene
 		GEO_OFFICE,
 		GEO_UPGRADEAREA,
 
+		GEO_UPGRADESHOPBG,
+		GEO_UPGRADESHOPFG,
+		GEO_UPGRADEITEM1,
 		//objs
 
 		NUM_GEOMETRY,
@@ -131,6 +136,7 @@ private:
 	// functions to render the room and indiv. tables 
 	void RenderRoom();
 	void RenderTable();
+	void RenderPermUpgrade();
 
 	//mouse input
 	double x, y;

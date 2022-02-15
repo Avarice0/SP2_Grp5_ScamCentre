@@ -70,7 +70,7 @@ void SceneGame::Init()
 	}
 
 	//Initialize camera settings
-	camera.Init(Vector3(10, 10, 10), Vector3(0, 10, 10), Vector3(0, 1, 0));
+	camera.Init(Vector3(50, 5, 50), Vector3(0, 10, 0), Vector3(0, 1, 0));
 
 	// Init VBO
 	{
@@ -103,6 +103,13 @@ void SceneGame::Init()
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+	}
+	{
+		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADESHOPFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0, 0), 1.f);
+		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADEITEM1]->textureID = LoadTGA("Image//Coffee.tga"); 
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -302,6 +309,15 @@ void SceneGame::Update(double dt)
 
 }
 
+void SceneGame::RenderPermUpgrade() {
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+	RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
+
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+}
+
 void SceneGame::Render()
 {
 	{
@@ -345,19 +361,30 @@ void SceneGame::Render()
 		}
 	}
 
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.05, 0);
+	modelStack.Scale(10, 10, 10);
+	RenderRoom();
+	modelStack.PopMatrix();
+
 	//text render
 	string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
-	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
+	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
 
 	//render mesh on screen
 	//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
-	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
+	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 	RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
 	RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
+	if((camera.position.x < 98 && camera.position.x > 27) && (camera.position.z < 74 && camera.position.z > 20)){
+		RenderPermUpgrade();
+	}
 
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
