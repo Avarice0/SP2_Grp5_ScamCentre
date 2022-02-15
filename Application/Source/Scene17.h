@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "Camera3.h"
+#include "Camera2.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -54,6 +55,10 @@ class Scene17 : public Scene
 		GEO_PHONE,
 		GEO_COMPUTER,
 
+		//SHOP POP UP
+		GEO_UPGRADESHOPBG,
+		GEO_UPGRADESHOPBAR,
+		GEO_,
 
 		//objs
 
@@ -108,7 +113,7 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	Camera3 camera;
+	Camera2 camera;
 
 	MS modelStack, viewStack, projectionStack;
 
