@@ -128,8 +128,9 @@ private:
 	entity* entities[10] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
-	
 
+	bool playerMoving = false;
+	bool legBack = false;
 	float debugRot;
 };
 
