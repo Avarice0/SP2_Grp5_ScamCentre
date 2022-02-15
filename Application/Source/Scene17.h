@@ -58,7 +58,7 @@ class Scene17 : public Scene
 		//SHOP POP UP
 		GEO_UPGRADESHOPBG,
 		GEO_UPGRADESHOPBAR,
-		GEO_UPGRADENAME1,
+		GEO_,
 
 		//objs
 

@@ -152,8 +152,7 @@ void Scene18::Update(double dt)
 		{
 			//trigger user action or function
 			mousestate = "play clicked";
-			Application application;
-			application.changescene(2);
+			//Application::changescene(2);
 			//error when uncommented
 		}
 	}
@@ -169,6 +168,7 @@ void Scene18::Update(double dt)
 		mousestate = "RBUTTON DOWN";
 		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
 		{
+			//trigger user action or function
 		}
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
