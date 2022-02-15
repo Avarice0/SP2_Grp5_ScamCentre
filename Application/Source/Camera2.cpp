@@ -85,6 +85,17 @@ void Camera2::Update(double dt)
 	}
 }
 
+void Camera2::TitleScreenUpdate(double dt)
+{
+	static const float CAMERA_SPEED = 45.f;
+	static const float ZOOM_SPEED = 20.f;
+	float yaw = -CAMERA_SPEED * static_cast<float>(dt);
+	Mtx44 rotation;
+	rotation.SetToRotation(yaw, 0, 1, 0);
+	position = rotation * position;
+	up = rotation * up;
+}
+
 void Camera2::Reset()
 {
 	position = defaultPosition;
