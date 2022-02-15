@@ -154,6 +154,36 @@ void SceneGame::Init()
 		shirtrarity[2] = meshList[GEO_SHIRT3]; 
 	}
 	
+	{
+		meshList[GEO_TABLE] = MeshBuilder::GenerateCube("table", Color(0.54, 0.27, 0.07), 1);
+		//meshList[GEO_TABLE]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_TABLE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_TABLE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_TABLE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_TABLE]->material.kShininess = 1.f;
+
+		meshList[GEO_ROOM] = MeshBuilder::GenerateQuad("room", Color(0.1, 0.1, 0.5), 1);
+		//meshList[GEO_ROOM]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_ROOM]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_ROOM]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_ROOM]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_ROOM]->material.kShininess = 1.f;
+
+		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
+		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_OFFICE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_OFFICE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_OFFICE]->material.kShininess = 1.f;
+
+		meshList[GEO_UPGRADEAREA] = MeshBuilder::GenerateQuad("room", Color(0.1, 0.1, 0.1), 1);
+		//meshList[GEO_UPGRADEAREA]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_UPGRADEAREA]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_UPGRADEAREA]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_UPGRADEAREA]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
+	}
+	
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -509,5 +539,93 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix(); 
 
+	modelStack.PopMatrix();
+}
+
+void SceneTexture::RenderRoom()
+{
+	// room floor
+	modelStack.PushMatrix();
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(20, 15, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room left side
+	modelStack.PushMatrix();
+	modelStack.Translate(-10, 2.5, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(15, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room right side
+	modelStack.PushMatrix();
+	modelStack.Translate(10, 2.5, 0);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Scale(15, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// room back side
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.5, -7.5);
+	modelStack.Rotate(0, 0, 1, 0);
+	modelStack.Scale(20, 5, 1);
+	RenderMesh(meshList[GEO_ROOM], true);
+	modelStack.PopMatrix();
+
+	// office area
+	modelStack.PushMatrix();
+	modelStack.Translate(6.25, 0.01, -5.5);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(7, 3.5, 1);
+	RenderMesh(meshList[GEO_OFFICE], true);
+	modelStack.PopMatrix();
+
+	// upgrade area
+	modelStack.PushMatrix();
+	modelStack.Translate(6.25, 0.01, 4.75);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(7, 5, 1);
+	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+	modelStack.PopMatrix();
+}
+
+void SceneTexture::RenderTable()
+{
+	// table leg 1
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 2
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 3
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 4
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// tabletop
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.1, 0);
+	modelStack.Scale(5, 0.2, 2.5);
+	RenderMesh(meshList[GEO_TABLE], true);
 	modelStack.PopMatrix();
 }
