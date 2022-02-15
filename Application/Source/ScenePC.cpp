@@ -114,6 +114,7 @@ void ScenePC::Init()
 
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
+		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(1, 1, 1), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -253,9 +254,10 @@ void ScenePC::Render()
 
 	RenderMeshOnScreen(meshList[GEO_QUIT], 15, 15, 14, 7);*/
 
-	
+	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40,30, 80, 60);
     RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
 
+	
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
