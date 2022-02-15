@@ -147,6 +147,9 @@ private:
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 
+
+
+
 	bool playerMoving = false;
 	bool legBack = false;
 	float debugRot;
