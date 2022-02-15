@@ -51,7 +51,6 @@ class SceneGame : public Scene
 		GEO_PANTS,
 
 		//
-		GEO_TABLE,
 		GEO_PHONE,
 		GEO_COMPUTER,
 
@@ -61,6 +60,9 @@ class SceneGame : public Scene
 		GEO_OFFICE,
 		GEO_UPGRADEAREA,
 
+		GEO_UPGRADESHOPBG,
+		GEO_UPGRADESHOPFG,
+		GEO_UPGRADEITEM1,
 		//objs
 
 		NUM_GEOMETRY,

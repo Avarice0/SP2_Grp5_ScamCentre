@@ -103,8 +103,8 @@ void SceneGame::Init()
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADESHOPBAR] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADESHOPNAME] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADEITEM1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -544,7 +544,7 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PopMatrix();
 }
 
-void SceneTexture::RenderRoom()
+void SceneGame::RenderRoom()
 {
 	// room floor
 	modelStack.PushMatrix();
@@ -594,7 +594,7 @@ void SceneTexture::RenderRoom()
 	modelStack.PopMatrix();
 }
 
-void SceneTexture::RenderTable()
+void SceneGame::RenderTable()
 {
 	// table leg 1
 	modelStack.PushMatrix();
