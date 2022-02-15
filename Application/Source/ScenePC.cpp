@@ -129,6 +129,7 @@ void ScenePC::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+	
 }
 
 void ScenePC::Render()
@@ -148,7 +149,7 @@ void ScenePC::Render()
 	//text render
 	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
     RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
-	RenderMeshOnScreen(meshList[GEO_BLACKLINE], 40, 30, 5, 20);
+	
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
