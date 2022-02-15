@@ -65,6 +65,11 @@ class SceneGame : public Scene
 		GEO_UPGRADESHOPBG,
 		GEO_UPGRADESHOPFG,
 		GEO_UPGRADEITEM1,
+		GEO_UPGRADEITEM2,
+		GEO_LOCK,
+		GEO_LOCKEDFG,
+		GEO_WORKERUPGRADE,
+		GEO_COMPUTERUPGRADE,
 		//objs
 
 		NUM_GEOMETRY,
@@ -137,6 +142,7 @@ private:
 	void RenderRoom();
 	void RenderTable();
 	void RenderPermUpgrade();
+	void RenderUpgrade();
 
 	//mouse input
 	double x, y;
