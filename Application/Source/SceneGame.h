@@ -54,6 +54,11 @@ class SceneGame : public Scene
 		GEO_PHONE,
 		GEO_COMPUTER,
 
+		// for the room
+		GEO_TABLE,
+		GEO_ROOM,
+		GEO_OFFICE,
+		GEO_UPGRADEAREA,
 
 		//objs
 
@@ -122,6 +127,10 @@ private:
 
 	//automated render functions
 	void renderworker(int x, int y, int z, int rarity);		//rarity 0-2
+	
+	// functions to render the room and indiv. tables 
+	void RenderRoom();
+	void RenderTable();
 
 	//mouse input
 	double x, y;
