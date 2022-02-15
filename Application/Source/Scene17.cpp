@@ -202,6 +202,7 @@ void Scene17::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		
 		//converting viewport space to UI space
 		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
 		{
@@ -212,6 +213,7 @@ void Scene17::Update(double dt)
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
+	
 		mousestate = "";
 	}
 	static bool bRButtonState = false;
@@ -244,7 +246,34 @@ void Scene17::Update(double dt)
 	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
 
-	debugRot += (float)(20 * dt);
+
+
+	if (playerMoving == true) 
+	{
+		if (debugRot <= -40)
+		{
+			
+			legBack = false;
+		}
+		if (debugRot >= 40)
+		{
+			
+			legBack = true;
+		}
+	}
+	else
+	{
+		debugRot = 0;
+	}
+
+	if (legBack == false) {
+		debugRot += (float)(40 * dt);
+	}
+	else
+	{
+		debugRot += (float)(-40 * dt);
+	}
+
 
 }
 
@@ -449,6 +478,7 @@ void Scene17::renderworker(int x, int y, int z, int rarity) {
 	RenderMesh(shirtrarity[rarity], true);
 
 		modelStack.PushMatrix(); 
+		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(20, 1, 0, 0);
 		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.5, 1, 0.5);
@@ -458,6 +488,7 @@ void Scene17::renderworker(int x, int y, int z, int rarity) {
 		modelStack.PopMatrix();
 
 		modelStack.PushMatrix();
+		modelStack.Rotate(-debugRot, 0, 0, 1);
 		modelStack.Rotate(-20, 1, 0, 0);
 		modelStack.Translate(0, -0.3, 1); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.5, 1, 0.5);
@@ -467,13 +498,16 @@ void Scene17::renderworker(int x, int y, int z, int rarity) {
 		modelStack.PopMatrix();
 
 		modelStack.PushMatrix(); 
+		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(-20, 1, 0, 0);
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
+		
 		modelStack.Scale(0.6, 1, 0.6);
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix(); 
 
 		modelStack.PushMatrix(); 
+		modelStack.Rotate(-debugRot, 0, 0, 1);
 		modelStack.Rotate(20, 1, 0, 0);
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.6, 1, 0.6);
