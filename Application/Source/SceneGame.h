@@ -118,7 +118,7 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	Camera2 camera;
+	Camera3 camera;
 
 	MS modelStack, viewStack, projectionStack;
 
@@ -136,6 +136,7 @@ private:
 	// functions to render the room and indiv. tables 
 	void RenderRoom();
 	void RenderTable();
+	void RenderPermUpgrade();
 
 	//mouse input
 	double x, y;
