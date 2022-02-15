@@ -542,7 +542,7 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PopMatrix();
 }
 
-void SceneTexture::RenderRoom()
+void SceneGame::RenderRoom()
 {
 	// room floor
 	modelStack.PushMatrix();
@@ -592,7 +592,7 @@ void SceneTexture::RenderRoom()
 	modelStack.PopMatrix();
 }
 
-void SceneTexture::RenderTable()
+void SceneGame::RenderTable()
 {
 	// table leg 1
 	modelStack.PushMatrix();

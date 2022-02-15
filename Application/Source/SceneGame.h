@@ -49,8 +49,8 @@ class SceneGame : public Scene
 		GEO_SHIRT3,
 		GEO_PANTS,
 
-		//
-		GEO_TABLE,
+		//workstation objs
+		GEO_MAIL,
 		GEO_PHONE,
 		GEO_COMPUTER,
 
