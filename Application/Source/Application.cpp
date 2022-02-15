@@ -11,6 +11,7 @@
 //scene includes
 #include "Scene17.h"
 #include "Scene18.h"
+#include "PCScene.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
