@@ -2,8 +2,6 @@
 #define SCENE_PC_H
 
 #include "Scene.h"
-#include "Camera3.h"
-#include "Camera2.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -42,7 +40,7 @@ class ScenePC : public Scene
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
-		GEO_COORDS,			//debug for position
+		GEO_SCORE,			//number of coins clicked
 
 		NUM_GEOMETRY,
 	};
@@ -56,18 +54,6 @@ class ScenePC : public Scene
 		U_MATERIAL_SPECULAR,
 		U_MATERIAL_SHININESS,
 		U_LIGHTENABLED,
-
-		U_LIGHT0_POSITION,
-		U_LIGHT0_COLOR,
-		U_LIGHT0_POWER,
-		U_LIGHT0_KC,
-		U_LIGHT0_KL,
-		U_LIGHT0_KQ,
-		U_LIGHT0_TYPE,
-		U_LIGHT0_SPOTDIRECTION,
-		U_LIGHT0_COSCUTOFF,
-		U_LIGHT0_COSINNER,
-		U_LIGHT0_EXPONENT,
 
 		U_NUMLIGHTS,
 		U_COLOR_TEXTURE_ENABLED,
@@ -95,22 +81,13 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	Camera2 camera;
-
 	MS modelStack, viewStack, projectionStack;
-
-	Light light[1];
 
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-
-
-	bool flashlighttoggle = false;
-	bool frametoggle = false;
-
 
 	//mouse input
 	double x, y;
@@ -121,6 +98,8 @@ private:
 
 	int coinx = rand() % 30 + 40;
 	int coiny = rand() % 10+45;
+
+	int score = 0;
 };
 
 
