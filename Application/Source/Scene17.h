@@ -45,9 +45,18 @@ class Scene17 : public Scene
 		//worker body
 		GEO_SKINNED,
 		GEO_SHIRT1,
+		GEO_SHIRT2,
+		GEO_SHIRT3,
 		GEO_PANTS,
 
+		//
+		GEO_TABLE,
+		GEO_PHONE,
+		GEO_COMPUTER,
+
+
 		//objs
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -112,7 +121,7 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	//automated render functions
-	void renderworker(int x, int y, int z);
+	void renderworker(int x, int y, int z, int rarity);		//rarity 0-2
 
 	//mouse input
 	double x, y;
@@ -132,6 +141,8 @@ private:
 	bool playerMoving = false;
 	bool legBack = false;
 	float debugRot;
+
+	Mesh* shirtrarity[3];			//increases with number of shirts
 };
 
 

@@ -126,17 +126,32 @@ void Scene17::Init()
 		meshList[GEO_SKINNED]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_SKINNED]->material.kShininess = 1.f;
 
-		meshList[GEO_SHIRT1] = MeshBuilder::GenerateSphere("sphere", Color(1,0,1), 5, 5, 1.f);
-		meshList[GEO_SHIRT1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
-		meshList[GEO_SHIRT1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
-		meshList[GEO_SHIRT1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
-		meshList[GEO_SHIRT1]->material.kShininess = 1.f;
-
 		meshList[GEO_PANTS] = MeshBuilder::GenerateSphere("sphere", Color(0, 0, 0.4), 5, 5, 1.f);
 		meshList[GEO_PANTS]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
 		meshList[GEO_PANTS]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_PANTS]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_PANTS]->material.kShininess = 1.f;
+
+		meshList[GEO_SHIRT1] = MeshBuilder::GenerateSphere("sphere", Color(0.5, 0.5, 0.5), 5, 5, 1.f);
+		meshList[GEO_SHIRT1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_SHIRT1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_SHIRT1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_SHIRT1]->material.kShininess = 1.f;
+
+		meshList[GEO_SHIRT2] = MeshBuilder::GenerateSphere("sphere", Color(0.5, 1, 0.5), 5, 5, 1.f);
+		meshList[GEO_SHIRT2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_SHIRT2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_SHIRT2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_SHIRT2]->material.kShininess = 1.f;
+
+		meshList[GEO_SHIRT3] = MeshBuilder::GenerateSphere("sphere", Color(0.5, 0.5, 1), 5, 5, 1.f);
+		meshList[GEO_SHIRT3]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_SHIRT3]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_SHIRT3]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_SHIRT3]->material.kShininess = 1.f;
+
+		shirtrarity[0] = meshList[GEO_SHIRT1]; shirtrarity[1] = meshList[GEO_SHIRT2];
+		shirtrarity[2] = meshList[GEO_SHIRT3]; 
 	}
 	
 	Mtx44 projection;
@@ -217,6 +232,8 @@ void Scene17::Update(double dt)
 		mousestate = "";
 	}
 	entities[0] = new entity();
+	entities[1] = new entity();
+	entities[2] = new entity();
 	totalframe++;
 	if (totalframe >= 1440) {
 		totalframe = 0;
@@ -299,7 +316,7 @@ void Scene17::Render()
 	
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i] != NULL) {
-			renderworker(i * 10, 12, 20);
+			renderworker(i * 10, 12, 20, entities[i]->getworkertier());
 		}
 	}
 
@@ -453,19 +470,19 @@ void Scene17::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Scene17::renderworker(int x, int y, int z) {
+void Scene17::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PushMatrix(); 
 	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
 	RenderMesh(meshList[GEO_SKINNED], true);
 	modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
-	RenderMesh(meshList[GEO_SHIRT1], true);
+	RenderMesh(shirtrarity[rarity], true);
 
 		modelStack.PushMatrix(); 
 		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(20, 1, 0, 0);
 		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.5, 1, 0.5);
-		RenderMesh(meshList[GEO_SHIRT1], true);
+		RenderMesh(shirtrarity[rarity], true);
 		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
 		RenderMesh(meshList[GEO_SKINNED], true);
 		modelStack.PopMatrix();
@@ -475,7 +492,7 @@ void Scene17::renderworker(int x, int y, int z) {
 		modelStack.Rotate(-20, 1, 0, 0);
 		modelStack.Translate(0, -0.3, 1); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.5, 1, 0.5);
-		RenderMesh(meshList[GEO_SHIRT1], true);
+		RenderMesh(shirtrarity[rarity], true);
 		modelStack.Translate(0, -1, 0); modelStack.Scale(0.833, 0.666, 0.833);
 		RenderMesh(meshList[GEO_SKINNED], true);
 		modelStack.PopMatrix();
