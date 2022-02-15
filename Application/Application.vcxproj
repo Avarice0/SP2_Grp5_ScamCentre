@@ -159,10 +159,10 @@
     <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
-    <ClCompile Include="Source\PCScene.cpp" />
+    <ClCompile Include="Source\ScenePC.cpp" />
     <ClCompile Include="Source\PoliceMeter.cpp" />
-    <ClCompile Include="Source\Scene17.cpp" />
-    <ClCompile Include="Source\Scene18.cpp" />
+    <ClCompile Include="Source\SceneGame.cpp" />
+    <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
@@ -179,11 +179,11 @@
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
-    <ClInclude Include="Source\PCScene.h" />
+    <ClInclude Include="Source\ScenePC.h" />
     <ClInclude Include="Source\PoliceMeter.h" />
     <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\Scene17.h" />
-    <ClInclude Include="Source\Scene18.h" />
+    <ClInclude Include="Source\SceneGame.h" />
+    <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />

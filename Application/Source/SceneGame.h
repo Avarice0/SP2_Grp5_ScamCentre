@@ -1,9 +1,8 @@
-#ifndef SCENE_18_H
-#define SCENE_18_H
+#ifndef SCENE_17_H
+#define SCENE_17_H
 
 #include "Scene.h"
 #include "Camera3.h"
-#include "Camera2.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -23,24 +22,40 @@
 
 #include <string>
 
+#include "entity.h"
+
 using namespace std;
 
-class Scene18 : public Scene
+class SceneGame : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
 		GEO_AXES,
 		GEO_FLOOR,
 		GEO_QUAD,
-		GEO_TITLESCREEN,
-		GEO_PLAY,
-		GEO_QUIT,
-		GEO_SETTINGS,
+
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_COORDS,			//debug for position
+		GEO_TIME,
+		GEO_DOLLARS,
+
+		//worker body
+		GEO_SKINNED,
+		GEO_SHIRT1,
+		GEO_SHIRT2,
+		GEO_SHIRT3,
+		GEO_PANTS,
+
+		//
+		GEO_TABLE,
+		GEO_PHONE,
+		GEO_COMPUTER,
+
+
+		//objs
 
 		NUM_GEOMETRY,
 	};
@@ -78,8 +93,8 @@ class Scene18 : public Scene
 	};
 
 public:
-	Scene18();
-	~Scene18();
+	SceneGame();
+	~SceneGame();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -93,7 +108,7 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
-	Camera2 camera;
+	Camera3 camera;
 
 	MS modelStack, viewStack, projectionStack;
 
@@ -105,16 +120,29 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
-
-	bool flashlighttoggle = false;
-	bool frametoggle = false;
-	int randomtrees[100][2];
+	//automated render functions
+	void renderworker(int x, int y, int z, int rarity);		//rarity 0-2
 
 	//mouse input
 	double x, y;
 	float posX, posY;
 	string mousestate;
-	
+
+	//time system
+	int day = 0;
+	int totalframe = 0;
+	string time;
+
+	//entities
+	entity* entities[10] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+	float dollars = 0;
+	float policemeter = 0;		//0-100% 
+
+	bool playerMoving = false;
+	bool legBack = false;
+	float debugRot;
+
+	Mesh* shirtrarity[3];			//increases with number of shirts
 };
 
 

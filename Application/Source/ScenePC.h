@@ -25,7 +25,7 @@
 
 using namespace std;
 
-class PCScene : public Scene
+class ScenePC : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
@@ -79,8 +79,8 @@ class PCScene : public Scene
 	};
 
 public:
-	PCScene();
-	~PCScene();
+	ScenePC();
+	~ScenePC();
 
 	virtual void Init();
 	virtual void Update(double dt);
