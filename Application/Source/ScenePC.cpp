@@ -70,7 +70,9 @@ void ScenePC::Init()
 		srand(time(NULL));
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
-		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(1, 1, 1), 1.f);
+		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
+		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+		meshList[GEO_BLACKLINE] = MeshBuilder::GenerateQuad("line", Color(1, 1, 1), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -107,7 +109,7 @@ void ScenePC::Update(double dt)
 		if ((posX > (coinx - 2.5) && posX < (coinx+2.5)) && (posY > (coiny-2.5) && posY < (coiny + 2.5)))
 		{
 			coinx = rand() % 30 + 40;
-			coiny = rand() % 10 + 45;
+			coiny = rand() % 35+15;
 			score++;
 		}
 	}
@@ -144,14 +146,15 @@ void ScenePC::Render()
 		//Set view matrix using camera settings
 	}
 	//text render
-	
+	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
     RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
+	RenderMeshOnScreen(meshList[GEO_BLACKLINE], 40, 30, 5, 20);
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
-	RenderTextOnScreen(meshList[GEO_SCORE], to_string(score), Color(0.5, 0.5, 1), 2, 0, 10);
+	RenderTextOnScreen(meshList[GEO_SCORE], to_string(score), Color(0.5, 0.5, 1), 2, 8, 10);
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
