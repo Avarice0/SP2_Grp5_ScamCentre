@@ -1,23 +1,20 @@
-#include "PCScene.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include "SceneMainMenu.h"
 
 
 
-
-PCScene::PCScene()
+SceneMainMenu::SceneMainMenu()
 {
 }
 
-PCScene::~PCScene()
+SceneMainMenu::~SceneMainMenu()
 {
 }
 
-void PCScene::Init()
+void SceneMainMenu::Init()
 {
 	{
-		
-		glClearColor(1.f, 1.0f, 1.0f, 0.0f);
+		// Set background color to dark blue
+		glClearColor(0.1f, 0.0f, 0.4f, 0.0f);
 
 		//Enable depth buffer and depth testing
 		glEnable(GL_DEPTH_TEST);
@@ -77,11 +74,10 @@ void PCScene::Init()
 	//Initialize camera settings
 	camera.Init(Vector3(50, 50, 50), Vector3(0, 10, 0), Vector3(0, 1, 0));
 
-	
 	// Init VBO
 	{
 		light[0].type = Light::LIGHT_DIRECTIONAL;
-		light[0].position.Set(10, 10, 10);
+		light[0].position.Set(10, 10 , 10);
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 0.2f;
 		light[0].kC = 1.f;
@@ -106,9 +102,8 @@ void PCScene::Init()
 		meshList[i] = nullptr;
 	}
 	{
-		srand(time(NULL));
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
-		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1,1,1), 1.f);
+		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 		meshList[GEO_TITLESCREEN] = MeshBuilder::GenerateQuad("titlescreen", Color(0, 0, 0), 1.f);
 		meshList[GEO_TITLESCREEN]->textureID = LoadTGA("Image//Title.tga");
@@ -118,8 +113,6 @@ void PCScene::Init()
 		meshList[GEO_QUIT]->textureID = LoadTGA("Image//Quit.tga");
 		meshList[GEO_SETTINGS] = MeshBuilder::GenerateQuad("Settings", Color(0, 0, 0), 1.f);
 		meshList[GEO_SETTINGS]->textureID = LoadTGA("Image//Settings.tga");
-		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
-		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -137,14 +130,12 @@ void PCScene::Init()
 	//-------------------------------------------------
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
-
-	
 }
 
-void PCScene::Update(double dt)
+void SceneMainMenu::Update(double dt)
 {
 	camera.TitleScreenUpdate(dt);
-
+	
 	if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
 		flashlighttoggle = true;							//flashlight toggle
 		if (light[0].power == 1.f) {
@@ -173,9 +164,12 @@ void PCScene::Update(double dt)
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
 		//converting viewport space to UI space
-		if ((posX > 5 && posX < 25) && (posY > 10 && posY < 30))
+		if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30))
 		{
 			//trigger user action or function
+			mousestate = "play clicked";
+			//Application::changescene(2);
+			//error when uncommented
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -188,10 +182,6 @@ void PCScene::Update(double dt)
 	{
 		bRButtonState = true;
 		mousestate = "RBUTTON DOWN";
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			//trigger user action or function
-		}
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
@@ -200,7 +190,7 @@ void PCScene::Update(double dt)
 	}
 }
 
-void PCScene::Render()
+void SceneMainMenu::Render()
 {
 	{
 		// Render VBO here
@@ -241,20 +231,19 @@ void PCScene::Render()
 	modelStack.Translate(0, 5, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_QUAD], true);
 	modelStack.PopMatrix();
-
+	
 	//text render
 	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
 	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
-	int coinx = rand() %  40 + 40;
-	int coiny = rand() % 80;
+
 	//render mesh on screen
-	/*RenderMeshOnScreen(meshList[GEO_TITLESCREEN], 40, 45, 35, 25);
+	RenderMeshOnScreen(meshList[GEO_TITLESCREEN], 40, 45, 35, 25);
 
 	RenderMeshOnScreen(meshList[GEO_PLAY], 15, 25, 12, 5);
 
-	RenderMeshOnScreen(meshList[GEO_QUIT], 15, 15, 14, 7);*/
+	RenderMeshOnScreen(meshList[GEO_QUIT], 15, 15, 14, 7);
 
-    RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
+	RenderMeshOnScreen(meshList[GEO_SETTINGS], 70, 10, 10, 10);
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
@@ -265,7 +254,7 @@ void PCScene::Render()
 }
 
 
-void PCScene::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneMainMenu::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -288,7 +277,7 @@ void PCScene::RenderText(Mesh* mesh, std::string text, Color color)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
 
-void PCScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
+void SceneMainMenu::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
 	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
@@ -320,7 +309,7 @@ void PCScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
-void PCScene::Exit()
+void SceneMainMenu::Exit()
 {
 	// Cleanup VBO here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -334,7 +323,7 @@ void PCScene::Exit()
 	glDeleteProgram(m_programID);
 }
 
-void PCScene::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneMainMenu::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -373,7 +362,7 @@ void PCScene::RenderMesh(Mesh* mesh, bool enableLight)
 	}
 }
 
-void PCScene::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+void SceneMainMenu::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
