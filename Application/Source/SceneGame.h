@@ -70,6 +70,8 @@ class SceneGame : public Scene
 		GEO_LOCKEDFG,
 		GEO_WORKERUPGRADE,
 		GEO_COMPUTERUPGRADE,
+		GEO_PUPGRADE,
+		GEO_WUPGRADE,
 		//objs
 
 		NUM_GEOMETRY,
@@ -159,7 +161,8 @@ private:
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 
-
+	//Upgrade
+	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false;
 
 
 	bool playerMoving = false;

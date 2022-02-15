@@ -1,9 +1,9 @@
 #include "entity.h"
 
 entity::entity() {
-    type = 0;
-    stationtier = 0;
-    workertier = 0;
+    type = 9;
+    stationtier = 10;
+    workertier = 10;
 }
 entity::~entity() {
 

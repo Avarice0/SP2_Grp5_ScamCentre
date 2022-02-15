@@ -118,6 +118,10 @@ void SceneGame::Init()
 		meshList[GEO_WORKERUPGRADE]->textureID = LoadTGA("Image//WorkerUp.tga");
 		meshList[GEO_COMPUTERUPGRADE] = MeshBuilder::GenerateQuad("ComputerUpgrade", Color(1, 1, 1), 1.f);
 		meshList[GEO_COMPUTERUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
+		meshList[GEO_PUPGRADE] = MeshBuilder::GenerateQuad("PermUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_PUPGRADE]->textureID = LoadTGA("Image//PermUpgrade.tga");
+		meshList[GEO_WUPGRADE] = MeshBuilder::GenerateQuad("WorkerUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_WUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -218,7 +222,11 @@ void SceneGame::Update(double dt)
 	light[0].position.y = camera.position.y;
 	light[0].position.z = camera.position.z;
 	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-	
+
+	if (dollars >= 600)
+		RenderPermItem1 = true;
+	if (dollars >= 600)
+		RenderPermItem2 = true;
 	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
 	//	flashlighttoggle = true;							//flashlight toggle
 	//	if (light[0].power == 1.f) {
@@ -253,6 +261,26 @@ void SceneGame::Update(double dt)
 		{
 			mousestate = "shop click";
 		}*/
+
+		if(RenderPermItem1 == true && coffee == false){
+			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
+			{
+				coffee = true;
+				RenderPermItem1 = false;
+				mousestate = "Coffee Bought";
+				dollars -= 600;
+			}
+		}
+		if (RenderPermItem2 == true && policedeter == false) {
+			if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
+			{
+//Add to police meter later
+				policedeter = true;
+				RenderPermItem2 = false;
+				mousestate = "Police Detergent Bought";
+				dollars -= 600;
+			}
+		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
@@ -280,7 +308,10 @@ void SceneGame::Update(double dt)
 		day++;
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
-				dollars += entities[i]->getprofit();
+				if(coffee == false)
+					dollars += entities[i]->getprofit();
+				else
+					dollars = dollars + entities[i]->getprofit() * 1.1;
 			}
 		}
 	}
@@ -320,7 +351,7 @@ void SceneGame::Update(double dt)
 void SceneGame::RenderPermUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
 
-	if(dollars >= 600){
+	if(coffee == false && RenderPermItem1 == true){
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
 	}
@@ -329,7 +360,7 @@ void SceneGame::RenderPermUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if(dollars >= 1000){
+	if (policedeter == false && RenderPermItem2 == true) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
 	}
@@ -337,6 +368,7 @@ void SceneGame::RenderPermUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
+	RenderMeshOnScreen(meshList[GEO_PUPGRADE], 60, 5, 20, 7);
 }
 
 void SceneGame::RenderUpgrade(){
@@ -359,13 +391,7 @@ void SceneGame::RenderUpgrade(){
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
 
-	if (dollars >= 0) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
-	}
+	
 }
 
 void SceneGame::Render()
@@ -405,11 +431,11 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
-	for (int i = 0; i < size(entities); i++) {
+	/*for (int i = 0; i < size(entities); i++) {
 		if (entities[i] != NULL) {
 			renderworker(i * 10, 12, 20, entities[i]->getworkertier());
 		}
-	}
+	}*/
 
 
 	modelStack.PushMatrix();
