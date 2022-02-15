@@ -182,10 +182,6 @@ void Scene18::Update(double dt)
 	{
 		bRButtonState = true;
 		mousestate = "RBUTTON DOWN";
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			//trigger user action or function
-		}
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
