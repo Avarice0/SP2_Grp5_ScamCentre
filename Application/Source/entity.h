@@ -3,7 +3,7 @@ class entity
 {
     //entity is the work station
 public:
-    entity();
+    entity(float X, float Y, float Z);
     ~entity();
 
     int getstationtier(void);
@@ -13,6 +13,8 @@ public:
     void setworkertier(int newtier);
 
     float getprofit(void);
+
+    float ECoords[3];
 
 private:
     float stationtier;          //5 levels, 0 is locked, 1-4 for better station
