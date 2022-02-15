@@ -175,7 +175,7 @@ void Scene18::Update(double dt)
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
 		//converting viewport space to UI space
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
+		if ((posX > 5 && posX < 25) && (posY > 10 && posY < 30))
 		{
 			//trigger user action or function
 		}

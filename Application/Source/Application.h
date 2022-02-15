@@ -1,4 +1,3 @@
-
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
@@ -21,12 +20,14 @@ public:
 	static int GetWindowHeight();
 	static unsigned m_width;
 	static unsigned m_height;
+	
+	void changescene(int newscene);
 
 private:
 
 	//Declare a window object
 	StopWatch m_timer;
-
+	int scenenum = 1;
 };
 
 #endif
