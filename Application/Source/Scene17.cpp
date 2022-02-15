@@ -206,11 +206,10 @@ void Scene17::Update(double dt)
 		mousestate = "LBUTTON DOWN";
 		
 		//converting viewport space to UI space
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
+		/*if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
 		{
-			//trigger user action or function
 			mousestate = "shop click";
-		}
+		}*/
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
@@ -223,10 +222,6 @@ void Scene17::Update(double dt)
 	{
 		bRButtonState = true;
 		mousestate = "RBUTTON DOWN";
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			//trigger user action or function
-		}
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{

@@ -11,6 +11,7 @@
 //scene includes
 #include "Scene17.h"
 #include "Scene18.h"
+#include "PCScene.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -64,6 +65,10 @@ int Application::GetWindowWidth() {
 }
 int Application::GetWindowHeight() {
 	return m_height;
+}
+
+void Application::changescene(int newscene) {
+	scenenum = newscene;
 }
 
 void Application::Init()
@@ -120,12 +125,21 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene = new Scene18();
-	scene->Init();
+	Scene *scene1 = new Scene18();
+	Scene *scene2 = new Scene17();
+	scene1->Init();
+	scene2->Init();
+	Scene* scene = scene1;
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
+		if (scenenum == 1) {
+			scene = scene1;
+		}
+		if (scenenum == 2) {
+			scene = scene2;
+		}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers

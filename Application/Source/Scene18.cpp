@@ -130,17 +130,6 @@ void Scene18::Init()
 	//-------------------------------------------------
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
-
-	for (int i = 0; i < 100; i++) {
-		int randx = rand() % 500 - 250;
-		int randz = rand() % 500 - 250;
-		while ((randx<75 && randx>-75) && (randz<75 && randz>-75)) {
-			randx = rand() % 500 - 250;
-			randz = rand() % 500 - 250;
-		}
-		randomtrees[i][0] = randx;
-		randomtrees[i][1] = randz;
-	}
 }
 
 void Scene18::Update(double dt)
@@ -159,9 +148,12 @@ void Scene18::Update(double dt)
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
 		//converting viewport space to UI space
-		if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
+		if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30))
 		{
 			//trigger user action or function
+			mousestate = "play clicked";
+			//Application::changescene(2);
+			//error when uncommented
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
