@@ -36,6 +36,7 @@ class ScenePC : public Scene
 
 		GEO_COIN,
 		GEO_WALLPAPER,
+		GEO_BLACKLINE,
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
@@ -97,7 +98,7 @@ private:
 	
 
 	int coinx = rand() % 30 + 40;
-	int coiny = rand() % 10+45;
+	int coiny = rand() % 50+10	;
 
 	int score = 0;
 };
