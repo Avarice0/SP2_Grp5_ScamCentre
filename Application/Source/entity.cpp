@@ -1,21 +1,12 @@
 #include "entity.h"
 
 entity::entity() {
-    type = 0;
     stationtier = 0;
     workertier = 0;
 }
 entity::~entity() {
 
 }
-
-int entity::gettype(void) {
-    return type;
-}
-void entity::settype(int newtype) {
-    type = newtype;
-}
-
 int entity::getstationtier(void) {
     return stationtier;
 }
@@ -31,6 +22,6 @@ void entity::setworkertier(int newtier) {
 }
 
 float entity::getprofit(void) {
-    profit = (type + 1) * (stationtier) * (workertier);
+    profit = stationtier * workertier;
     return profit;
 }

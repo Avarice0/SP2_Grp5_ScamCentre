@@ -218,22 +218,6 @@ void SceneGame::Update(double dt)
 	light[0].position.y = camera.position.y;
 	light[0].position.z = camera.position.z;
 	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-	
-	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = true;							//flashlight toggle
-	//	if (light[0].power == 1.f) {
-	//		light[0].power = 0.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//	else if (light[0].power == 0.f) {
-	//		light[0].power = 1.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//}
-	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = false;
-	//}
-	//else {}
 
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -407,7 +391,8 @@ void SceneGame::Render()
 	
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i] != NULL) {
-			renderworker(i * 10, 12, 20, entities[i]->getworkertier());
+			renderworker(i * 10, 6, 20, entities[i]->getworkertier());
+			RenderTable(i * 10 - 5, 3, 20);
 		}
 	}
 
@@ -672,40 +657,26 @@ void SceneGame::RenderRoom()
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderTable()
+void SceneGame::RenderTable(int x, int y, int z)
 {
-	// table leg 1
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 2
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 3
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 4
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
 	// tabletop
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 1.1, 0);
-	modelStack.Scale(5, 0.2, 2.5);
+	modelStack.Translate(x, y, z);
+	modelStack.Scale(5, 0.2, 5);
 	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.Scale(0.1, 15, 0.1);
+	modelStack.Translate(4, -0.5, 4);
+
+	RenderMesh(meshList[GEO_TABLE], true);
+	
+	modelStack.Translate(0, 0, -8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(-8, 0, 0);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(0, 0, 8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
 	modelStack.PopMatrix();
 }
