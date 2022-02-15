@@ -169,6 +169,7 @@ void Scene18::Update(double dt)
 			//trigger user action or function
 			mousestate = "play clicked";
 			//Application::changescene(2);
+			//error when uncommented
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
