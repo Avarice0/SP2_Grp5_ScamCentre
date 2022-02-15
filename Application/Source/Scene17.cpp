@@ -268,10 +268,14 @@ void Scene17::Render()
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
-	renderworker(10, 12, 10);
+	for (int i = 0; i < size(entities); i++) {
+		if (entities[i] != NULL) {
+			renderworker(i * 10, 12, 20);
+		}
+	}
 
 	//text render
-	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
+	string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
 	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
 
 	//render mesh on screen
