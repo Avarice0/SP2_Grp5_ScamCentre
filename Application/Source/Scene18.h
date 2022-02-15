@@ -42,6 +42,7 @@ class Scene18 : public Scene
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_COORDS,			//debug for position
 
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE

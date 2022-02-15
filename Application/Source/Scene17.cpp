@@ -104,7 +104,7 @@ void Scene17::Init()
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 		meshList[GEO_UPGRADESHOPBAR] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_UPGRADESHOPNAME] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_UPGRADENAME1] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
