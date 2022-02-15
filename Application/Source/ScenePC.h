@@ -22,6 +22,9 @@
 #include "Utility.h"
 
 #include <string>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
 
 using namespace std;
 
@@ -32,10 +35,7 @@ class ScenePC : public Scene
 		GEO_AXES,
 		GEO_FLOOR,
 		GEO_QUAD,
-		GEO_TITLESCREEN,
-		GEO_PLAY,
-		GEO_QUIT,
-		GEO_SETTINGS,
+
 		GEO_COIN,
 		//text
 		GEO_TEXT,			//debug for text
@@ -116,7 +116,12 @@ private:
 	float posX, posY;
 	string mousestate;
 
+	
+
+	int coinx = rand() % 30 + 40;
+	int coiny = rand() % 10+45;
 };
+
 
 
 #endif

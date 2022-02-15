@@ -110,14 +110,8 @@ void ScenePC::Init()
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(1,1,1), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
-		meshList[GEO_TITLESCREEN] = MeshBuilder::GenerateQuad("titlescreen", Color(0, 0, 0), 1.f);
-		meshList[GEO_TITLESCREEN]->textureID = LoadTGA("Image//Title.tga");
-		meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("play", Color(0, 0, 0), 1.f);
-		meshList[GEO_PLAY]->textureID = LoadTGA("Image//Play.tga");
-		meshList[GEO_QUIT] = MeshBuilder::GenerateQuad("quit", Color(0, 0, 0), 1.f);
-		meshList[GEO_QUIT]->textureID = LoadTGA("Image//Quit.tga");
-		meshList[GEO_SETTINGS] = MeshBuilder::GenerateQuad("Settings", Color(0, 0, 0), 1.f);
-		meshList[GEO_SETTINGS]->textureID = LoadTGA("Image//Settings.tga");
+		
+
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
 	}
@@ -172,10 +166,13 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+
+		
 		//converting viewport space to UI space
-		if ((posX > 5 && posX < 25) && (posY > 10 && posY < 30))
+		if ((posX > (coinx - 2.5) && posX < (coinx+2.5)) && (posY > (coiny-2.5) && posY < (coiny + 2.5)))
 		{
-			//trigger user action or function
+			coinx = rand() % 30 + 40;
+			coiny = rand() % 10+ 45;
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -198,6 +195,9 @@ void ScenePC::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+
+
+
 }
 
 void ScenePC::Render()
@@ -245,8 +245,7 @@ void ScenePC::Render()
 	//text render
 	string coord = to_string(camera.position.x) + ", " + to_string(camera.position.y) + ", " + to_string(camera.position.z);
 	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 0.5);
-	int coinx = rand() %  40 + 40;
-	int coiny = rand() % 80;
+	
 	//render mesh on screen
 	/*RenderMeshOnScreen(meshList[GEO_TITLESCREEN], 40, 45, 35, 25);
 
@@ -254,6 +253,7 @@ void ScenePC::Render()
 
 	RenderMeshOnScreen(meshList[GEO_QUIT], 15, 15, 14, 7);*/
 
+	
     RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
 
 	//UI buttons test

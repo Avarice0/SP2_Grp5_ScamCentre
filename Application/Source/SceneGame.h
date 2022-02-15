@@ -50,6 +50,8 @@ class SceneGame : public Scene
 		GEO_SHIRT3,
 		GEO_PANTS,
 
+		//workstation objs
+		GEO_MAIL,
 		//
 		GEO_PHONE,
 		GEO_COMPUTER,
@@ -149,6 +151,9 @@ private:
 	entity* entities[10] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
+
+
+
 
 	bool playerMoving = false;
 	bool legBack = false;
