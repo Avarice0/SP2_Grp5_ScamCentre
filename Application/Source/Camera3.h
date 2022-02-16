@@ -2,6 +2,8 @@
 #define CAMERA_3_H
 
 #include "Camera.h"
+#include "Application.h"
+#include "Mtx44.h"
 
 class Camera3 : public Camera
 {
