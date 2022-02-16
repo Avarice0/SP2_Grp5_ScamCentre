@@ -110,6 +110,8 @@ void ScenePC::Update(double dt)
 		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
 		{
 			gamenum = 1; //coins
+			coinx = rand() % 25 + 45;
+			coiny = rand() % 35 + 15;
 		}
 
 		if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
@@ -121,7 +123,7 @@ void ScenePC::Update(double dt)
 
 			if ((posX > (coinx - 2.5) && posX < (coinx + 2.5)) && (posY > (coiny - 2.5) && posY < (coiny + 2.5)))
 			{
-				coinx = rand() % 30 + 45;
+				coinx = rand() % 25 + 45;
 				coiny = rand() % 35 + 15;
 				score++;
 			}
@@ -132,6 +134,11 @@ void ScenePC::Update(double dt)
 					score--;
 				}
 			}
+		}
+
+		if (gamenum == 2)
+		{
+			coinx = 100; coiny = 100;
 		}
 
 	}
@@ -178,8 +185,11 @@ void ScenePC::Render()
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
 
-	string scoreText = "Score: " + to_string(score);
-	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 8, 10);
+
+	if (gamenum == 1) {
+		string scoreText = "Score: " + to_string(score);
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 8, 10);
+	}
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
