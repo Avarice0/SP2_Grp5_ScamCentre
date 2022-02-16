@@ -100,13 +100,17 @@ private:
 
 	int coinx = rand() % 25 + 45;
 	int coiny = rand() % 50 + 10;
-
 	int score = 0;
+	int seconds = 5; //coin game timer
+	bool coinStarted = false;
+
+
+	int totalframe = 0;
 
 	std::string victimMsg[10]{
 		"What company are you calling from?",
 		"Are you a scammer?",
-		"How do I ",
+		"How do I stop ",
 		"     ",
 		"    ",
 		"     ",

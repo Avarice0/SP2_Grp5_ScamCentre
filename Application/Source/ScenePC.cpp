@@ -116,7 +116,7 @@ void ScenePC::Update(double dt)
 
 		if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
 		{
-			gamenum = 2; //coins
+			gamenum = 2; //texting
 		}
 
 		if (gamenum == 1) {
@@ -126,14 +126,15 @@ void ScenePC::Update(double dt)
 				coinx = rand() % 25 + 45;
 				coiny = rand() % 35 + 15;
 				score++;
+				coinStarted = true;
 			}
-			else
+			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && coinStarted == true))
 			{
-				if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53))
-				{
-					score--;
-				}
+				score--;
+
 			}
+			
+			
 		}
 
 		if (gamenum == 2)
@@ -159,6 +160,20 @@ void ScenePC::Update(double dt)
 		mousestate = "";
 	}
 	
+	if (coinStarted == true) {
+		totalframe++;
+		if (totalframe >= 60)
+		{
+			totalframe = 0;
+			seconds--;
+		}
+		if (seconds < 0) {
+			seconds = 0;
+			coinStarted = false;
+			coinx = 100; coiny = 100;
+		}
+
+	}
 }
 
 void ScenePC::Render()
@@ -187,8 +202,14 @@ void ScenePC::Render()
 
 
 	if (gamenum == 1) {
+		string coinTimer = "Secs left: " + to_string(seconds);
 		string scoreText = "Score: " + to_string(score);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 8, 10);
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
+		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
+		if (coinStarted == false)
+		{
+			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
+		}
 	}
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
