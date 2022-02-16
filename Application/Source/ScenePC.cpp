@@ -70,8 +70,6 @@ void ScenePC::Init()
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
-		meshList[GEO_TEXTOPTIONS] = MeshBuilder::GenerateQuad("textbutton", 16, 16);
-		meshList[GEO_TEXTOPTIONS]->textureID = LoadTGA("Image//textoption.tga");
 		meshList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("pickaxe", Color(0, 0, 0), 1.f);
 		meshList[GEO_PICKAXE]->textureID = LoadTGA("Image//Pickaxe.tga");
 
