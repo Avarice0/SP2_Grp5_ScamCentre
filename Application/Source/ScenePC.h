@@ -18,6 +18,7 @@
 
 #include "LoadTGA.h"
 #include "Utility.h"
+#include <iostream>
 
 #include <string>
 #include <stdlib.h>     /* srand, rand */
@@ -97,11 +98,23 @@ private:
 
 	int gamenum = 1;
 
-
-	int coinx = rand() % 30 + 45;
-	int coiny = rand() % 50+10	;
+	int coinx = rand() % 25 + 45;
+	int coiny = rand() % 50 + 10;
 
 	int score = 0;
+
+	std::string victimMsg[10]{
+		"What company are you calling from?",
+		"Are you a scammer?",
+		"How do I ",
+		"     ",
+		"    ",
+		"     ",
+		"    ",
+		"     ",
+		"    ",
+		"     "
+	};
 };
 
 
