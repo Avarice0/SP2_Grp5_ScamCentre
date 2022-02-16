@@ -124,6 +124,13 @@ private:
 		{"Give me back my son!", "  "}
 	};
 
+	std::string answers[8][2]
+	{
+		{"Amazon", "fruit store"},
+		{"No", "Yes"},
+
+	};
+
 	int RNGmsg = 5;
 };
 
