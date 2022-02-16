@@ -170,6 +170,7 @@ private:
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false;
+	bool workerupgrade = false, stationupgrade = false;
 
 	bool playerMoving = false;
 	bool legBack = false;
