@@ -179,6 +179,8 @@ void ScenePC::Update(double dt)
 				miningScale = 20;
 			}
 		}
+
+		times = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
 	}
 
 	else if (bLButtonState && !Application::IsMousePressed(0))

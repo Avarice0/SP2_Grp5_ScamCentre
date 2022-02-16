@@ -351,10 +351,10 @@ void SceneGame::Update(double dt)
 			ExpertCount++;
 		}
 	}
-
+	Application::GetTime(); // in seconds (supposedly)
 	totalframe++;
-	if (totalframe >= 120) {
-		totalframe = 0;
+	if (Application::GetTime() >= 5) {
+		Application::SetTime(0);
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
@@ -369,7 +369,8 @@ void SceneGame::Update(double dt)
 			}
 		}
 	}
-	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
+	//time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
 
 	if (playerMoving == true)
 	{

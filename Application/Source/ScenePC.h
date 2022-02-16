@@ -103,6 +103,10 @@ private:
 	float posX, posY;
 	string mousestate;
 
+	string times;
+	int day;
+
+
 	int gamenum = 2;
 
 	int coinx = rand() % 25 + 45;

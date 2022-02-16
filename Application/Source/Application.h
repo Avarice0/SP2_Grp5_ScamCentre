@@ -17,16 +17,19 @@ public:
 	static bool IsKeyPressed(unsigned short key);
 	static bool IsMousePressed(unsigned short key);
 	static void GetCursorPos(double* xpos, double* ypos);
+	static double GetTime();
+	static void SetTime(double time);
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 	static unsigned m_width;
 	static unsigned m_height;
-
+  
 private:
 
 	//Declare a window object
 	StopWatch m_timer;
-	int scenenum = 3;
+	int scenenum = 1;
+	/*	int time=0;*/
 };
 
 #endif

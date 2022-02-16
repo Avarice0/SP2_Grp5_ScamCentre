@@ -71,6 +71,14 @@ void Application::changescene(int newscene) {
 	scenenum = newscene;
 }
 
+double Application::GetTime()
+{
+	return glfwGetTime();
+}
+void Application::SetTime(double time)
+{
+	glfwSetTime(time);
+}
 void Application::Init()
 {
 	
@@ -150,6 +158,7 @@ void Application::Run()
 			if(scenenum == 1){
 				if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
 					scenenum = 2;
+					Application::SetTime(0);
 				}
 			}
 			if (scenenum == 3) {
@@ -161,9 +170,9 @@ void Application::Run()
 		}
 		if (Application::IsKeyPressed('E')) {
 			if (scenenum == 2) {
-				if ((posX > 27 && posX < 97) && (posY > -74 && posY < -36)) {
+				//if ((posX > 27 && posX < 97) && (posY > -74 && posY < -36)) {
 					scenenum = 3;
-				}
+				//}
 			}
 		}
 		if (scenenum == 1) {
@@ -171,6 +180,7 @@ void Application::Run()
 		}
 		else if (scenenum == 2) {
 			scene = scene2;
+			
 		}
 		else if (scenenum == 3) {
 			scene = scene3;
@@ -178,6 +188,8 @@ void Application::Run()
 		else{}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
+
+		
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
@@ -187,6 +199,7 @@ void Application::Run()
 	} //Check if the ESC key had been pressed or if the window had been closed
 	scene->Exit();
 	delete scene;
+	
 }
 
 void Application::Exit()
