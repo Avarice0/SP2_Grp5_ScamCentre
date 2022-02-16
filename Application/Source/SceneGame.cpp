@@ -70,7 +70,8 @@ void SceneGame::Init()
 	}
 
 	//Initialize camera settings
-	camera.Init(Vector3(50, 5, 50), Vector3(0, 10, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 10, 1), Vector3(0, 10, 0), Vector3(0, 1, 0));
+	camera2.Init(Vector3(0, 120, 160), Vector3(0, 0, 25), Vector3(0, 1, 0));
 
 	// Init VBO
 	{
@@ -263,6 +264,10 @@ void SceneGame::Init()
 void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
+
+	player.UpdatePlayerPosition(camera.position.x, camera.position.z);
+
+
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	if (dollars >= 600)
@@ -395,6 +400,13 @@ void SceneGame::Update(double dt)
 	{
 		debugRot += (float)(-40 * dt);
 	}
+
+	if (Application::IsKeyPressed('9')) {
+		cameranumber = 2;
+	}
+	else if(Application::IsKeyPressed('8')) {
+		cameranumber = 1;
+	}
 }
 
 void SceneGame::Render()
@@ -410,16 +422,31 @@ void SceneGame::Render()
 			//These will be replaced by matrix stack soon
 			Mtx44 model, view, projection;
 			//Set view matrix using camera settings
-			view.SetToLookAt(
-				camera.position.x, camera.position.y, camera.position.z,
-				camera.target.x, camera.target.y, camera.target.z,
-				camera.up.x, camera.up.y, camera.up.z
-			);
-			viewStack.LoadIdentity();
-			viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
-				camera.target.x, camera.target.y, camera.target.z,
-				camera.up.x, camera.up.y, camera.up.z);
-			modelStack.LoadIdentity();
+			if(cameranumber == 1){
+				view.SetToLookAt(
+					camera2.position.x, camera2.position.y, camera2.position.z,
+					camera2.target.x, camera2.target.y, camera2.target.z,
+					camera2.up.x, camera2.up.y, camera2.up.z
+				);
+				viewStack.LoadIdentity();
+				viewStack.LookAt(camera2.position.x, camera2.position.y, camera2.position.z,
+					camera2.target.x, camera2.target.y, camera2.target.z,
+					camera2.up.x, camera2.up.y, camera2.up.z);
+				modelStack.LoadIdentity();
+				renderworker(player.GetPlayerX(), 5, player.GetPlayerZ(), 1);
+			}
+			else if (cameranumber){
+				view.SetToLookAt(
+					camera.position.x, camera.position.y, camera.position.z,
+					camera.target.x, camera.target.y, camera.target.z,
+					camera.up.x, camera.up.y, camera.up.z
+				);
+				viewStack.LoadIdentity();
+				viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
+					camera.target.x, camera.target.y, camera.target.z,
+					camera.up.x, camera.up.y, camera.up.z);
+				modelStack.LoadIdentity();
+			}
 		}
 		{
 			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
@@ -481,6 +508,7 @@ void SceneGame::Render()
 			}
 		}
 		RenderPoliceMetre();
+
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
