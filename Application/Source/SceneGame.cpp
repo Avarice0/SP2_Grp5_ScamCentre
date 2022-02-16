@@ -248,7 +248,6 @@ void SceneGame::Init()
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
 	//-------------------------------------------------
-
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 	debugRot = 20;
 
@@ -432,30 +431,24 @@ void SceneGame::Render()
 		modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
-
-		//UNCOMMENT FOR ENTITIES
-		//for (int i = 0; i < size(entities); i++) {
-		//	RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
-		//	if (entities[i]->getstationtier() == 0) {
-		//		//place obj above table
-		//	}
-		//	else if (entities[i]->getstationtier() == 1) {
-		//		//place obj above table
-		//	}
-		//	else if (entities[i]->getstationtier() == 2) {
-		//		//place obj above table
-		//	}
-		//	else {}		//statement break
-		//	if (entities[i]->getworkertier() > 0) {
-		//		renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-		//	}
-		//}
-
-		modelStack.PushMatrix();
-		modelStack.Translate(0, 0.05, 0);
-		modelStack.Scale(10, 10, 10);
 		RenderRoom();
-		modelStack.PopMatrix();
+
+		for (int i = 0; i < size(entities); i++) {
+			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
+			if (entities[i]->getstationtier() == 0) {
+				//place obj above table
+			}
+			else if (entities[i]->getstationtier() == 1) {
+				//place obj above table
+			}
+			else if (entities[i]->getstationtier() == 2) {
+				//place obj above table
+			}
+			else {}		//statement break
+			if (entities[i]->getworkertier() > 0) {
+				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+			}
+		}
 
 		//text render
 		string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
