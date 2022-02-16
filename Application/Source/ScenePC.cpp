@@ -16,7 +16,7 @@ ScenePC::~ScenePC()
 void ScenePC::Init()
 {
 	{
-		
+
 		glClearColor(1.f, 1.0f, 1.0f, 0.0f);
 
 		//Enable depth buffer and depth testing
@@ -61,7 +61,7 @@ void ScenePC::Init()
 		glUseProgram(m_programID);
 		glUniform1i(m_parameters[U_NUMLIGHTS], 0);
 	}
-	
+
 	// Init VBO
 	for (int i = 0; i < NUM_GEOMETRY; ++i) {
 		meshList[i] = nullptr;
@@ -70,7 +70,9 @@ void ScenePC::Init()
 		srand(time(NULL));
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
-		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(1, 1, 1), 1.f);
+		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
+		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -104,12 +106,34 @@ void ScenePC::Update(double dt)
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
 
-		if ((posX > (coinx - 2.5) && posX < (coinx+2.5)) && (posY > (coiny-2.5) && posY < (coiny + 2.5)))
+		
+		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
 		{
-			coinx = rand() % 30 + 40;
-			coiny = rand() % 10 + 45;
-			score++;
+			gamenum = 1; //coins
 		}
+
+		if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
+		{
+			gamenum = 2; //coins
+		}
+
+		if (gamenum == 1) {
+
+			if ((posX > (coinx - 2.5) && posX < (coinx + 2.5)) && (posY > (coiny - 2.5) && posY < (coiny + 2.5)))
+			{
+				coinx = rand() % 30 + 45;
+				coiny = rand() % 35 + 15;
+				score++;
+			}
+			else
+			{
+				if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53))
+				{
+					score--;
+				}
+			}
+		}
+
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
@@ -127,6 +151,7 @@ void ScenePC::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+	
 }
 
 void ScenePC::Render()
@@ -144,14 +169,17 @@ void ScenePC::Render()
 		//Set view matrix using camera settings
 	}
 	//text render
-	
+	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
     RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
+	
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
-	RenderTextOnScreen(meshList[GEO_SCORE], to_string(score), Color(0.5, 0.5, 1), 2, 0, 10);
+
+	string scoreText = "Score: " + to_string(score);
+	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 8, 10);
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }

@@ -73,6 +73,7 @@ void Application::changescene(int newscene) {
 
 void Application::Init()
 {
+	
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
 

@@ -299,9 +299,9 @@ void SceneGame::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
-	entities[0] = new entity();
+	/*entities[0] = new entity(15,12,15);
 	entities[1] = new entity();
-	entities[2] = new entity();
+	entities[2] = new entity();*/
 	totalframe++;
 	if (totalframe >= 1440) {
 		totalframe = 0;
@@ -316,8 +316,6 @@ void SceneGame::Update(double dt)
 		}
 	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
-
-
 
 	if (playerMoving == true) 
 	{
@@ -433,10 +431,10 @@ void SceneGame::Render()
 	
 	/*for (int i = 0; i < size(entities); i++) {
 		if (entities[i] != NULL) {
-			renderworker(i * 10, 12, 20, entities[i]->getworkertier());
+			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+			RenderTable(i * 10 - 5, 3, 20);
 		}
 	}*/
-
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0.05, 0);
@@ -462,7 +460,13 @@ void SceneGame::Render()
 		RenderPermUpgrade();
 	}
 	else{
-		RenderUpgrade();
+		for (int i = 0; i < size(entities); i++) {
+			if (entities[i] != NULL) {
+				//radius distance check
+
+				RenderUpgrade();
+			}
+		}
 	}
 
 	//---------------------------------------------------------
@@ -698,40 +702,26 @@ void SceneGame::RenderRoom()
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderTable()
+void SceneGame::RenderTable(int x, int y, int z)
 {
-	// table leg 1
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 2
-	modelStack.PushMatrix();
-	modelStack.Translate(2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 3
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, -1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
-	// table leg 4
-	modelStack.PushMatrix();
-	modelStack.Translate(-2, 0.5, 1);
-	modelStack.Scale(0.1, 1, 0.1);
-	RenderMesh(meshList[GEO_TABLE], true);
-	modelStack.PopMatrix();
-
 	// tabletop
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 1.1, 0);
-	modelStack.Scale(5, 0.2, 2.5);
+	modelStack.Translate(x, y, z);
+	modelStack.Scale(5, 0.2, 5);
 	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.Scale(0.1, 15, 0.1);
+	modelStack.Translate(4, -0.5, 4);
+
+	RenderMesh(meshList[GEO_TABLE], true);
+	
+	modelStack.Translate(0, 0, -8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(-8, 0, 0);
+	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.Translate(0, 0, 8);
+	RenderMesh(meshList[GEO_TABLE], true);
+
 	modelStack.PopMatrix();
 }

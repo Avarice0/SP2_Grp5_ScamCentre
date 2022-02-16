@@ -52,9 +52,9 @@ class SceneGame : public Scene
 
 		//workstation objs
 		GEO_MAIL,
-		//
 		GEO_PHONE,
-		GEO_COMPUTER,
+		GEO_LAPTOP,
+		GEO_TOWER,
 
 		// for the room
 		GEO_TABLE,
@@ -142,7 +142,7 @@ private:
 	
 	// functions to render the room and indiv. tables 
 	void RenderRoom();
-	void RenderTable();
+	void RenderTable(int x, int y, int z);
 	void RenderPermUpgrade();
 	void RenderUpgrade();
 
