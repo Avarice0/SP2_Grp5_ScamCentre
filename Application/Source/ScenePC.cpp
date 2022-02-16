@@ -161,7 +161,6 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
-
 				minescore++;
 				miningScale = 20;
 			}

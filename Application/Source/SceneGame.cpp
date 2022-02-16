@@ -434,22 +434,22 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 
 		//UNCOMMENT FOR ENTITIES
-		//for (int i = 0; i < size(entities); i++) {
-		//	RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
-		//	if (entities[i]->getstationtier() == 0) {
-		//		//place obj above table
-		//	}
-		//	else if (entities[i]->getstationtier() == 1) {
-		//		//place obj above table
-		//	}
-		//	else if (entities[i]->getstationtier() == 2) {
-		//		//place obj above table
-		//	}
-		//	else {}		//statement break
-		//	if (entities[i]->getworkertier() > 0) {
-		//		renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-		//	}
-		//}
+		for (int i = 0; i < size(entities); i++) {
+			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
+			if (entities[i]->getstationtier() == 0) {
+				//place obj above table
+			}
+			else if (entities[i]->getstationtier() == 1) {
+				//place obj above table
+			}
+			else if (entities[i]->getstationtier() == 2) {
+				//place obj above table
+			}
+			else {}		//statement break
+			if (entities[i]->getworkertier() > 0) {
+				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+			}
+		}
 
 		modelStack.PushMatrix();
 		modelStack.Translate(0, 0.05, 0);
