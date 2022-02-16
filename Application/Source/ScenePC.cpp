@@ -237,9 +237,11 @@ void ScenePC::Render()
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 43, 46);
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 43, 43);
 
-		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 47.5, 14, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 65, 14, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
+	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
 
+		RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
+		RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
 	}
 	else if (gamenum == 3)
 	{

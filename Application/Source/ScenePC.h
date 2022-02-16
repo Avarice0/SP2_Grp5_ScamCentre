@@ -46,7 +46,7 @@ class ScenePC : public Scene
 		GEO_SCORE,			//number of coins clicked
 		GEO_MINING,			//Instructions
 		
-		GEO_TEXTOPTIONS,
+		GEO_LINE,
 
 		GEO_GREENTEXT,
 
@@ -151,6 +151,7 @@ private:
 	};
 
 	int RNGmsg = 5;
+	bool correctPos = rand() % 2;
 };
 
 
