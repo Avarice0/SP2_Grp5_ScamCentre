@@ -2,9 +2,6 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-
-
-
 ScenePC::ScenePC()
 {
 }
@@ -72,6 +69,12 @@ void ScenePC::Init()
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
+		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
+		meshList[GEO_TEXTOPTIONS] = MeshBuilder::GenerateQuad("textbutton", 16, 16);
+		meshList[GEO_TEXTOPTIONS]->textureID = LoadTGA("Image//textoption.tga");
+		meshList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("pickaxe", Color(0, 0, 0), 1.f);
+		meshList[GEO_PICKAXE]->textureID = LoadTGA("Image//Pickaxe.tga");
 
 	}
 	{
@@ -83,10 +86,9 @@ void ScenePC::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_SCORE] = MeshBuilder::GenerateText("score", 16, 16);
 		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
-		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
-		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
-		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
+		meshList[GEO_MINING] = MeshBuilder::GenerateQuad("mining", 16, 16);
+		meshList[GEO_MINING]->textureID = LoadTGA("Image//calibri.tga");
+		
 	}
 
 
@@ -111,19 +113,21 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-
-		
 		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
 		{
 			gamenum = 1; //coins
 			coinx = rand() % 25 + 45;
 			coiny = rand() % 35 + 15;
 		}
-
-		if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
+		else if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
 		{
 			gamenum = 2; //texting
 		}
+		else if ((posX > 25 && posX < 35) && (posY > 44.5 && posY < 52))
+		{
+			gamenum = 3; //clicker mining
+		}
+		else {}
 
 		if (gamenum == 1) {
 
@@ -139,7 +143,7 @@ void ScenePC::Update(double dt)
 				score--;
 			}
 		}
-		if (gamenum == 2)
+		else if (gamenum == 2)
 		{
 			coinx = 100; coiny = 100;
 			if ((posX > 40 && posX < 54) && (posY > 9.5 && posY < 18.5))
@@ -151,6 +155,12 @@ void ScenePC::Update(double dt)
 			{
 				coinx = 40;
 				coiny = 30;
+			}
+		}
+		else if (gamenum == 3)
+		{
+			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
+
 			}
 		}
 	}
