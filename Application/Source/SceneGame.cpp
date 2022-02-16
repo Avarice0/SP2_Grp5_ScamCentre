@@ -122,6 +122,11 @@ void SceneGame::Init()
 		meshList[GEO_PUPGRADE]->textureID = LoadTGA("Image//PermUpgrade.tga");
 		meshList[GEO_WUPGRADE] = MeshBuilder::GenerateQuad("WorkerUpgrade", Color(1, 1, 1), 1.f);
 		meshList[GEO_WUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
+		meshList[GEO_METREBARBG] = MeshBuilder::GenerateQuad("metrebarbg", Color(1, 1, 1), 1.f);
+		meshList[GEO_METREBARBG]->textureID = LoadTGA("Image//Metrebar.tga");
+		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
+		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
+		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -392,6 +397,13 @@ void SceneGame::RenderUpgrade(){
 	
 }
 
+void SceneGame::RenderPoliceMetre()
+{
+	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
+	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
+	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
+}
+
 void SceneGame::Render()
 {
 	{
@@ -468,6 +480,7 @@ void SceneGame::Render()
 			}
 		}
 	}
+	RenderPoliceMetre();
 
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();

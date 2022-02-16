@@ -72,6 +72,13 @@ class SceneGame : public Scene
 		GEO_COMPUTERUPGRADE,
 		GEO_PUPGRADE,
 		GEO_WUPGRADE,
+
+		//HUD
+		GEO_METREBARBG,
+		GEO_METREBARFG,
+		GEO_METREBARBGBG,
+		GEO_METREBARBULB,
+
 		//objs
 
 		NUM_GEOMETRY,
@@ -145,6 +152,7 @@ private:
 	void RenderTable(int x, int y, int z);
 	void RenderPermUpgrade();
 	void RenderUpgrade();
+	void RenderPoliceMetre();
 
 	//mouse input
 	double x, y;
