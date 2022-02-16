@@ -41,6 +41,7 @@ class SceneGame : public Scene
 		GEO_COORDS,			//debug for position
 		GEO_TIME,
 		GEO_DOLLARS,
+		GEO_PROFIT,
 
 		//worker body
 		GEO_SKINNED,

@@ -140,6 +140,8 @@ void SceneGame::Init()
 		meshList[GEO_TIME]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_DOLLARS] = MeshBuilder::GenerateText("dollars", 16, 16);
 		meshList[GEO_DOLLARS]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_PROFIT] = MeshBuilder::GenerateText("profit", 16, 16);
+		meshList[GEO_PROFIT]->textureID = LoadTGA("Image//calibri.tga");
 	}
 
 	{
@@ -272,7 +274,7 @@ void SceneGame::Update(double dt)
 		if (RenderPermItem2 == true && policedeter == false) {
 			if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-//Add to police meter later
+				//Add to police meter later
 				policedeter = true;
 				RenderPermItem2 = false;
 				mousestate = "Police Detergent Bought";
@@ -304,8 +306,10 @@ void SceneGame::Update(double dt)
 			if (entities[i] != NULL) {
 				if(coffee == false)
 					dollars += entities[i]->getprofit();
-				else
-					dollars = dollars + entities[i]->getprofit() * 1.1;
+				else {
+					dollars += entities[i]->getprofit() * 1.1;
+				}
+					
 			}
 		}
 	}
