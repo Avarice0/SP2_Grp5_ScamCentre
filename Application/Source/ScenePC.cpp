@@ -142,6 +142,16 @@ void ScenePC::Update(double dt)
 		if (gamenum == 2)
 		{
 			coinx = 100; coiny = 100;
+			if ((posX > 40 && posX < 54) && (posY > 9.5 && posY < 18.5))
+			{
+				coinx = 40;
+				coiny = 30;
+			}
+			if ((posX > 57.5 && posX < 72.5) && (posY > 9.5 && posY < 18.5))
+			{
+				coinx = 40;
+				coiny = 30;
+			}
 		}
 	}
 
@@ -224,6 +234,7 @@ void ScenePC::Render()
 
 		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 47.5, 14, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 65, 14, 1, 1);
+
 	}
 
 	//---------------------------------------------------------
