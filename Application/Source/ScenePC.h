@@ -43,6 +43,8 @@ class ScenePC : public Scene
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_SCORE,			//number of coins clicked
+		
+		GEO_TEXTOPTIONS,
 
 		GEO_GREENTEXT,
 
