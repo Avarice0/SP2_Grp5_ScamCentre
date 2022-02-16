@@ -301,7 +301,7 @@ void SceneGame::Update(double dt)
 				//Add to police meter later
 				policedeter = true;
 				RenderPermItem2 = false;
-				mousestate = "Police Detergent Bought";
+				mousestate = "Police Deterrence Bought";
 				dollars -= 600;
 			}
 		}
