@@ -107,8 +107,11 @@ private:
 
 	int coinx = rand() % 25 + 45;
 	int coiny = rand() % 50 + 10;
+
 	int score = 0;
 	int minescore = 0;
+	int textscore = 0;
+
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
 

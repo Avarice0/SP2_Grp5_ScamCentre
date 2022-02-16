@@ -147,13 +147,25 @@ void ScenePC::Update(double dt)
 			coinx = 100; coiny = 100;
 			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
 			{
-				coinx = 40;
-				coiny = 30;
+				if (correctPos == true) {
+					textscore++;
+				}
+				else
+				{
+					textscore--;
+				}
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
 			if ((posX > 38 && posX < 74) && (posY > 8 && posY < 22))
 			{
+				if (correctPos == true) {
+					textscore--;
+				}
+				else
+				{
+					textscore++;
+				}
 				coinx = 40;
 				coiny = 30;
 				RNGmsg = rand() % 8;
@@ -247,6 +259,9 @@ void ScenePC::Render()
 
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
+
+		string scoreText = "Score: " + to_string(textscore);
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 30);
 
 		if (correctPos == true) {
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
