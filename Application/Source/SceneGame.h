@@ -142,6 +142,9 @@ private:
 
 	PoliceMeter metre;
 	
+	static float GetMouseX();
+	static float GetMouseY();
+
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 
