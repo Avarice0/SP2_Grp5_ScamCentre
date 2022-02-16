@@ -235,30 +235,10 @@ void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
 
-	light[0].position.x = camera.position.x;
-	light[0].position.y = camera.position.y;
-	light[0].position.z = camera.position.z;
-	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	if (dollars >= 600)
 		RenderPermItem2 = true;
-	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = true;							//flashlight toggle
-	//	if (light[0].power == 1.f) {
-	//		light[0].power = 0.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//	else if (light[0].power == 0.f) {
-	//		light[0].power = 1.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//}
-	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = false;
-	//}
-	//else {}
 
 	//mouse inputs
 	{

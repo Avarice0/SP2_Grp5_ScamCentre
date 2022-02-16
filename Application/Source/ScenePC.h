@@ -44,6 +44,9 @@ class ScenePC : public Scene
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_SCORE,			//number of coins clicked
 
+		GEO_GREENTEXT,
+
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -96,7 +99,7 @@ private:
 	float posX, posY;
 	string mousestate;
 
-	int gamenum = 1;
+	int gamenum = 2;
 
 	int coinx = rand() % 25 + 45;
 	int coiny = rand() % 50 + 10;
@@ -107,18 +110,19 @@ private:
 
 	int totalframe = 0;
 
-	std::string victimMsg[10]{
-		"What company are you calling from?",
-		"Are you a scammer?",
-		"How do I stop ",
-		"     ",
-		"    ",
-		"     ",
-		"    ",
-		"     ",
-		"    ",
-		"     "
+	std::string victimMsg[8][2]
+	{
+		{"What company are", "you calling from?"},
+		{"Are you a scammer?", "  "},
+		{"How do I stop the" ,"police from coming???"},
+		{"How do I receive ","the refund?"},
+		{"How 2 receive this ","lottery prize? lol"},
+		{"how to get FREE"," discerds nitre"},
+		{"How do I stop my account","from being suspended?"},
+		{"Give me back my son!", "  "}
 	};
+
+	int RNGmsg = 5;
 };
 
 
