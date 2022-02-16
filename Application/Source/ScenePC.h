@@ -124,11 +124,16 @@ private:
 		{"Give me back my son!", "  "}
 	};
 
-	std::string answers[8][2]
+	std::string correctAns[8]
 	{
-		{"Amazon", "fruit store"},
-		{"No", "Yes"},
-
+		"Amazon",
+		"No",
+		"Give credit card no.",
+		"Give credit card no.",
+		"give a deposit",
+		"Give account details",
+		"pay up",
+		"hand over the mooney",
 	};
 
 	int RNGmsg = 5;
