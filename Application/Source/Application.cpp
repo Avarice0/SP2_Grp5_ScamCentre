@@ -152,6 +152,12 @@ void Application::Run()
 					scenenum = 2;
 				}
 			}
+			if (scenenum == 3) {
+				if ((posX >= 76 && posX <= 80) && (posY >= 56 && posY <= 60)) {
+					scenenum = 2;
+				}
+			}
+
 		}
 		if (Application::IsKeyPressed('E')) {
 			if (scenenum == 2) {

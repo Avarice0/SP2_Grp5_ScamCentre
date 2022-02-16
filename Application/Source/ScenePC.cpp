@@ -224,7 +224,7 @@ void ScenePC::Render()
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
 	
-	RenderMeshOnScreen(meshList[GEO_EXIT], 77, 58, 3, 3);
+	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
 	if (gamenum == 1) 
 	{
