@@ -12,11 +12,11 @@ PoliceMeter::PoliceMeter()
 PoliceMeter::~PoliceMeter()
 {
 }
-//call entity worker tier
-void PoliceMeter::DailyIncreaseMP(int NoOfNoobWorkers, int NoOfExperiencedWorkers, int NoOfExpertWorkers, bool minus3boost)
+
+void PoliceMeter::DailyIncreaseMP(float NoOfNoobWorkers, float NoOfExperiencedWorkers, float NoOfExpertWorkers, bool minus3boost)
 {
 	// formula based on the google doc
-	int dailyIncrease = (NoOfNoobWorkers * 3) + (NoOfExperiencedWorkers * 2) + (NoOfExpertWorkers * 1);
+	int dailyIncrease = (NoOfNoobWorkers * 2) + (NoOfExperiencedWorkers * 1) + (NoOfExpertWorkers * 0.5);
 
 	// if boost has been bought and the bool value is true,
 	// the daily increase will - 3%

@@ -332,6 +332,21 @@ void SceneGame::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+
+	//worker counter
+	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
+	for (int i = 0; i < size(entities); i++) {
+		if (entities[i]->getworkertier() == 1) {
+			NoobCount++;
+		}
+		if (entities[i]->getworkertier() == 2) {
+			ExperiencedCount++;
+		}
+		if (entities[i]->getworkertier() == 3) {
+			ExpertCount++;
+		}
+	}
+
 	totalframe++;
 	if (totalframe >= 120) {
 		totalframe = 0;
@@ -339,12 +354,12 @@ void SceneGame::Update(double dt)
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
-				if(coffee == false)
+				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
 				}
-					
 			}
 		}
 	}
@@ -372,19 +387,6 @@ void SceneGame::Update(double dt)
 	else
 	{
 		debugRot += (float)(-40 * dt);
-	}
-
-	//worker counter
-	for (int i = 0; i < size(entities); i++) {
-		if (entities[i]->getworkertier() == 1) {
-			NoobCount++;
-		}
-		if (entities[i]->getworkertier() == 2) {
-			ExperiencedCount++;
-		}
-		if (entities[i]->getworkertier() == 3) {
-			ExpertCount++;
-		}
 	}
 }
 
@@ -423,6 +425,7 @@ void SceneGame::Render()
 	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
+	RenderRoom();
 	
 	for (int i = 0; i < size(entities); i++) {
 		RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
@@ -440,12 +443,6 @@ void SceneGame::Render()
 			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
 		}
 	}
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0.05, 0);
-	modelStack.Scale(10, 10, 10);
-	RenderRoom();
-	modelStack.PopMatrix();
 
 	//text render
 	string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
@@ -476,7 +473,7 @@ void SceneGame::Render()
 			}
 		}
 	}
-
+	RenderPoliceMetre();
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
@@ -555,11 +552,6 @@ void SceneGame::Exit()
 	glDeleteProgram(m_programID);
 }
 
-//float SceneGame::GetMouseY()
-//{
-//	return ;
-//}
-
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -619,6 +611,7 @@ void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int size
 }
 
 void SceneGame::renderworker(int x, int y, int z, int rarity) {
+	rarity--;
 	modelStack.PushMatrix(); 
 	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
 	RenderMesh(meshList[GEO_SKINNED], true);
@@ -667,52 +660,56 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 
 void SceneGame::RenderRoom(void)
 {
-	// room floor
 	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(10, 10, 10);
 	modelStack.Translate(0, 0.01, 0);
-	modelStack.Scale(20, 15, 1);
-	RenderMesh(meshList[GEO_FLOORTILES], true);
-	modelStack.PopMatrix();
+		// room floor
+		modelStack.PushMatrix();
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(20, 15, 1);
+		RenderMesh(meshList[GEO_FLOORTILES], true);
+		modelStack.PopMatrix();
 
-	// room left side
-	modelStack.PushMatrix();
-	modelStack.Translate(-10, 2.5, 0);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(15, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room left side
+		modelStack.PushMatrix();
+		modelStack.Translate(-10, 2.5, 0);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(15, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// room right side
-	modelStack.PushMatrix();
-	modelStack.Translate(10, 2.5, 0);
-	modelStack.Rotate(-90, 0, 1, 0);
-	modelStack.Scale(15, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room right side
+		modelStack.PushMatrix();
+		modelStack.Translate(10, 2.5, 0);
+		modelStack.Rotate(-90, 0, 1, 0);
+		modelStack.Scale(15, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// room back side
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 2.5, -7.5);
-	modelStack.Rotate(0, 0, 1, 0);
-	modelStack.Scale(20, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room back side
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 2.5, -7.5);
+		modelStack.Rotate(0, 0, 1, 0);
+		modelStack.Scale(20, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// office area
-	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.03, -5.5);
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(7, 3.5, 1);
-	RenderMesh(meshList[GEO_OFFICE], true);
-	modelStack.PopMatrix();
+		// office area
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.03, -5.5);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(7, 3.5, 1);
+		RenderMesh(meshList[GEO_OFFICE], true);
+		modelStack.PopMatrix();
 
-	// upgrade area
-	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.03, 4.75);
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(7, 5, 1);
-	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		// upgrade area
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.03, 4.75);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(7, 5, 1);
+		RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		modelStack.PopMatrix();
+
 	modelStack.PopMatrix();
 }
 
