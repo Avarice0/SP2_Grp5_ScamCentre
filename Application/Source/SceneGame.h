@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "PoliceMeter.h"
 
 #include "GL\glew.h"
 
@@ -138,6 +139,8 @@ private:
 	MS modelStack, viewStack, projectionStack;
 
 	Light light[1];	
+
+	PoliceMeter metre;
 	
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
@@ -157,8 +160,10 @@ private:
 	double x, y;
 	float posX, posY;
 	string mousestate;
+	int NoobCount = 5, ExperiencedCount = 0, ExpertCount = 0;
 
 	//time system
+	// gay
 	int day = 0;
 	int totalframe = 0;
 	string time;
