@@ -38,16 +38,13 @@ void PoliceMeter::Bribe(void)
 	{
 		MeterPercentage = MeterPercentage/2;
 		BribeCost *= 1.1;
+		if (BribeSuccess >= 40) {
+			BribeSuccess -= 10;
+		}
 	}
 	else
 	{
 		MeterPercentage = MeterPercentage + 5;
-	}
-
-	// after every bribe, successful or not, chance of getting next
-	// bribe to work decreases(lowest the success rate goes is 30%)
-	if (BribeSuccess >= 40) {
-		BribeSuccess -= 10;
 	}
 }
 
@@ -77,7 +74,7 @@ float PoliceMeter::GetMP(void)
 
 float PoliceMeter::GetBribeCost(void)
 {
-	return MeterPercentage;
+	return BribeCost;
 }
 
 

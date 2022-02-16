@@ -26,3 +26,16 @@ float entity::getprofit(void) {
     profit = stationtier * workertier;
     return profit;
 }
+
+void entity::setstationcost(float newcost) {
+    stationcost = newcost;
+}
+float entity::getstationcost(void) {
+    return stationcost;
+}
+void entity::setworkercost(float newcost) {
+    workercost = newcost;
+}
+float entity::getworkercost() {
+    return workercost;
+}

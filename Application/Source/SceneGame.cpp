@@ -140,6 +140,8 @@ void SceneGame::Init()
 		meshList[GEO_TIME]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_DOLLARS] = MeshBuilder::GenerateText("dollars", 16, 16);
 		meshList[GEO_DOLLARS]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_PROFIT] = MeshBuilder::GenerateText("profit", 16, 16);
+		meshList[GEO_PROFIT]->textureID = LoadTGA("Image//calibri.tga");
 	}
 
 	{
@@ -231,11 +233,6 @@ void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
 
-	light[0].position.x = camera.position.x;
-	light[0].position.y = camera.position.y;
-	light[0].position.z = camera.position.z;
-	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	if (dollars >= 600)
@@ -301,7 +298,7 @@ void SceneGame::Update(double dt)
 		if (RenderPermItem2 == true && policedeter == false) {
 			if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-//Add to police meter later
+				//Add to police meter later
 				policedeter = true;
 				RenderPermItem2 = false;
 				mousestate = "Police Detergent Bought";
@@ -334,8 +331,10 @@ void SceneGame::Update(double dt)
 			if (entities[i] != NULL) {
 				if(coffee == false)
 					dollars += entities[i]->getprofit();
-				else
-					dollars = dollars + entities[i]->getprofit() * 1.1;
+				else {
+					dollars += entities[i]->getprofit() * 1.1;
+				}
+					
 			}
 		}
 	}
@@ -345,12 +344,10 @@ void SceneGame::Update(double dt)
 	{
 		if (debugRot <= -40)
 		{
-			
 			legBack = false;
 		}
 		if (debugRot >= 40)
 		{
-			
 			legBack = true;
 		}
 	}
@@ -367,7 +364,18 @@ void SceneGame::Update(double dt)
 		debugRot += (float)(-40 * dt);
 	}
 
-
+	//worker counter
+	for (int i = 0; i < size(entities); i++) {
+		if (entities[i]->getworkertier() == 1) {
+			NoobCount++;
+		}
+		if (entities[i]->getworkertier() == 2) {
+			ExperiencedCount++;
+		}
+		if (entities[i]->getworkertier() == 3) {
+			ExpertCount++;
+		}
+	}
 }
 
 void SceneGame::Render()
@@ -406,22 +414,22 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
-	//for (int i = 0; i < size(entities); i++) {
-	//	RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
-	//	if (entities[i]->getstationtier() == 0) {
-	//		//place obj above table
-	//	}
-	//	else if (entities[i]->getstationtier() == 1) {
-	//		//place obj above table
-	//	}
-	//	else if (entities[i]->getstationtier() == 2) {
-	//		//place obj above table
-	//	}
-	//	else {}		//statement break
-	//	if (entities[i]->getworkertier() > 0) {
-	//		renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-	//	}
-	//}
+	for (int i = 0; i < size(entities); i++) {
+		RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
+		if (entities[i]->getstationtier() == 0) {
+			//place obj above table
+		}
+		else if (entities[i]->getstationtier() == 1) {
+			//place obj above table
+		}
+		else if (entities[i]->getstationtier() == 2) {
+			//place obj above table
+		}
+		else {}		//statement break
+		if (entities[i]->getworkertier() > 0) {
+			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+		}
+	}
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0.05, 0);
@@ -448,14 +456,16 @@ void SceneGame::Render()
 	}
 	else{
 		for (int i = 0; i < size(entities); i++) {
-			if (entities[i] != NULL) {
-				//radius distance check
-
+			//distance
+			float distance = sqrt((camera.position.x - entities[i]->ECoords[0] + 5) * (camera.position.x - entities[i]->ECoords[0] + 5) + 
+								  (camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
+			if (distance <= 5) {
 				RenderUpgrade();
+				//get upgrade cost and tier
+				//render the name and attach it to unique entity
 			}
 		}
 	}
-	RenderPoliceMetre();
 
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -644,8 +654,8 @@ void SceneGame::RenderRoom(void)
 {
 	// room floor
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0.01, 0);
 	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Translate(0, 0.01, 0);
 	modelStack.Scale(20, 15, 1);
 	RenderMesh(meshList[GEO_FLOORTILES], true);
 	modelStack.PopMatrix();
