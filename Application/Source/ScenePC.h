@@ -111,6 +111,7 @@ private:
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
 
+	int miningScale = 25;
 
 	int totalframe = 0;
 

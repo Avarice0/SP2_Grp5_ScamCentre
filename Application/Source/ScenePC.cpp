@@ -159,7 +159,9 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
+
 				score++;
+				miningScale = 20;
 			}
 		}
 	}
@@ -168,6 +170,7 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = false;
 		mousestate = "";
+		miningScale = 25;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
@@ -250,7 +253,7 @@ void ScenePC::Render()
 		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
 		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
 		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
-		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, 25, 25);
+		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, miningScale, miningScale);
 	}
 	
 	//---------------------------------------------------------
