@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "PoliceMeter.h"
+#include "Player.h"
 
 #include "GL\glew.h"
 
@@ -136,6 +137,7 @@ private:
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 
+	Camera2 camera2;
 	Camera3 camera;
 
 	MS modelStack, viewStack, projectionStack;
@@ -143,6 +145,8 @@ private:
 	Light light[1];	
 
 	PoliceMeter metre;
+
+	Player player;
 
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
@@ -183,6 +187,7 @@ private:
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
 	bool workerupgrade = false, stationupgrade = false;
 
+	int cameranumber = 1;
 
 	bool playerMoving = false;
 	bool legBack = false;

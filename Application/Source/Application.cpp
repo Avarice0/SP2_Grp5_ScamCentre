@@ -151,6 +151,9 @@ void Application::Run()
 				if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
 					scenenum = 2;
 				}
+				if ((posX > 5 && posX < 25) && (posY > 10 && posY < 20)) {
+					Application::Exit();
+				}
 			}
 		}
 		if (Application::IsKeyPressed('E')) {
@@ -160,6 +163,7 @@ void Application::Run()
 				}
 			}
 		}
+		
 		if (scenenum == 1) {
 			scene = scene1;
 		}
