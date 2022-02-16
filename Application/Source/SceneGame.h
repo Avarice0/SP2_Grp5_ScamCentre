@@ -81,10 +81,12 @@ class SceneGame : public Scene
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
 		GEO_LAPTOP3,
+		
+		GEO_PHONE,
+		GEO_PHONE1,
+		GEO_PHONE2,
 
 		//objs
-		GEO_QUILL,
-		GEO_PHONE,
 
 		NUM_GEOMETRY,
 	};
