@@ -1,13 +1,11 @@
 #pragma once
+#include "Application.h"
 class Player {
 private:
-	int X, Z;
 
 public:
 	Player();
 	~Player();
-
-	void UpdatePlayerPosition(int x, int z);
-	int GetPlayerX();
-	int GetPlayerZ();
+	int X, Z;
+	int D;
 };
