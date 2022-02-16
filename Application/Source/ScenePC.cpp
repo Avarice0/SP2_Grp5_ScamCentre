@@ -85,7 +85,11 @@ void ScenePC::Init()
 		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
+		meshList[GEO_TEXTOPTIONS] = MeshBuilder::GenerateQuad("textbutton", 16, 16);
+		meshList[GEO_TEXTOPTIONS]->textureID = LoadTGA("Image//textoption.tga");
 	}
+
+
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -218,7 +222,8 @@ void ScenePC::Render()
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 43, 46);
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 43, 43);
 
-
+		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 47.5, 14, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 65, 14, 1, 1);
 	}
 
 	//---------------------------------------------------------
