@@ -83,6 +83,8 @@ void ScenePC::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_SCORE] = MeshBuilder::GenerateText("score", 16, 16);
 		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
+		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -131,18 +133,14 @@ void ScenePC::Update(double dt)
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && coinStarted == true))
 			{
 				score--;
-
 			}
-			
-			
 		}
-
 		if (gamenum == 2)
 		{
 			coinx = 100; coiny = 100;
 		}
-
 	}
+
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
@@ -201,7 +199,8 @@ void ScenePC::Render()
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
 
 
-	if (gamenum == 1) {
+	if (gamenum == 1) 
+	{
 		string coinTimer = "Secs left: " + to_string(seconds);
 		string scoreText = "Score: " + to_string(score);
 		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
@@ -211,6 +210,17 @@ void ScenePC::Render()
 			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
 		}
 	}
+
+	if (gamenum == 2)
+	{
+		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
+		
+		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 43, 46);
+		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 43, 43);
+
+
+	}
+
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
