@@ -74,6 +74,8 @@ void ScenePC::Init()
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
 		meshList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("pickaxe", Color(0, 0, 0), 1.f);
 		meshList[GEO_PICKAXE]->textureID = LoadTGA("Image//Pickaxe.tga");
+		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
+		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -221,6 +223,8 @@ void ScenePC::Render()
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	
+	RenderMeshOnScreen(meshList[GEO_EXIT], 77, 58, 3, 3);
 
 	if (gamenum == 1) 
 	{

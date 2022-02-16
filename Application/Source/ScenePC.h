@@ -47,7 +47,7 @@ class ScenePC : public Scene
 		GEO_MINING,			//Instructions
 		
 		GEO_LINE,
-
+		GEO_EXIT,
 		GEO_GREENTEXT,
 
 
