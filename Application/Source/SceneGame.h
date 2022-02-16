@@ -51,12 +51,6 @@ class SceneGame : public Scene
 		GEO_SHIRT3,
 		GEO_PANTS,
 
-		//workstation objs
-		GEO_MAIL,
-		GEO_PHONE,
-		GEO_LAPTOP,
-		GEO_TOWER,
-
 		// for the room
 		GEO_TABLE,
 		GEO_ROOM,
