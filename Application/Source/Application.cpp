@@ -160,6 +160,9 @@ void Application::Run()
 					scenenum = 2;
 					Application::SetTime(0);
 				}
+				if ((posX > 5 && posX < 25) && (posY > 10 && posY < 20)) {
+					Application::Exit();
+				}
 			}
 			if (scenenum == 3) {
 				if ((posX >= 76 && posX <= 80) && (posY >= 56 && posY <= 60)) {
@@ -175,6 +178,7 @@ void Application::Run()
 				//}
 			}
 		}
+		
 		if (scenenum == 1) {
 			scene = scene1;
 		}
