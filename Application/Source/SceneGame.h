@@ -51,12 +51,6 @@ class SceneGame : public Scene
 		GEO_SHIRT3,
 		GEO_PANTS,
 
-		//workstation objs
-		GEO_MAIL,
-		GEO_PHONE,
-		GEO_LAPTOP,
-		GEO_TOWER,
-
 		// for the room
 		GEO_TABLE,
 		GEO_ROOM,
@@ -81,7 +75,15 @@ class SceneGame : public Scene
 		GEO_METREBARBGBG,
 		GEO_METREBARBULB,
 		
+		// quill, paperstack, laptop and phone
+		GEO_PAPERSTACK,
+		GEO_LAPTOP,
+		GEO_LAPTOP2,
+		GEO_LAPTOP3,
+
 		//objs
+		GEO_QUILL,
+		GEO_PHONE,
 
 		NUM_GEOMETRY,
 	};
@@ -152,6 +154,10 @@ private:
 	void renderworker(int x, int y, int z, int rarity);		//call entities list
 	void RenderRoom(void);
 	void RenderTable(int x, int y, int z);
+	void RenderQuillPaper();
+	void RenderPhone();
+	void RenderLaptop();
+	
 	void RenderPermUpgrade();
 	void RenderUpgrade();
 	void RenderPoliceMetre();

@@ -37,14 +37,16 @@ class ScenePC : public Scene
 
 		GEO_COIN,
 		GEO_WALLPAPER,
+		GEO_PICKAXE,
 	
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_SCORE,			//number of coins clicked
+		GEO_MINING,			//Instructions
 		
-		GEO_TEXTOPTIONS,
+		GEO_LINE,
 
 		GEO_GREENTEXT,
 
@@ -106,21 +108,23 @@ private:
 	int coinx = rand() % 25 + 45;
 	int coiny = rand() % 50 + 10;
 	int score = 0;
+	int minescore = 0;
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
 
+	int miningScale = 25;
 
 	int totalframe = 0;
 
-	std::string victimMsg[8][2]
+	std::string victimMsg[8][2] = 
 	{
 		{"What company are", "you calling from?"},
 		{"Are you a scammer?", "  "},
 		{"How do I stop the" ,"police from coming???"},
-		{"How do I receive ","the refund?"},
+		{"How do I receive ","the product refund?"},
 		{"How 2 receive this ","lottery prize? lol"},
 		{"how to get FREE"," discerds nitre"},
-		{"How do I stop my account","from being suspended?"},
+		{"How do I stop my acc","from being suspended"},
 		{"Give me back my son!", "  "}
 	};
 
@@ -136,7 +140,20 @@ private:
 		"hand over the mooney",
 	};
 
+	std::string wrongAns[8]
+	{
+		"amazoone",
+		"Yes",
+		"you can't",
+		"go to our office",
+		"It was a prank",
+		"buy it yourself",
+		"Nothing",
+		"no",
+	};
+
 	int RNGmsg = 5;
+	bool correctPos = rand() % 2;
 };
 
 

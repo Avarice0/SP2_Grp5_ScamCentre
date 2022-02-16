@@ -197,19 +197,51 @@ void SceneGame::Init()
 		meshList[GEO_FLOORTILES] = MeshBuilder::GenerateQuad("roomtiles", Color(1, 1, 1), 1);
 		meshList[GEO_FLOORTILES]->textureID = LoadTGA("Image//floor tiles.tga");
 
-		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
+		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("playeroffice", Color(0.3, 0.3, 0.3), 1);
 		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
 		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
 		meshList[GEO_OFFICE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_OFFICE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_OFFICE]->material.kShininess = 1.f;
 
-		meshList[GEO_UPGRADEAREA] = MeshBuilder::GenerateQuad("room", Color(0.1, 0.1, 0.1), 1);
+		meshList[GEO_UPGRADEAREA] = MeshBuilder::GenerateQuad("upgradearea", Color(0.1, 0.1, 0.1), 1);
 		//meshList[GEO_UPGRADEAREA]->textureID = LoadTGA("Image//color.tga");
 		meshList[GEO_UPGRADEAREA]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
 		meshList[GEO_UPGRADEAREA]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_UPGRADEAREA]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
+	}
+	{
+		//meshList[GEO_QUILL] = MeshBuilder::GenerateOBJ("quill", "OBJ//Quill.obj");
+		//meshList[GEO_PHONE] = MeshBuilder::GenerateOBJ("phone", "OBJ//Phone.obj");
+
+		meshList[GEO_PAPERSTACK] = MeshBuilder::GenerateCube("paperstack", Color(0.9, 0.9, 0.9), 1);
+		//meshList[GEO_PAPERSTACK]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_PAPERSTACK]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PAPERSTACK]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PAPERSTACK]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PAPERSTACK]->material.kShininess = 1.f;
+
+		meshList[GEO_LAPTOP] = MeshBuilder::GenerateCube("laptop", Color(0.6, 0.6, 0.6), 1);
+		//meshList[GEO_LAPTOP]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_LAPTOP]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_LAPTOP]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_LAPTOP]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_LAPTOP]->material.kShininess = 1.f;
+
+		meshList[GEO_LAPTOP2] = MeshBuilder::GenerateCube("laptop2", Color(0.05, 0.05, 0.05), 1);
+		//meshList[GEO_LAPTOP2]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_LAPTOP2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_LAPTOP2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_LAPTOP2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_LAPTOP2]->material.kShininess = 1.f;
+
+		meshList[GEO_LAPTOP3] = MeshBuilder::GenerateCube("laptop3", Color(0.3, 0.3, 0.3), 1);
+		//meshList[GEO_LAPTOP3]->textureID = LoadTGA("Image//color.tga");
+		meshList[GEO_LAPTOP3]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_LAPTOP3]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_LAPTOP3]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_LAPTOP3]->material.kShininess = 1.f;
 	}
 	
 	Mtx44 projection;
@@ -241,31 +273,16 @@ void SceneGame::Update(double dt)
 		if (entities[i]->getworkertier() == 1) {
 			NoobCount++;
 		}
-		if (entities[i]->getworkertier() == 2) {
-			ExperiencedCount++;
+		else if (entities[i]->getworkertier() == 2) {
+			ExperiencedCount	++;
 		}
-		if (entities[i]->getworkertier() == 3) {
+		else if (entities[i]->getworkertier() == 3) {
 			ExpertCount++;
 		}
+		else {}
 	}
-	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = true;							//flashlight toggle
-	//	if (light[0].power == 1.f) {
-	//		light[0].power = 0.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//	else if (light[0].power == 0.f) {
-	//		light[0].power = 1.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//}
-	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = false;
-	//}
-	//else {}
 
 	//mouse inputs
-
 	{
 		Application::GetCursorPos(&x, &y);
 		unsigned w = Application::GetWindowWidth();
@@ -322,8 +339,8 @@ void SceneGame::Update(double dt)
 		mousestate = "";
 	}
 
-	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
 	//worker counter
+	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i]->getworkertier() == 1) {
 			NoobCount++;
@@ -343,8 +360,9 @@ void SceneGame::Update(double dt)
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
-				if (coffee == false)
+				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
 				}
@@ -609,6 +627,7 @@ void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int size
 }
 
 void SceneGame::renderworker(int x, int y, int z, int rarity) {
+	rarity--;
 	modelStack.PushMatrix(); 
 	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
 	RenderMesh(meshList[GEO_SKINNED], true);
@@ -657,52 +676,56 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 
 void SceneGame::RenderRoom(void)
 {
-	// room floor
 	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(10, 10, 10);
 	modelStack.Translate(0, 0.01, 0);
-	modelStack.Scale(20, 15, 1);
-	RenderMesh(meshList[GEO_FLOORTILES], true);
-	modelStack.PopMatrix();
+		// room floor
+		modelStack.PushMatrix();
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(20, 15, 1);
+		RenderMesh(meshList[GEO_FLOORTILES], true);
+		modelStack.PopMatrix();
 
-	// room left side
-	modelStack.PushMatrix();
-	modelStack.Translate(-10, 2.5, 0);
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(15, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room left side
+		modelStack.PushMatrix();
+		modelStack.Translate(-10, 2.5, 0);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(15, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// room right side
-	modelStack.PushMatrix();
-	modelStack.Translate(10, 2.5, 0);
-	modelStack.Rotate(-90, 0, 1, 0);
-	modelStack.Scale(15, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room right side
+		modelStack.PushMatrix();
+		modelStack.Translate(10, 2.5, 0);
+		modelStack.Rotate(-90, 0, 1, 0);
+		modelStack.Scale(15, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// room back side
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 2.5, -7.5);
-	modelStack.Rotate(0, 0, 1, 0);
-	modelStack.Scale(20, 5, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
-	modelStack.PopMatrix();
+		// room back side
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 2.5, -7.5);
+		modelStack.Rotate(0, 0, 1, 0);
+		modelStack.Scale(20, 5, 1);
+		RenderMesh(meshList[GEO_ROOM], true);
+		modelStack.PopMatrix();
 
-	// office area
-	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.03, -5.5);
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(7, 3.5, 1);
-	RenderMesh(meshList[GEO_OFFICE], true);
-	modelStack.PopMatrix();
+		// office area
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.03, -5.5);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(7, 3.5, 1);
+		RenderMesh(meshList[GEO_OFFICE], true);
+		modelStack.PopMatrix();
 
-	// upgrade area
-	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.03, 4.75);
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(7, 5, 1);
-	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		// upgrade area
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.03, 4.75);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(7, 5, 1);
+		RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		modelStack.PopMatrix();
+
 	modelStack.PopMatrix();
 }
 
@@ -727,6 +750,63 @@ void SceneGame::RenderTable(int x, int y, int z)
 	modelStack.Translate(0, 0, 8);
 	RenderMesh(meshList[GEO_TABLE], true);
 
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderQuillPaper()
+{
+	/*modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(0, 1, 0, 0);
+	modelStack.Scale(0.0218, 0.0218, 0.0218);
+	RenderMesh(meshList[GEO_QUILL], true);
+	modelStack.PopMatrix();*/
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 0);
+	modelStack.Scale(2.9, 1, 2.1);
+	RenderMesh(meshList[GEO_PAPERSTACK], true);
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderPhone()
+{
+	/*modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(0.1, 0.1, 0.1);
+	RenderMesh(meshList[GEO_PHONE], true);*/
+}
+
+void SceneGame::RenderLaptop()
+{
+	// laptop base
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.075, 0);
+	modelStack.Rotate(0, 1, 0, 0);
+	modelStack.Scale(3.2, 0.15, 2.4);
+	RenderMesh(meshList[GEO_LAPTOP], true);
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0.4, -0.075);
+		modelStack.Scale(0.85, 0.3, 0.4);
+		RenderMesh(meshList[GEO_LAPTOP3], true);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(-0.075, 0.4, 0.3);
+		modelStack.Scale(0.35, 0.3, 0.3);
+		RenderMesh(meshList[GEO_LAPTOP3], true);
+		modelStack.PopMatrix();
+	modelStack.PopMatrix();
+
+	// laptop screen
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.1, -1.2);
+	modelStack.Rotate(75, 1, 0, 0);
+	modelStack.Scale(3.2, 0.15, 2.2);
+	RenderMesh(meshList[GEO_LAPTOP], true);
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0.5, 0);
+		modelStack.Scale(0.85, 0.3, 0.85);
+		RenderMesh(meshList[GEO_LAPTOP2], true);
+		modelStack.PopMatrix();
 	modelStack.PopMatrix();
 }
 

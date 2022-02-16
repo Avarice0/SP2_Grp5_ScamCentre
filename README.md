@@ -14,6 +14,11 @@ Worker Upgrade:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F3087740%2Fgame_gamer_level_up_lvl_up_player_roleplay_rpg_icon&psig=AOvVaw2AapGFQYIIbVSkPEcQXno9&ust=1644994725916000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNCi0oeRgfYCFQAAAAAdAAAAABAD
 Computer Upgrade:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fthenounproject.com%2Ficon%2Fcomputer-update-1510132%2F&psig=AOvVaw2714y4-cNQdpqrPiy1iwS0&ust=1644995666928000&source=images&cd=vfe&ved=0CAwQjhxqFwoTCIiHhceUgfYCFQAAAAAdAAAAABAD
+Quill(Feather Pen)OBJ:
+https://www.cgtrader.com/free-3d-models/household/other/quill-pen-pen
+Phone OBJ:
+https://free3d.com/3d-model/-traditional-corded-phone-v1--777709.html
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fthenounproject.com%2Ficon%2Fcomputer-update-1510132%2F&psig=AOvVaw2714y4-cNQdpqrPiy1iwS0&ust=1644995666928000&source=images&cd=vfe&ved=0CAwQjhxqFwoTCIiHhceUgfYCFQAAAAAdAAAAABAD
 Jail Scene:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprison&psig=AOvVaw2T6Jyeh2kv-Yh6Osmd02H1&ust=1645074507343000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDJrae6g_YCFQAAAAAdAAAAABAa
 Thermometer:

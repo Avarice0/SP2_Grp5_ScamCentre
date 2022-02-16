@@ -8,7 +8,7 @@ public:
 	~PoliceMeter(); // decon
 
 	// the daily increase in meter %
-	void DailyIncreaseMP(int NoOfNoobWorkers, int NoOfExperiencedWorkers, int NoOfExpertWorkers, bool minus3boost);
+	void DailyIncreaseMP(float NoOfNoobWorkers, float NoOfExperiencedWorkers, float NoOfExpertWorkers, bool minus3boost);
 	
 	float GetBribeCost(void);
 
@@ -31,7 +31,7 @@ public:
 	bool IsMeterFull(void);
 
 private:
-	float MeterPercentage;			// the police-meter "score"
-	float BribeSuccess;				// global variable
-	float BribeCost;				// cost of activating bribe function
+	float MeterPercentage = 0;			// the police-meter "score"
+	float BribeSuccess = 100;				// global variable
+	float BribeCost = 1000;				// cost of activating bribe function
 };
