@@ -70,6 +70,15 @@ class SceneGame : public Scene
 		GEO_LOCKEDFG,
 		GEO_WORKERUPGRADE,
 		GEO_COMPUTERUPGRADE,
+		GEO_PUPGRADE,
+		GEO_WUPGRADE,
+
+		//HUD
+		GEO_METREBARBG,
+		GEO_METREBARFG,
+		GEO_METREBARBGBG,
+		GEO_METREBARBULB,
+
 		//objs
 
 		NUM_GEOMETRY,
@@ -141,6 +150,7 @@ private:
 	void RenderTable(int x, int y, int z);
 	void RenderPermUpgrade();
 	void RenderUpgrade();
+	void RenderPoliceMetre();
 
 	//mouse input
 	double x, y;
@@ -157,7 +167,8 @@ private:
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 
-
+	//Upgrade
+	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false;
 
 
 	bool playerMoving = false;
