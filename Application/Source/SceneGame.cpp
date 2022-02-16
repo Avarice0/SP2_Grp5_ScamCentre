@@ -242,31 +242,16 @@ void SceneGame::Update(double dt)
 		if (entities[i]->getworkertier() == 1) {
 			NoobCount++;
 		}
-		if (entities[i]->getworkertier() == 2) {
+		else if (entities[i]->getworkertier() == 2) {
 			ExperiencedCount	++;
 		}
-		if (entities[i]->getworkertier() == 3) {
+		else if (entities[i]->getworkertier() == 3) {
 			ExpertCount++;
 		}
+		else {}
 	}
-	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = true;							//flashlight toggle
-	//	if (light[0].power == 1.f) {
-	//		light[0].power = 0.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//	else if (light[0].power == 0.f) {
-	//		light[0].power = 1.f;
-	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//	}
-	//}
-	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
-	//	flashlighttoggle = false;
-	//}
-	//else {}
 
 	//mouse inputs
-
 	{
 		Application::GetCursorPos(&x, &y);
 		unsigned w = Application::GetWindowWidth();
@@ -279,13 +264,6 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-		
-		//converting viewport space to UI space
-		/*if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			mousestate = "shop click";
-		}*/
-
 		if(RenderPermItem1 == true && coffee == false){
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
@@ -544,6 +522,11 @@ void SceneGame::Exit()
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
+
+//float SceneGame::GetMouseY()
+//{
+//	return ;
+//}
 
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {

@@ -58,13 +58,12 @@ void ScenePC::Init()
 		glUseProgram(m_programID);
 		glUniform1i(m_parameters[U_NUMLIGHTS], 0);
 	}
-
+	srand(time(NULL));
 	// Init VBO
 	for (int i = 0; i < NUM_GEOMETRY; ++i) {
 		meshList[i] = nullptr;
 	}
 	{
-		srand(time(NULL));
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
@@ -160,7 +159,7 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
-
+				score++;
 			}
 		}
 	}
@@ -214,14 +213,10 @@ void ScenePC::Render()
 	}
 	//text render
 	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
-    RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
-	
-
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
-
 
 	if (gamenum == 1) 
 	{
@@ -233,9 +228,9 @@ void ScenePC::Render()
 		{
 			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
 		}
+		RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
 	}
-
-	if (gamenum == 2)
+	else if (gamenum == 2)
 	{
 		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
 		
@@ -246,7 +241,16 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_TEXTOPTIONS], 65, 14, 1, 1);
 
 	}
-
+	else if (gamenum == 3)
+	{
+		string scoreText = "Score: " + to_string(score);
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
+		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
+		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
+		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
+		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, 25, 25);
+	}
+	
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
