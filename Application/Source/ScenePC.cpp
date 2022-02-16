@@ -145,22 +145,26 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 2)
 		{
 			coinx = 100; coiny = 100;
-			if ((posX > 40 && posX < 54) && (posY > 9.5 && posY < 18.5))
+			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
 			{
 				coinx = 40;
 				coiny = 30;
+				RNGmsg = rand() % 8;
+				correctPos = rand() % 2;
 			}
-			if ((posX > 57.5 && posX < 72.5) && (posY > 9.5 && posY < 18.5))
+			if ((posX > 38 && posX < 74) && (posY > 8 && posY < 22))
 			{
 				coinx = 40;
 				coiny = 30;
+				RNGmsg = rand() % 8;
+				correctPos = rand() % 2;
 			}
 		}
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
 
-				score++;
+				minescore++;
 				miningScale = 20;
 			}
 		}
@@ -237,18 +241,24 @@ void ScenePC::Render()
 	{
 		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
 		
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 43, 46);
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 43, 43);
+		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 41, 46);
+		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 41, 43);
 
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
 
-		RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
-		RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
+		if (correctPos == true) {
+			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
+		}
+		if (correctPos == false) {
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
+			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
+		}
 	}
 	else if (gamenum == 3)
 	{
-		string scoreText = "Score: " + to_string(score);
+		string scoreText = "Score: " + to_string(minescore);
 		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
 		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
