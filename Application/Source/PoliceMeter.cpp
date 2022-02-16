@@ -22,7 +22,7 @@ void PoliceMeter::DailyIncreaseMP(int NoOfNoobWorkers, int NoOfExperiencedWorker
 	// the daily increase will - 3%
 	if ((minus3boost == true) && (dailyIncrease > 3))
 	{
-		dailyIncrease = dailyIncrease - 3;
+		dailyIncrease = dailyIncrease - 10;
 	}
 	MeterPercentage += dailyIncrease;
 }

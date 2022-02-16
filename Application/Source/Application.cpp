@@ -134,21 +134,32 @@ void Application::Run()
 	scene3->Init();
 	Scene* scene = scene1;
 
-	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
+	
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		if()
-		if (Application::IsKeyPressed('1')) {
-			scenenum = 1;
+		//Converting Viewport space to UI space
+		double x, y;
+		Application::GetCursorPos(&x, &y);
+		unsigned w = Application::GetWindowWidth();
+		unsigned h = Application::GetWindowHeight();
+		float posX = (x / w) * 80; //convert (0,800) to (0,80)
+		float posY = 60 - (y / h) * 60; //convert (600,0) to (0,60)
+		static bool bLButtonState = false;
+		if (!bLButtonState && Application::IsMousePressed(0))
+		{
+			if(scenenum == 1){
+				if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
+					scenenum = 2;
+				}
+			}
 		}
-		else if (Application::IsKeyPressed('2')) {
-			scenenum = 2;
+		if (Application::IsKeyPressed('E')) {
+			if (scenenum == 2) {
+				if ((posX > 27 && posX < 97) && (posY > -74 && posY < -36)) {
+					scenenum = 3;
+				}
+			}
 		}
-		else if (Application::IsKeyPressed('3')) {
-			scenenum = 3;
-		}
-		else{}
-
 		if (scenenum == 1) {
 			scene = scene1;
 		}

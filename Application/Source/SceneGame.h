@@ -80,7 +80,7 @@ class SceneGame : public Scene
 		GEO_METREBARFG,
 		GEO_METREBARBGBG,
 		GEO_METREBARBULB,
-
+		
 		//objs
 
 		NUM_GEOMETRY,
@@ -141,9 +141,6 @@ private:
 	Light light[1];	
 
 	PoliceMeter metre;
-	
-	static float GetMouseX();
-	static float GetMouseY();
 
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
@@ -163,7 +160,6 @@ private:
 	double x, y;
 	float posX, posY;
 	string mousestate;
-	int NoobCount = 5, ExperiencedCount = 0, ExpertCount = 0;
 
 	//time system
 	// gay
@@ -178,8 +174,9 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 
 	//Upgrade
-	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false;
+	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
 	bool workerupgrade = false, stationupgrade = false;
+
 
 	bool playerMoving = false;
 	bool legBack = false;

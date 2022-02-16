@@ -232,7 +232,6 @@ void SceneGame::Init()
 void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
-
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	if (dollars >= 600)
@@ -243,7 +242,7 @@ void SceneGame::Update(double dt)
 			NoobCount++;
 		}
 		if (entities[i]->getworkertier() == 2) {
-			ExperiencedCount	++;
+			ExperiencedCount++;
 		}
 		if (entities[i]->getworkertier() == 3) {
 			ExpertCount++;
@@ -279,14 +278,14 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-		
+
 		//converting viewport space to UI space
 		/*if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
 		{
 			mousestate = "shop click";
 		}*/
 
-		if(RenderPermItem1 == true && coffee == false){
+		if (RenderPermItem1 == true && coffee == false) {
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
 				coffee = true;
@@ -301,7 +300,7 @@ void SceneGame::Update(double dt)
 				//Add to police meter later
 				policedeter = true;
 				RenderPermItem2 = false;
-				mousestate = "Police Detergent Bought";
+				mousestate = "Police Deterrence Bought";
 				dollars -= 600;
 			}
 		}
@@ -322,6 +321,21 @@ void SceneGame::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+
+	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
+	//worker counter
+	for (int i = 0; i < size(entities); i++) {
+		if (entities[i]->getworkertier() == 1) {
+			NoobCount++;
+		}
+		if (entities[i]->getworkertier() == 2) {
+			ExperiencedCount++;
+		}
+		if (entities[i]->getworkertier() == 3) {
+			ExpertCount++;
+		}
+	}
+
 	totalframe++;
 	if (totalframe >= 120) {
 		totalframe = 0;
@@ -329,18 +343,18 @@ void SceneGame::Update(double dt)
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
-				if(coffee == false)
+				if (coffee == false)
 					dollars += entities[i]->getprofit();
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
 				}
-					
+
 			}
 		}
 	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
 
-	if (playerMoving == true) 
+	if (playerMoving == true)
 	{
 		if (debugRot <= -40)
 		{
@@ -363,112 +377,102 @@ void SceneGame::Update(double dt)
 	{
 		debugRot += (float)(-40 * dt);
 	}
-
-	//worker counter
-	for (int i = 0; i < size(entities); i++) {
-		if (entities[i]->getworkertier() == 1) {
-			NoobCount++;
-		}
-		if (entities[i]->getworkertier() == 2) {
-			ExperiencedCount++;
-		}
-		if (entities[i]->getworkertier() == 3) {
-			ExpertCount++;
-		}
-	}
 }
 
 void SceneGame::Render()
 {
-	{
-		// Render VBO here
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		{
+			// Render VBO here
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//Temp variables
-		Mtx44 translate, rotate, scale;
-		Mtx44 MVP;
+			//Temp variables
+			Mtx44 translate, rotate, scale;
+			Mtx44 MVP;
 
-		//These will be replaced by matrix stack soon
-		Mtx44 model, view, projection;
-		//Set view matrix using camera settings
-		view.SetToLookAt(
-			camera.position.x, camera.position.y, camera.position.z,
-			camera.target.x, camera.target.y, camera.target.z,
-			camera.up.x, camera.up.y, camera.up.z
-		);
-		viewStack.LoadIdentity();
-		viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
-			camera.target.x, camera.target.y, camera.target.z,
-			camera.up.x, camera.up.y, camera.up.z);
-		modelStack.LoadIdentity();
-	}
-	{
-		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
-		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
-		Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
-		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
-	}
-	//----------------------------------------
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
-	RenderMesh(meshList[GEO_FLOOR], true);
-	modelStack.PopMatrix();
-	
-	for (int i = 0; i < size(entities); i++) {
-		RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
-		if (entities[i]->getstationtier() == 0) {
-			//place obj above table
+			//These will be replaced by matrix stack soon
+			Mtx44 model, view, projection;
+			//Set view matrix using camera settings
+			view.SetToLookAt(
+				camera.position.x, camera.position.y, camera.position.z,
+				camera.target.x, camera.target.y, camera.target.z,
+				camera.up.x, camera.up.y, camera.up.z
+			);
+			viewStack.LoadIdentity();
+			viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
+				camera.target.x, camera.target.y, camera.target.z,
+				camera.up.x, camera.up.y, camera.up.z);
+			modelStack.LoadIdentity();
 		}
-		else if (entities[i]->getstationtier() == 1) {
-			//place obj above table
+		{
+			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
+			Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
+			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
 		}
-		else if (entities[i]->getstationtier() == 2) {
-			//place obj above table
+		//----------------------------------------
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
+		RenderMesh(meshList[GEO_FLOOR], true);
+		modelStack.PopMatrix();
+
+		//UNCOMMENT FOR ENTITIES
+		//for (int i = 0; i < size(entities); i++) {
+		//	RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
+		//	if (entities[i]->getstationtier() == 0) {
+		//		//place obj above table
+		//	}
+		//	else if (entities[i]->getstationtier() == 1) {
+		//		//place obj above table
+		//	}
+		//	else if (entities[i]->getstationtier() == 2) {
+		//		//place obj above table
+		//	}
+		//	else {}		//statement break
+		//	if (entities[i]->getworkertier() > 0) {
+		//		renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+		//	}
+		//}
+
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0.05, 0);
+		modelStack.Scale(10, 10, 10);
+		RenderRoom();
+		modelStack.PopMatrix();
+
+		//text render
+		string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
+		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
+
+		//render mesh on screen
+		//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
+
+		//UI buttons test
+		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
+		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
+		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
+		if ((camera.position.x < 98 && camera.position.x > 27) && (camera.position.z < 74 && camera.position.z > 20)) {
+			RenderPermUpgrade();
 		}
-		else {}		//statement break
-		if (entities[i]->getworkertier() > 0) {
-			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-		}
-	}
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0.05, 0);
-	modelStack.Scale(10, 10, 10);
-	RenderRoom();
-	modelStack.PopMatrix();
-
-	//text render
-	string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
-	RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
-
-	//render mesh on screen
-	//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
-
-	//UI buttons test
-	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
-	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
-	RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-	RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
-
-	if((camera.position.x < 98 && camera.position.x > 27) && (camera.position.z < 74 && camera.position.z > 20)){
-		RenderPermUpgrade();
-	}
-	else{
-		for (int i = 0; i < size(entities); i++) {
-			//distance
-			float distance = sqrt((camera.position.x - entities[i]->ECoords[0] + 5) * (camera.position.x - entities[i]->ECoords[0] + 5) + 
-								  (camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
-			if (distance <= 5) {
-				RenderUpgrade();
-				//get upgrade cost and tier
-				//render the name and attach it to unique entity
+		else {
+			for (int i = 0; i < size(entities); i++) {
+				//distance
+				float distance = sqrt((camera.position.x - entities[i]->ECoords[0] + 5) * (camera.position.x - entities[i]->ECoords[0] + 5) +
+					(camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
+				if (distance <= 5) {
+					RenderUpgrade();
+					//get upgrade cost and tier
+					//render the name and attach it to unique entity
+				}
 			}
 		}
-	}
+		RenderPoliceMetre();
 
-	//---------------------------------------------------------
-	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+		//---------------------------------------------------------
+		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	
 }
 
 void SceneGame::RenderText(Mesh* mesh, std::string text, Color color)
@@ -545,10 +549,6 @@ void SceneGame::Exit()
 	glDeleteProgram(m_programID);
 }
 
-float SceneGame::GetMouseY()
-{
-	return ;
-}
 
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
@@ -780,6 +780,6 @@ void SceneGame::RenderPoliceMetre()
 {
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
-	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 100 , 5, metre.GetMP()/ 5); //start y 22 end 33
+	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
