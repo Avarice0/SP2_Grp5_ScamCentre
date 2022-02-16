@@ -31,7 +31,6 @@ class SceneGame : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
-		GEO_AXES,
 		GEO_FLOOR,
 		GEO_QUAD,
 
@@ -59,6 +58,7 @@ class SceneGame : public Scene
 		// for the room
 		GEO_TABLE,
 		GEO_ROOM,
+		GEO_FLOORTILES,
 		GEO_OFFICE,
 		GEO_UPGRADEAREA,
 
@@ -136,10 +136,8 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	//automated render functions
-	void renderworker(int x, int y, int z, int rarity);		//rarity 0-2
-	
-	// functions to render the room and indiv. tables 
-	void RenderRoom();
+	void renderworker(int x, int y, int z, int rarity);		//call entities list
+	void RenderRoom(void);
 	void RenderTable(int x, int y, int z);
 	void RenderPermUpgrade();
 	void RenderUpgrade();
@@ -155,7 +153,7 @@ private:
 	string time;
 
 	//entities
-	entity* entities[10] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+	entity* entities[20];
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 

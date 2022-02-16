@@ -100,7 +100,6 @@ void SceneGame::Init()
 		meshList[i] = nullptr;
 	}
 	{
-		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	}
@@ -184,6 +183,13 @@ void SceneGame::Init()
 		meshList[GEO_ROOM]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_ROOM]->material.kShininess = 1.f;
 
+		meshList[GEO_FLOORTILES] = MeshBuilder::GenerateQuad("roomtiles", Color(1, 1, 1), 1);
+		meshList[GEO_FLOORTILES]->textureID = LoadTGA("Image//floor tiles.tga");
+		meshList[GEO_FLOORTILES]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_FLOORTILES]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_FLOORTILES]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_FLOORTILES]->material.kShininess = 1.f;
+
 		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
 		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
 		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
@@ -205,43 +211,43 @@ void SceneGame::Init()
 	//-------------------------------------------------
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
-
-
 	debugRot = 20;
+
+	{
+		entities[0] = new entity(000, 6, 00); entities[5] = new entity(000, 6, 20);	entities[10] = new entity(000, 6, 40); entities[15] = new entity(000, 6, 60);
+		entities[1] = new entity(-15, 6, 00); entities[6] = new entity(-15, 6, 20); entities[11] = new entity(-15, 6, 40); entities[16] = new entity(-15, 6, 60);
+		entities[2] = new entity(-30, 6, 00); entities[7] = new entity(-30, 6, 20); entities[12] = new entity(-30, 6, 40); entities[17] = new entity(-30, 6, 60);
+		entities[3] = new entity(-45, 6, 00); entities[8] = new entity(-45, 6, 20); entities[13] = new entity(-45, 6, 40); entities[18] = new entity(-45, 6, 60);
+		entities[4] = new entity(-60, 6, 00); entities[9] = new entity(-60, 6, 20); entities[14] = new entity(-60, 6, 40); entities[19] = new entity(-60, 6, 60);
+	}
 }
 
 void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
-
-	light[0].position.x = camera.position.x;
-	light[0].position.y = camera.position.y;
-	light[0].position.z = camera.position.z;
-	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
-
+	{
+		light[0].position.x = camera.position.x;
+		light[0].position.y = camera.position.y;
+		light[0].position.z = camera.position.z;
+		light[0].spotDirection.Set(camera.position.x - camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
+	}
 	//mouse inputs
-	Application::GetCursorPos(&x, &y);
-	unsigned w = Application::GetWindowWidth();
-	unsigned h = Application::GetWindowHeight();
-	posX = x / w * 80; //convert (0,800) to (0,80)
-	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
-
+	{
+		Application::GetCursorPos(&x, &y);
+		unsigned w = Application::GetWindowWidth();
+		unsigned h = Application::GetWindowHeight();
+		posX = x / w * 80; //convert (0,800) to (0,80)
+		posY = 60 - y / h * 60; //convert (600,0) to (0,60)
+	}
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-		
-		//converting viewport space to UI space
-		/*if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			mousestate = "shop click";
-		}*/
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-	
 		mousestate = "";
 	}
 	static bool bRButtonState = false;
@@ -255,17 +261,13 @@ void SceneGame::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
-	/*entities[0] = new entity(15,12,15);
-	entities[1] = new entity();
-	entities[2] = new entity();*/
 	totalframe++;
 	if (totalframe >= 1440) {
 		totalframe = 0;
 		day++;
 		for (int i = 0; i < size(entities); i++) {
-			if (entities[i] != NULL) {
-				dollars += entities[i]->getprofit();
-			}
+			dollars += entities[i]->getprofit();
+			
 		}
 	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
@@ -374,23 +376,32 @@ void SceneGame::Render()
 			camera.up.x, camera.up.y, camera.up.z);
 		modelStack.LoadIdentity();
 	}
-	{			//spot light
+	{
 		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 		Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
 		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
 	}
 	//----------------------------------------
-	//RenderMesh(meshList[GEO_AXES], false);
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
 	for (int i = 0; i < size(entities); i++) {
-		if (entities[i] != NULL) {
+		RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
+		if (entities[i]->getstationtier() == 0) {
+			//place obj above table
+		}
+		else if (entities[i]->getstationtier() == 1) {
+			//place obj above table
+		}
+		else if (entities[i]->getstationtier() == 2) {
+			//place obj above table
+		}
+		else {}		//statement break
+		if (entities[i]->getworkertier() > 0) {
 			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-			RenderTable(i * 10 - 5, 3, 20);
 		}
 	}
 
@@ -419,11 +430,9 @@ void SceneGame::Render()
 	}
 	else{
 		for (int i = 0; i < size(entities); i++) {
-			if (entities[i] != NULL) {
-				//radius distance check
-
-				RenderUpgrade();
-			}
+			//distance
+			
+			RenderUpgrade();
 		}
 	}
 
@@ -610,13 +619,13 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderRoom()
+void SceneGame::RenderRoom(void)
 {
 	// room floor
 	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Rotate(90, 1, 0, 0);
 	modelStack.Scale(20, 15, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
+	RenderMesh(meshList[GEO_FLOORTILES], true);
 	modelStack.PopMatrix();
 
 	// room left side
