@@ -79,14 +79,14 @@ void SceneMainMenu::Init()
 		light[0].type = Light::LIGHT_DIRECTIONAL;
 		light[0].position.Set(10, 10 , 10);
 		light[0].color.Set(1, 1, 1);
-		light[0].power = 0.2f;
+		light[0].power = 1.5f;
 		light[0].kC = 1.f;
 		light[0].kL = 0.01;
 		light[0].kQ = 0.001f;
 		light[0].cosCutoff = cos(Math::DegreeToRadian(12.5));
 		light[0].cosInner = cos(Math::DegreeToRadian(10));
 		light[0].exponent = 1.f;
-		light[0].spotDirection.Set(0, 0, 0);
+		light[0].spotDirection.Set(0, 1, 0);
 
 		glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
 		glUniform3fv(m_parameters[U_LIGHT0_COLOR], 1, &light[0].color.r);

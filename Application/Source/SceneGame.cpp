@@ -100,7 +100,6 @@ void SceneGame::Init()
 		meshList[i] = nullptr;
 	}
 	{
-		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 	}
@@ -118,6 +117,15 @@ void SceneGame::Init()
 		meshList[GEO_WORKERUPGRADE]->textureID = LoadTGA("Image//WorkerUp.tga");
 		meshList[GEO_COMPUTERUPGRADE] = MeshBuilder::GenerateQuad("ComputerUpgrade", Color(1, 1, 1), 1.f);
 		meshList[GEO_COMPUTERUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
+		meshList[GEO_PUPGRADE] = MeshBuilder::GenerateQuad("PermUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_PUPGRADE]->textureID = LoadTGA("Image//PermUpgrade.tga");
+		meshList[GEO_WUPGRADE] = MeshBuilder::GenerateQuad("WorkerUpgrade", Color(1, 1, 1), 1.f);
+		meshList[GEO_WUPGRADE]->textureID = LoadTGA("Image//ComputerUp.tga");
+		meshList[GEO_METREBARBG] = MeshBuilder::GenerateQuad("metrebarbg", Color(1, 1, 1), 1.f);
+		meshList[GEO_METREBARBG]->textureID = LoadTGA("Image//Metrebar.tga");
+		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
+		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
+		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -184,6 +192,13 @@ void SceneGame::Init()
 		meshList[GEO_ROOM]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_ROOM]->material.kShininess = 1.f;
 
+		meshList[GEO_FLOORTILES] = MeshBuilder::GenerateQuad("roomtiles", Color(1, 1, 1), 1);
+		meshList[GEO_FLOORTILES]->textureID = LoadTGA("Image//floor tiles.tga");
+		meshList[GEO_FLOORTILES]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_FLOORTILES]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_FLOORTILES]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_FLOORTILES]->material.kShininess = 1.f;
+
 		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
 		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
 		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
@@ -205,9 +220,15 @@ void SceneGame::Init()
 	//-------------------------------------------------
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
-
-
 	debugRot = 20;
+
+	{
+		entities[0] = new entity(000, 6, 00); entities[5] = new entity(000, 6, 20);	entities[10] = new entity(000, 6, 40); entities[15] = new entity(000, 6, 60);
+		entities[1] = new entity(-15, 6, 00); entities[6] = new entity(-15, 6, 20); entities[11] = new entity(-15, 6, 40); entities[16] = new entity(-15, 6, 60);
+		entities[2] = new entity(-30, 6, 00); entities[7] = new entity(-30, 6, 20); entities[12] = new entity(-30, 6, 40); entities[17] = new entity(-30, 6, 60);
+		entities[3] = new entity(-45, 6, 00); entities[8] = new entity(-45, 6, 20); entities[13] = new entity(-45, 6, 40); entities[18] = new entity(-45, 6, 60);
+		entities[4] = new entity(-60, 6, 00); entities[9] = new entity(-60, 6, 20); entities[14] = new entity(-60, 6, 40); entities[19] = new entity(-60, 6, 60);
+	}
 }
 
 void SceneGame::Update(double dt)
@@ -219,13 +240,34 @@ void SceneGame::Update(double dt)
 	light[0].position.z = camera.position.z;
 	light[0].spotDirection.Set(camera.position.x-camera.target.x, camera.position.y - camera.target.y, camera.position.z - camera.target.z);
 
-	//mouse inputs
-	Application::GetCursorPos(&x, &y);
-	unsigned w = Application::GetWindowWidth();
-	unsigned h = Application::GetWindowHeight();
-	posX = x / w * 80; //convert (0,800) to (0,80)
-	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
+	if (dollars >= 600)
+		RenderPermItem1 = true;
+	if (dollars >= 600)
+		RenderPermItem2 = true;
+	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = true;							//flashlight toggle
+	//	if (light[0].power == 1.f) {
+	//		light[0].power = 0.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//	else if (light[0].power == 0.f) {
+	//		light[0].power = 1.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//}
+	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = false;
+	//}
+	//else {}
 
+	//mouse inputs
+	{
+		Application::GetCursorPos(&x, &y);
+		unsigned w = Application::GetWindowWidth();
+		unsigned h = Application::GetWindowHeight();
+		posX = x / w * 80; //convert (0,800) to (0,80)
+		posY = 60 - y / h * 60; //convert (600,0) to (0,60)
+	}
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
@@ -237,11 +279,30 @@ void SceneGame::Update(double dt)
 		{
 			mousestate = "shop click";
 		}*/
+
+		if(RenderPermItem1 == true && coffee == false){
+			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
+			{
+				coffee = true;
+				RenderPermItem1 = false;
+				mousestate = "Coffee Bought";
+				dollars -= 600;
+			}
+		}
+		if (RenderPermItem2 == true && policedeter == false) {
+			if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
+			{
+//Add to police meter later
+				policedeter = true;
+				RenderPermItem2 = false;
+				mousestate = "Police Detergent Bought";
+				dollars -= 600;
+			}
+		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-	
 		mousestate = "";
 	}
 	static bool bRButtonState = false;
@@ -255,16 +316,16 @@ void SceneGame::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
-	/*entities[0] = new entity(15,12,15);
-	entities[1] = new entity();
-	entities[2] = new entity();*/
 	totalframe++;
 	if (totalframe >= 1440) {
 		totalframe = 0;
 		day++;
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
-				dollars += entities[i]->getprofit();
+				if(coffee == false)
+					dollars += entities[i]->getprofit();
+				else
+					dollars = dollars + entities[i]->getprofit() * 1.1;
 			}
 		}
 	}
@@ -302,7 +363,7 @@ void SceneGame::Update(double dt)
 void SceneGame::RenderPermUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
 
-	if(dollars >= 600){
+	if(coffee == false && RenderPermItem1 == true){
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
 	}
@@ -311,7 +372,7 @@ void SceneGame::RenderPermUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if(dollars >= 1000){
+	if (policedeter == false && RenderPermItem2 == true) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
 	}
@@ -319,6 +380,7 @@ void SceneGame::RenderPermUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
+	RenderMeshOnScreen(meshList[GEO_PUPGRADE], 60, 5, 20, 7);
 }
 
 void SceneGame::RenderUpgrade(){
@@ -341,13 +403,14 @@ void SceneGame::RenderUpgrade(){
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
 
-	if (dollars >= 0) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
-	}
+	
+}
+
+void SceneGame::RenderPoliceMetre()
+{
+	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
+	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
+	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
 
 void SceneGame::Render()
@@ -374,25 +437,34 @@ void SceneGame::Render()
 			camera.up.x, camera.up.y, camera.up.z);
 		modelStack.LoadIdentity();
 	}
-	{			//spot light
+	{
 		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 		Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
 		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
 	}
 	//----------------------------------------
-	//RenderMesh(meshList[GEO_AXES], false);
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 	
 	for (int i = 0; i < size(entities); i++) {
-		if (entities[i] != NULL) {
-			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
-			RenderTable(i * 10 - 5, 3, 20);
+		RenderTable(entities[i]->ECoords[0]-5, 3, entities[i]->ECoords[2]);
+		if (entities[i]->getstationtier() == 0) {
+			//place obj above table
 		}
-	}
+		else if (entities[i]->getstationtier() == 1) {
+			//place obj above table
+		}
+		else if (entities[i]->getstationtier() == 2) {
+			//place obj above table
+		}
+		else {}		//statement break
+		if (entities[i]->getworkertier() > 0) {
+			renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
+		}
+	}*/
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0.05, 0);
@@ -419,9 +491,10 @@ void SceneGame::Render()
 	}
 	else{
 		for (int i = 0; i < size(entities); i++) {
-			if (entities[i] != NULL) {
-				//radius distance check
-
+			//distance
+			float distance = sqrt((camera.position.x - entities[i]->ECoords[0]) * (camera.position.x - entities[i]->ECoords[0]) + 
+								  (camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
+			if (distance <= 3) {
 				RenderUpgrade();
 			}
 		}
@@ -610,13 +683,13 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderRoom()
+void SceneGame::RenderRoom(void)
 {
 	// room floor
 	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Rotate(90, 1, 0, 0);
 	modelStack.Scale(20, 15, 1);
-	RenderMesh(meshList[GEO_ROOM], true);
+	RenderMesh(meshList[GEO_FLOORTILES], true);
 	modelStack.PopMatrix();
 
 	// room left side
@@ -682,4 +755,55 @@ void SceneGame::RenderTable(int x, int y, int z)
 	RenderMesh(meshList[GEO_TABLE], true);
 
 	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderPermUpgrade() {
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+
+	if (dollars >= 600) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
+
+	if (dollars >= 1000) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+}
+
+void SceneGame::RenderUpgrade() {
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
+	}
 }
