@@ -315,12 +315,10 @@ void SceneGame::Update(double dt)
 	{
 		if (debugRot <= -40)
 		{
-			
 			legBack = false;
 		}
 		if (debugRot >= 40)
 		{
-			
 			legBack = true;
 		}
 	}
