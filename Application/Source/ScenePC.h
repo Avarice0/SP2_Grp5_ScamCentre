@@ -108,9 +108,11 @@ private:
 	int coinx = rand() % 25 + 45;
 	int coiny = rand() % 50 + 10;
 	int score = 0;
+	int minescore = 0;
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
 
+	int miningScale = 25;
 
 	int totalframe = 0;
 
@@ -122,7 +124,7 @@ private:
 		{"How do I receive ","the product refund?"},
 		{"How 2 receive this ","lottery prize? lol"},
 		{"how to get FREE"," discerds nitre"},
-		{"How do I stop my account","from being suspended?"},
+		{"How do I stop my acc","from being suspended"},
 		{"Give me back my son!", "  "}
 	};
 
