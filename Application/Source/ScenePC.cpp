@@ -179,8 +179,6 @@ void ScenePC::Update(double dt)
 				miningScale = 20;
 			}
 		}
-
-		times = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
 	}
 
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -200,6 +198,12 @@ void ScenePC::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
+
+	if (Application::GetTime() >= 5) {
+		Application::SetTime(0);
+		day++;
+	}
+	times = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
 	
 	if (coinStarted == true) {
 		totalframe++;
@@ -215,6 +219,7 @@ void ScenePC::Update(double dt)
 		}
 
 	}
+	
 }
 
 void ScenePC::Render()
@@ -240,6 +245,7 @@ void ScenePC::Render()
 	
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
+	RenderTextOnScreen(meshList[GEO_SCORE], times, Color(0.5, 0.5, 1), 2, 40, 30);
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
@@ -283,6 +289,8 @@ void ScenePC::Render()
 		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
 		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, miningScale, miningScale);
 	}
+
+
 	
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
