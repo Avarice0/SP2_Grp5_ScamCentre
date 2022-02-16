@@ -545,6 +545,11 @@ void SceneGame::Exit()
 	glDeleteProgram(m_programID);
 }
 
+//float SceneGame::GetMouseY()
+//{
+//	return ;
+//}
+
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;

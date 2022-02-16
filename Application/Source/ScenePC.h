@@ -119,11 +119,35 @@ private:
 		{"What company are", "you calling from?"},
 		{"Are you a scammer?", "  "},
 		{"How do I stop the" ,"police from coming???"},
-		{"How do I receive ","the refund?"},
+		{"How do I receive ","the product refund?"},
 		{"How 2 receive this ","lottery prize? lol"},
 		{"how to get FREE"," discerds nitre"},
 		{"How do I stop my account","from being suspended?"},
 		{"Give me back my son!", "  "}
+	};
+
+	std::string correctAns[8]
+	{
+		"Amazon",
+		"No",
+		"Give credit card no.",
+		"Give credit card no.",
+		"give a deposit",
+		"Give account details",
+		"pay up",
+		"hand over the mooney",
+	};
+
+	std::string wrongAns[8]
+	{
+		"amazoone",
+		"Yes",
+		"you can't",
+		"go to our office",
+		"It was a prank",
+		"buy it yourself",
+		"Nothing",
+		"no",
 	};
 
 	int RNGmsg = 5;
