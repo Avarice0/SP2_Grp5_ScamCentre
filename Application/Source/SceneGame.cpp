@@ -196,10 +196,6 @@ void SceneGame::Init()
 
 		meshList[GEO_FLOORTILES] = MeshBuilder::GenerateQuad("roomtiles", Color(1, 1, 1), 1);
 		meshList[GEO_FLOORTILES]->textureID = LoadTGA("Image//floor tiles.tga");
-		meshList[GEO_FLOORTILES]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
-		meshList[GEO_FLOORTILES]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
-		meshList[GEO_FLOORTILES]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
-		meshList[GEO_FLOORTILES]->material.kShininess = 1.f;
 
 		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("room", Color(0.3, 0.3, 0.3), 1);
 		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
@@ -242,7 +238,35 @@ void SceneGame::Update(double dt)
 	if (dollars >= 600)
 		RenderPermItem2 = true;
 
+	for (int i = 0; i < size(entities); i++) {
+		if (entities[i]->getworkertier() == 1) {
+			NoobCount++;
+		}
+		if (entities[i]->getworkertier() == 2) {
+			ExperiencedCount	++;
+		}
+		if (entities[i]->getworkertier() == 3) {
+			ExpertCount++;
+		}
+	}
+	//if (flashlighttoggle == false && Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = true;							//flashlight toggle
+	//	if (light[0].power == 1.f) {
+	//		light[0].power = 0.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//	else if (light[0].power == 0.f) {
+	//		light[0].power = 1.f;
+	//		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+	//	}
+	//}
+	//else if (flashlighttoggle == true && !Application::IsKeyPressed('Q')) {
+	//	flashlighttoggle = false;
+	//}
+	//else {}
+
 	//mouse inputs
+
 	{
 		Application::GetCursorPos(&x, &y);
 		unsigned w = Application::GetWindowWidth();
@@ -299,9 +323,10 @@ void SceneGame::Update(double dt)
 		mousestate = "";
 	}
 	totalframe++;
-	if (totalframe >= 1440) {
+	if (totalframe >= 120) {
 		totalframe = 0;
 		day++;
+		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
 				if(coffee == false)
@@ -661,7 +686,7 @@ void SceneGame::RenderRoom(void)
 
 	// office area
 	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.01, -5.5);
+	modelStack.Translate(6.25, 0.03, -5.5);
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(7, 3.5, 1);
 	RenderMesh(meshList[GEO_OFFICE], true);
@@ -669,7 +694,7 @@ void SceneGame::RenderRoom(void)
 
 	// upgrade area
 	modelStack.PushMatrix();
-	modelStack.Translate(6.25, 0.01, 4.75);
+	modelStack.Translate(6.25, 0.03, 4.75);
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(7, 5, 1);
 	RenderMesh(meshList[GEO_UPGRADEAREA], true);
@@ -699,7 +724,6 @@ void SceneGame::RenderTable(int x, int y, int z)
 
 	modelStack.PopMatrix();
 }
-
 
 void SceneGame::RenderPermUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
@@ -751,5 +775,6 @@ void SceneGame::RenderPoliceMetre()
 {
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
+	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 100 , 5, metre.GetMP()/ 5); //start y 22 end 33
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }

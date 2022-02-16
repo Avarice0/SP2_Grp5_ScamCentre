@@ -37,12 +37,14 @@ class ScenePC : public Scene
 
 		GEO_COIN,
 		GEO_WALLPAPER,
+		GEO_PICKAXE,
 	
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_SCORE,			//number of coins clicked
+		GEO_MINING,			//Instructions
 		
 		GEO_TEXTOPTIONS,
 
@@ -112,7 +114,7 @@ private:
 
 	int totalframe = 0;
 
-	std::string victimMsg[8][2]
+	std::string victimMsg[8][2] = 
 	{
 		{"What company are", "you calling from?"},
 		{"Are you a scammer?", "  "},

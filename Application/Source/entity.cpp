@@ -1,6 +1,8 @@
 #include "entity.h"
 
 entity::entity(float X, float Y, float Z) {
+    stationtier = 0;
+    workertier = 0;
     ECoords[0] = X; ECoords[1] = Y; ECoords[2] = Z;
 }
 entity::~entity() {
