@@ -545,10 +545,10 @@ void SceneGame::Exit()
 	glDeleteProgram(m_programID);
 }
 
-float SceneGame::GetMouseY()
-{
-	return ;
-}
+//float SceneGame::GetMouseY()
+//{
+//	return ;
+//}
 
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
