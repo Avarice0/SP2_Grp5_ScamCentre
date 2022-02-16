@@ -301,57 +301,6 @@ void SceneGame::Update(double dt)
 
 }
 
-void SceneGame::RenderPermUpgrade() {
-	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
-
-	if(dollars >= 600){
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
-	}
-
-	if(dollars >= 1000){
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
-	}
-}
-
-void SceneGame::RenderUpgrade(){
-	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
-	if (dollars >= 0) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
-	}
-
-	if (dollars >= 0) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
-	}
-
-	if (dollars >= 0) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
-	}
-	else {
-		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
-	}
-}
-
 void SceneGame::Render()
 {
 	{
@@ -431,8 +380,11 @@ void SceneGame::Render()
 	else{
 		for (int i = 0; i < size(entities); i++) {
 			//distance
-			
-			RenderUpgrade();
+			float distance = sqrt((camera.position.x - entities[i]->ECoords[0]) * (camera.position.x - entities[i]->ECoords[0]) + 
+								  (camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
+			if (distance <= 3) {
+				RenderUpgrade();
+			}
 		}
 	}
 
@@ -691,4 +643,55 @@ void SceneGame::RenderTable(int x, int y, int z)
 	RenderMesh(meshList[GEO_TABLE], true);
 
 	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderPermUpgrade() {
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+
+	if (dollars >= 600) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM1], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
+
+	if (dollars >= 1000) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_UPGRADEITEM2], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+}
+
+void SceneGame::RenderUpgrade() {
+	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
+	}
+
+	if (dollars >= 0) {
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 50, 5, 15, 7);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 50, 5, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 50, 5, 15, 11);
+	}
 }
