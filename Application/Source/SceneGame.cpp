@@ -826,6 +826,13 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix();
 
+		modelStack.PushMatrix();
+		modelStack.Translate(0, -1.65, 0);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(4, 5, 5);
+		RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		modelStack.PopMatrix();
+
 		modelStack.PopMatrix();
 	}
 }
