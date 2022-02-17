@@ -10,6 +10,7 @@ SceneGame::~SceneGame()
 }
 
 float SceneGame::dollars = 0;
+float SceneGame::totalearned = 0;
 
 void SceneGame::Init()
 {
@@ -430,14 +431,14 @@ void SceneGame::Update(double dt)
 		if (upgrades == true) {
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
-				if (entities[entitynumber]->getworkertier() > 0 && entities[entitynumber]->getworkertier() < 3) {
+				if (entities[entitynumber]->getworkertier() >= 0 && entities[entitynumber]->getworkertier() < 3) {
 					entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
 					std::cout << "worker tier upgrade" << std::endl;
 				}
 			}
 			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-				if(entities[entitynumber]->getstationtier() > 0 && entities[entitynumber]->getstationtier() < 3){
+				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 4){
 					entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
 					std::cout << "Station tier upgrade" << std::endl;
 				}
@@ -497,9 +498,11 @@ void SceneGame::Update(double dt)
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+					totalearned += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
+					totalearned += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -1117,8 +1120,8 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
-
-
+	baseupgraderendered = true;
+	
 }
 
 void SceneGame::RenderPoliceMetre()

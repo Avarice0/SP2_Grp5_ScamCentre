@@ -26,6 +26,7 @@ private:
     float stationcost = 100;
     float workertier = 0;           //0 for empty, 1 for weak, 2 for normal, 3 for expert
     float workercost = 100;
+    float WorkerUpgrade1 = 200, Workerupgrade2 = 500, Workerupgrade3 = 1000;
     //if either station is bought, or if the station does not have a hire, then it wont earn money
     //plan to add the profit as a floating value above worker's head... more visual way of knowing income
     float profit;

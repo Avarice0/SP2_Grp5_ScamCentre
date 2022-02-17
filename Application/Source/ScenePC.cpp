@@ -187,6 +187,9 @@ void ScenePC::Update(double dt)
 			SceneGame::dollars += score * 2;
 			SceneGame::dollars += textscore * 4;
 			SceneGame::dollars += minescore * 2;
+			SceneGame::totalearned += score * 2;
+			SceneGame::totalearned += textscore * 4;
+			SceneGame::totalearned += minescore * 2;
 		}
 	}
 
