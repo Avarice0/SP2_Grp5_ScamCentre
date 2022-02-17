@@ -20,6 +20,7 @@ public:
 	static bool IsMousePressed(unsigned short key);
 	static void GetCursorPos(double* xpos, double* ypos);
 	static double GetTime();
+	//int getday();
 	static void SetTime(double time);
 	static int GetWindowWidth();
 	static int GetWindowHeight();

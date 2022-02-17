@@ -1,4 +1,5 @@
 #include "SceneGame.h"
+#include <math.h> 
 
 SceneGame::SceneGame()
 {
@@ -76,7 +77,7 @@ void SceneGame::Init()
 	// Init VBO
 	{
 		light[0].type = Light::LIGHT_SPOT;
-		light[0].position.Set(camera.position.x, camera.position.y, camera.position.z);
+		light[0].position.Set(0, 0, -90);
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 1.0f;
 		light[0].kC = 1.f;
@@ -314,8 +315,12 @@ void SceneGame::Update(double dt)
 	}
 	if (dollars >= 600)
 		RenderPermItem1 = true;
+	else
+		RenderPermItem1 = false;
 	if (dollars >= 600)
 		RenderPermItem2 = true;
+	else
+		RenderPermItem2 = false;
 
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i]->getworkertier() == 1) {
@@ -400,10 +405,18 @@ void SceneGame::Update(double dt)
 			ExpertCount++;
 		}
 	}
-	Application::GetTime(); // in seconds (supposedly)
-	totalframe++;
-	if (Application::GetTime() >= 5) {
-		Application::SetTime(0);
+
+	int times = Application::GetTime(); // in seconds 
+	
+	if (times / 5 == daydivide && times != 0)
+	{
+		dayUp = true;
+		daydivide++;
+		//Application::getday();
+	}
+	if (dayUp == true) {
+
+	//	Application::SetTime(0);
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
@@ -417,9 +430,10 @@ void SceneGame::Update(double dt)
 
 			}
 		}
+		dayUp = false;
 	}
 	//time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
-	time = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(times);
 
 	if (playerMoving == true)
 	{

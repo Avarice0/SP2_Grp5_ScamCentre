@@ -103,7 +103,7 @@ private:
 	float posX, posY;
 	string mousestate;
 
-	string times;
+	string timeprint;
 	int day;
 
 
@@ -120,6 +120,8 @@ private:
 	bool coinStarted = false;
 
 	int miningScale = 25;
+
+	int daydivide = 1;
 
 	int totalframe = 0;
 
