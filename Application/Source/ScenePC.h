@@ -126,6 +126,8 @@ private:
 
 	int totalframe = 0;
 
+	bool gameended = false;
+
 	std::string victimMsg[8][2] = 
 	{
 		{"What company are", "you calling from?"},

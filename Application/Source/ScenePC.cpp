@@ -1,4 +1,5 @@
 #include "ScenePC.h"
+#include "SceneGame.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
@@ -141,6 +142,7 @@ void ScenePC::Update(double dt)
 			{
 				score--;
 			}
+			gameended = true;
 		}
 		else if (gamenum == 2)
 		{
@@ -171,6 +173,7 @@ void ScenePC::Update(double dt)
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
+			gameended = true;
 		}
 		else if (gamenum == 3)
 		{
@@ -178,8 +181,13 @@ void ScenePC::Update(double dt)
 				minescore++;
 				miningScale = 20;
 			}
+			gameended = true;
 		}
-		
+		if (gameended == true) {
+			SceneGame::dollars += score * 2;
+			SceneGame::dollars += textscore * 4;
+			SceneGame::dollars += minescore * 2;
+		}
 	}
 
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -224,8 +232,10 @@ void ScenePC::Update(double dt)
 		if (seconds < 0) {
 			seconds = 0;
 			coinStarted = false;
-			coinx = 100; coiny = 100;
+			coinx = 45; coiny = 50;
+			seconds = 5;
 		}
+
 
 	}
 	

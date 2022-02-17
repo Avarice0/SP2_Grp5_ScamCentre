@@ -105,6 +105,7 @@ void SceneGame::Init()
 	{
 		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
+		meshList[GEO_WORKERAREA] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 	}
 	{
 		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("shopbg", Color(1, 1, 1), 1.f);
@@ -429,13 +430,17 @@ void SceneGame::Update(double dt)
 		if (upgrades == true) {
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
-				entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
-				std::cout << "worker tier upgrade" << std::endl;
+				if (entities[entitynumber]->getworkertier() > 0 && entities[entitynumber]->getworkertier() < 3) {
+					entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
+					std::cout << "worker tier upgrade" << std::endl;
+				}
 			}
 			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-				entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
-				std::cout << "Station tier upgrade" << std::endl;
+				if(entities[entitynumber]->getstationtier() > 0 && entities[entitynumber]->getstationtier() < 3){
+					entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
+					std::cout << "Station tier upgrade" << std::endl;
+				}
 			}
 			else {
 				upgrades = false;
@@ -621,8 +626,8 @@ void SceneGame::Render()
 				//distance
 				float distance = sqrt((player.X - entities[i]->ECoords[0] + 5) * (player.X - entities[i]->ECoords[0] + 5) +
 					(player.Z - entities[i]->ECoords[2]) * (player.Z - entities[i]->ECoords[2]));
-				entitynumber = i;
-				if (distance <= 5) {
+				if (distance <= 8) {
+					entitynumber = i;
 					RenderUpgrade();
 					upgrades = true;
 					//get upgrade cost and tier
@@ -775,13 +780,14 @@ void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int size
 
 void SceneGame::renderworker(int x, int y, int z, int rarity) {
 	rarity--;
-	modelStack.PushMatrix(); 
-	modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
-	RenderMesh(meshList[GEO_SKINNED], true);
-	modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
-	RenderMesh(shirtrarity[rarity], true);
+	if(rarity >= 0){
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z); modelStack.Scale(1, 1.3, 1);
+		RenderMesh(meshList[GEO_SKINNED], true);
+		modelStack.Translate(0, -2, 0); modelStack.Scale(1.1, 1.5, 1.1);
+		RenderMesh(shirtrarity[rarity], true);
 
-		modelStack.PushMatrix(); 
+		modelStack.PushMatrix();
 		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(20, 1, 0, 0);
 		modelStack.Translate(0, -0.3, -1); modelStack.Scale(0.833, 0.666, 0.833);
@@ -801,24 +807,25 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_SKINNED], true);
 		modelStack.PopMatrix();
 
-		modelStack.PushMatrix(); 
+		modelStack.PushMatrix();
 		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(-20, 1, 0, 0);
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
-		
+
 		modelStack.Scale(0.6, 1, 0.6);
 		RenderMesh(meshList[GEO_PANTS], true);
-		modelStack.PopMatrix(); 
+		modelStack.PopMatrix();
 
-		modelStack.PushMatrix(); 
+		modelStack.PushMatrix();
 		modelStack.Rotate(-debugRot, 0, 0, 1);
 		modelStack.Rotate(20, 1, 0, 0);
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.6, 1, 0.6);
 		RenderMesh(meshList[GEO_PANTS], true);
-		modelStack.PopMatrix(); 
+		modelStack.PopMatrix();
 
-	modelStack.PopMatrix();
+		modelStack.PopMatrix();
+	}
 }
 
 void SceneGame::RenderRoom(void)
@@ -1121,3 +1128,4 @@ void SceneGame::RenderPoliceMetre()
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
+

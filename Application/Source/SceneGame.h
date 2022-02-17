@@ -60,6 +60,8 @@ class SceneGame : public Scene
 		GEO_OFFICE,
 		GEO_UPGRADEAREA,
 
+		GEO_WORKERAREA,
+
 		GEO_UPGRADESHOPBG,
 		GEO_UPGRADESHOPFG,
 		GEO_UPGRADEITEM1,
@@ -136,6 +138,9 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+	static void editDollars(int amount);
+
+	static float dollars;
 
 private:
 	unsigned m_vertexArrayID;
@@ -172,7 +177,6 @@ private:
 	void RenderPermUpgrade();
 	void RenderUpgrade();
 	void RenderPoliceMetre();
-
 	//mouse input
 	double x, y;
 	float posX, posY;
@@ -187,7 +191,6 @@ private:
 
 	//entities
 	entity* entities[20];
-	static float dollars;
 	float policemeter = 0;		//0-100% 
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
