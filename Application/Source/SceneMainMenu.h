@@ -35,7 +35,6 @@ class SceneMainMenu : public Scene
 		GEO_TITLESCREEN,
 		GEO_PLAY,
 		GEO_QUIT,
-		GEO_SETTINGS,
 		//text
 		GEO_TEXT,			//debug for text
 		GEO_MOUSEPOS,		//debug for mouse

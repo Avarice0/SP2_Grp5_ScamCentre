@@ -19,7 +19,7 @@ const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
 //change this for scene number
-int Application::scenenum = 2;
+int Application::scenenum = 1;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -141,8 +141,8 @@ void Application::Run()
 	//Main Loop
 	Scene *scene1 = new SceneMainMenu();
 	Scene *scene2 = new SceneGame();
-	Scene* scene3 = new ScenePC();
-	Scene* scene4 = new SceneEnd();
+	Scene *scene3 = new ScenePC();
+	Scene *scene4 = new SceneEnd();
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
@@ -176,6 +176,14 @@ void Application::Run()
 					scenenum = 2;
 				}
 			}
+			else if(scenenum == 4){
+				if ((posX > 13 && posY < 33) && (posY > 2 && posY < 12)) {
+					scenenum = 1;
+				}
+				if ((posX > 47 && posX < 67) && (posY > 2 && posY < 12)) {
+					exit(0);
+				}
+			}
 
 		}
 		if (scenenum == 1) {
@@ -183,7 +191,6 @@ void Application::Run()
 		}
 		else if (scenenum == 2) {
 			scene = scene2;
-
 		}
 		else if (scenenum == 3) {
 			scene = scene3;

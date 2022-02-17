@@ -137,6 +137,7 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
+
 private:
 	unsigned m_vertexArrayID;
 	Mesh *meshList[NUM_GEOMETRY];
@@ -190,6 +191,8 @@ private:
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
+	int entitynumber;
+	bool upgrades = false;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
