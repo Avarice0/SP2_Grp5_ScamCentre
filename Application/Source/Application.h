@@ -18,6 +18,7 @@ public:
 	static bool IsMousePressed(unsigned short key);
 	static void GetCursorPos(double* xpos, double* ypos);
 	static double GetTime();
+	//int getday();
 	static void SetTime(double time);
 	static int GetWindowWidth();
 	static int GetWindowHeight();
@@ -29,6 +30,7 @@ private:
 	//Declare a window object
 	StopWatch m_timer;
 	int scenenum = 1;
+	//int day = 1;
 	/*	int time=0;*/
 };
 

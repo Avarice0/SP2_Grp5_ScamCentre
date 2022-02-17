@@ -1,4 +1,5 @@
 #include "SceneGame.h"
+#include <math.h> 
 
 SceneGame::SceneGame()
 {
@@ -213,23 +214,23 @@ void SceneGame::Init()
 		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
 	}
 	{
-		meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1, 1, 1);
-		meshList[GEO_PHONE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
-		meshList[GEO_PHONE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
-		meshList[GEO_PHONE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
-		meshList[GEO_PHONE]->material.kShininess = 1.f;
+		//meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1, 1, 1);
+		//meshList[GEO_PHONE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		//meshList[GEO_PHONE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		//meshList[GEO_PHONE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		//meshList[GEO_PHONE]->material.kShininess = 1.f;
 
-		meshList[GEO_PHONE1] = MeshBuilder::GenerateCube("phone1", Color(0.7, 0.7, 0.7), 1, 1, 1);
-		meshList[GEO_PHONE1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
-		meshList[GEO_PHONE1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
-		meshList[GEO_PHONE1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
-		meshList[GEO_PHONE1]->material.kShininess = 1.f;
+		//meshList[GEO_PHONE1] = MeshBuilder::GenerateCube("phone1", Color(0.7, 0.7, 0.7), 1, 1, 1);
+		//meshList[GEO_PHONE1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		//meshList[GEO_PHONE1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		//meshList[GEO_PHONE1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		//meshList[GEO_PHONE1]->material.kShininess = 1.f;
 
-		meshList[GEO_PHONE2] = MeshBuilder::GenerateCube("phone2", Color(0.6, 0.2, 0.2), 1, 1, 1);
-		meshList[GEO_PHONE2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
-		meshList[GEO_PHONE2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
-		meshList[GEO_PHONE2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
-		meshList[GEO_PHONE2]->material.kShininess = 1.f;
+		//meshList[GEO_PHONE2] = MeshBuilder::GenerateCube("phone2", Color(0.6, 0.2, 0.2), 1, 1, 1);
+		//meshList[GEO_PHONE2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		//meshList[GEO_PHONE2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		//meshList[GEO_PHONE2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		//meshList[GEO_PHONE2]->material.kShininess = 1.f;
 
 		meshList[GEO_PAPERSTACK] = MeshBuilder::GenerateCube("paperstack", Color(0.9, 0.9, 0.9), 1);
 		//meshList[GEO_PAPERSTACK]->textureID = LoadTGA("Image//color.tga");
@@ -393,10 +394,18 @@ void SceneGame::Update(double dt)
 			ExpertCount++;
 		}
 	}
-	Application::GetTime(); // in seconds (supposedly)
-	totalframe++;
-	if (Application::GetTime() >= 5) {
-		Application::SetTime(0);
+
+	int times = Application::GetTime(); // in seconds 
+	
+	if (times / 5 == daydivide && times != 0)
+	{
+		dayUp = true;
+		daydivide++;
+		//Application::getday();
+	}
+	if (dayUp == true) {
+
+	//	Application::SetTime(0);
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
@@ -410,9 +419,10 @@ void SceneGame::Update(double dt)
 
 			}
 		}
+		dayUp = false;
 	}
 	//time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
-	time = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(times);
 
 	if (playerMoving == true)
 	{

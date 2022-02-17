@@ -199,12 +199,18 @@ void ScenePC::Update(double dt)
 		mousestate = "";
 	}
 
-	if (Application::GetTime() >= 5) {
-		Application::SetTime(0);
+
+	int times = Application::GetTime(); // in seconds 
+
+	if (times / 5 == daydivide && times != 0)
+	{
 		day++;
+		daydivide++;
+		//Application::getday();
 	}
-	times = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
+	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(times);
 	
+
 	if (coinStarted == true) {
 		totalframe++;
 		if (totalframe >= 60)
@@ -245,7 +251,7 @@ void ScenePC::Render()
 	
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
-	RenderTextOnScreen(meshList[GEO_SCORE], times, Color(0.5, 0.5, 1), 2, 40, 30);
+	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0.5, 0.5, 1), 2, 40, 30);
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);

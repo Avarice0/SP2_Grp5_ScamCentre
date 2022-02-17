@@ -195,6 +195,9 @@ private:
 	bool legBack = false;
 	float debugRot;
 
+	bool dayUp = false;
+	int daydivide = 1;
+
 	Mesh* shirtrarity[3];			//increases with number of shirts
 };
 
