@@ -207,7 +207,7 @@ private:
 
 	bool dayUp = false;
 	int daydivide = 1;
-
+	float totalearned = 0;
 	Mesh* shirtrarity[3];			//increases with number of shirts
 
 };
