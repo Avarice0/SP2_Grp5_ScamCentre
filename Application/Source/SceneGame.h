@@ -182,6 +182,7 @@ private:
 	// gay
 	int day = 0;
 	int totalframe = 0;
+	int hours = 0;
 	string time;
 
 	//entities

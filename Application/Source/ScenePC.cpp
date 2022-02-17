@@ -201,7 +201,7 @@ void ScenePC::Update(double dt)
 
 
 	int times = Application::GetTime(); // in seconds 
-
+	hours = times % 5;
 	if (times / 5 == daydivide && times != 0)
 	{
 		day++;
@@ -209,7 +209,7 @@ void ScenePC::Update(double dt)
 		//Application::getday();
 	}
 
-	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(times);
+	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 	
 
 	if (coinStarted == true) {

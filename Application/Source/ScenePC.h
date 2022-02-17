@@ -105,6 +105,7 @@ private:
 
 	string timeprint;
 	int day;
+	int hours=0;
 
 
 	int gamenum = 2;
