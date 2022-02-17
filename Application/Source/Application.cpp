@@ -141,8 +141,8 @@ void Application::Run()
 	//Main Loop
 	Scene *scene1 = new SceneMainMenu();
 	Scene *scene2 = new SceneGame();
-	Scene* scene3 = new ScenePC();
-	Scene* scene4 = new SceneEnd();
+	Scene *scene3 = new ScenePC();
+	Scene *scene4 = new SceneEnd();
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
@@ -191,7 +191,6 @@ void Application::Run()
 		}
 		else if (scenenum == 2) {
 			scene = scene2;
-
 		}
 		else if (scenenum == 3) {
 			scene = scene3;
