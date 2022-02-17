@@ -1111,7 +1111,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
 
-
+	
 }
 
 void SceneGame::RenderPoliceMetre()
