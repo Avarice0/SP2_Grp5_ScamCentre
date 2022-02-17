@@ -9,7 +9,8 @@ SceneGame::~SceneGame()
 {
 }
 
-float SceneGame::dollars = 0;
+float SceneGame::dollars = 10000;
+float SceneGame::totalearned = 0;
 
 void SceneGame::Init()
 {
@@ -130,6 +131,8 @@ void SceneGame::Init()
 		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
+
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("UI_BG", Color(0.1, 0.1, 0.1), 1);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -430,16 +433,22 @@ void SceneGame::Update(double dt)
 		if (upgrades == true) {
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
-				if (entities[entitynumber]->getworkertier() > 0 && entities[entitynumber]->getworkertier() < 3) {
-					entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
-					std::cout << "worker tier upgrade" << std::endl;
+				if (entities[entitynumber]->getworkertier() >= 0 && entities[entitynumber]->getworkertier() < 3) {
+					if(dollars > entities[entitynumber]->getworkercost()){
+						entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
+						std::cout << "worker tier upgrade" << std::endl;
+						dollars -= entities[entitynumber]->getworkercost();
+					}
 				}
 			}
 			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-				if(entities[entitynumber]->getstationtier() > 0 && entities[entitynumber]->getstationtier() < 3){
-					entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
-					std::cout << "Station tier upgrade" << std::endl;
+				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 4){
+					if (dollars > entities[entitynumber]->getstationcost()) {
+						entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
+						std::cout << "Station tier upgrade" << std::endl;
+						dollars -= entities[entitynumber]->getstationcost();
+					}
 				}
 			}
 			else {
@@ -493,13 +502,16 @@ void SceneGame::Update(double dt)
 	
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+					dailyprofit += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
+					dailyprofit += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -615,8 +627,11 @@ void SceneGame::Render()
 		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
-		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 60, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 10, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1, 1, 0), 2, 1, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "+" + to_string(dailyprofit), Color(1, 1, 0), 2, 1, 55.5);
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();
@@ -822,6 +837,13 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
 		modelStack.Scale(0.6, 1, 0.6);
 		RenderMesh(meshList[GEO_PANTS], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(0, -1.65, 0);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(4, 5, 5);
+		RenderMesh(meshList[GEO_UPGRADEAREA], true);
 		modelStack.PopMatrix();
 
 		modelStack.PopMatrix();
@@ -1100,7 +1122,7 @@ void SceneGame::RenderPermUpgrade() {
 
 void SceneGame::RenderUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
-	if (dollars >= 0) {
+	if (dollars >= entities[entitynumber]->getworkercost()) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
 	}
@@ -1109,7 +1131,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if (dollars >= 0) {
+	if (dollars >= entities[entitynumber]->getstationcost()) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
 	}
@@ -1117,7 +1139,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
-
+	baseupgraderendered = true;
 	
 }
 

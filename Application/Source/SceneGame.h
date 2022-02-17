@@ -73,6 +73,8 @@ class SceneGame : public Scene
 		GEO_PUPGRADE,
 		GEO_WUPGRADE,
 
+		GEO_QUAD_BG,
+
 		//HUD
 		GEO_METREBARBG,
 		GEO_METREBARFG,
@@ -138,9 +140,8 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
-	static void editDollars(int amount);
-
 	static float dollars;
+	static float totalearned;
 
 private:
 	unsigned m_vertexArrayID;
@@ -195,10 +196,11 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
 	bool upgrades = false;
+	float dailyprofit;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
-	bool workerupgrade = false, stationupgrade = false;
+	bool workerupgrade = false, stationupgrade = false, baseupgraderendered = false;;
 
 	int cameranumber = 1;
 
@@ -208,8 +210,8 @@ private:
 
 	bool dayUp = false;
 	int daydivide = 1;
-
 	Mesh* shirtrarity[3];			//increases with number of shirts
+
 };
 
 
