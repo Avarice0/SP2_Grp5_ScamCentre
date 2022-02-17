@@ -90,7 +90,7 @@ class SceneGame : public Scene
 		GEO_INKJAR,
 		GEO_PENBASE,
 		GEO_FEATHER,
-		GEO_PAPERSTACK,
+		//GEO_PAPERSTACK,
 		
 		//objs
 
