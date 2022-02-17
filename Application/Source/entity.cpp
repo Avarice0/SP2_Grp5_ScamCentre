@@ -29,13 +29,13 @@ float entity::getprofit(void) {
 //    stationcost = newcost;
 //}
 float entity::getstationcost(void) {
-    if (stationtier == 0)
+    if (stationtier == 1)
         return StationUpgrade0;
-    else if (stationtier == 1)
-        return StationUpgrade1;
     else if (stationtier == 2)
-        return StationUpgrade2;
+        return StationUpgrade1;
     else if (stationtier == 3)
+        return StationUpgrade2;
+    else if (stationtier == 4)
         return StationUpgrade3;
     else
         return 0;
@@ -44,11 +44,11 @@ void entity::setworkercost(float newcost) {
     workercost = newcost;
 }*/
 float entity::getworkercost() {
-    if (workertier == 0)
+    if (workertier == 1)
         return WorkerUpgrade0;
-    else if (workertier == 1)
-        return WorkerUpgrade1;
     else if (workertier == 2)
+        return WorkerUpgrade1;
+    else if (workertier == 3)
         return Workerupgrade2;
     else
         return 0;
