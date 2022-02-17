@@ -202,11 +202,12 @@ void ScenePC::Update(double dt)
 
 	int times = Application::GetTime(); // in seconds 
 	hours = times % 5;
+	day = times / 5;
 	if (times / 5 == daydivide && times != 0)
 	{
-		day++;
+		
 		daydivide++;
-		//Application::getday();
+
 	}
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);

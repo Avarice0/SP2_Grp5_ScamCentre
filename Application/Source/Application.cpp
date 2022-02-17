@@ -176,7 +176,14 @@ void Application::Run()
 					scenenum = 2;
 				}
 			}
+		
 
+		}
+		if (scenenum == 2) {
+			if ((Application::IsKeyPressed('3')))    //debug
+			{
+				scenenum = 3;
+			}
 		}
 		if (scenenum == 1) {
 			scene = scene1;
