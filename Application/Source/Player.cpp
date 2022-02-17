@@ -10,18 +10,16 @@ Player::~Player()
 {
 }
 
-void Player::UpdatePlayerPosition(int x, int z)
-{
-	X = x;
-	Z = z;
-}
-
-int Player::GetPlayerX()
-{
-	return X;
-}
-
-int Player::GetPlayerZ()
-{
-	return Z;
-}
+//
+//if (position.x < minx) {
+//	position.x = minx;
+//}
+//if (position.x > maxx) {
+//	position.x = maxx;
+//}
+//if (position.z < minz) {
+//	position.z = minz;
+//}
+//if (position.z > maxz) {
+//	position.z = maxz;
+//}

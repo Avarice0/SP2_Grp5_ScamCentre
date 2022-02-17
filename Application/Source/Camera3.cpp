@@ -43,7 +43,7 @@ void Camera3::Update(double dt)
 	}
 	//delete when done modeling
 	{
-		if (Application::IsKeyPressed(VK_RIGHT))
+		/*if (Application::IsKeyPressed(VK_RIGHT))
 		{
 			float yaw = -CAMERA_SPEED * static_cast<float>(dt);
 			rotation.SetToRotation(yaw, 0, 1, 0);
@@ -82,35 +82,31 @@ void Camera3::Update(double dt)
 			if (view.y > 0.9) {
 				view.y = 0.9;
 			}
-		}
+		}*/
 	}
-	if (Application::IsKeyPressed('W'))
+	/*if (Application::IsKeyPressed('W'))
 	{
 		position += pos * ZOOM_SPEED * static_cast<float>(dt);
-		direction = 0;
 	}
 	if (Application::IsKeyPressed('S'))
 	{
 		position -= pos * ZOOM_SPEED * static_cast<float>(dt);
-		direction = 1;
 	}
 	if (Application::IsKeyPressed('A'))
 	{
 		position -= right * ZOOM_SPEED * static_cast<float>(dt);
-		direction = 2;
 	}
 	if (Application::IsKeyPressed('D'))
 	{
 		position += right * ZOOM_SPEED * static_cast<float>(dt);
-		direction = 3;
-	}
+	}*/
 	if (Application::IsKeyPressed('R'))
 	{
 		Reset();
 	}
 
 	//bounds check
-	{
+	/*{
 		if (position.x < minx) {
 			position.x = minx;
 		}
@@ -123,7 +119,7 @@ void Camera3::Update(double dt)
 		if (position.z > maxz) {
 			position.z = maxz;
 		}
-	}
+	}*/
 	target = position + view;
 }
 
@@ -134,7 +130,3 @@ void Camera3::Reset()
 	up = defaultUp;
 }
 
-
-int Camera3::GetDirection(void) {
-	return direction;
-}

@@ -71,8 +71,7 @@ void SceneGame::Init()
 	}
 
 	//Initialize camera settings
-	camera.Init(Vector3(30, 10, -10), Vector3(0, 10, 0), Vector3(0, 1, 0));
-	camera2.Init(Vector3(0, 120, 160), Vector3(0, 0, 25), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 120, 160), Vector3(0, 0, 25), Vector3(0, 1, 0));
 
 	// Init VBO
 	{
@@ -299,25 +298,42 @@ void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
 
-	player.UpdatePlayerPosition(camera.position.x, camera.position.z);
+	//player update code
+	if (Application::IsKeyPressed('W'))
+	{
+		player.D = 0;
+		player.Z--;
+	}
+	if (Application::IsKeyPressed('S'))
+	{
+		player.D = 1;
+		player.Z++;
+	}
+	if (Application::IsKeyPressed('A'))
+	{
+		player.D = 2;
+		player.X--;
+	}
+	if (Application::IsKeyPressed('D'))
+	{
+		player.D = 3;
+		player.X++;
+	}
+
 	for (int i = 0; i < size(entities); i++) {
-		if ((player.GetPlayerX() > entities[i]->ECoords[0] - 10) && (player.GetPlayerX() < entities[i]->ECoords[0] - 5)) {
-			if ((player.GetPlayerZ() > entities[i]->ECoords[2] - 2.5) && (player.GetPlayerZ() < entities[i]->ECoords[2] + 2.5)) {
-				if (camera.GetDirection() == 0) {
-					player.UpdatePlayerPosition(entities[i]->ECoords[0], entities[i]->ECoords[2] - 1);
-					std::cout << " collided up" << std::endl;
+		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
+			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+				if (player.D == 0) {
+					player.Z++;
 				}
-				else if (camera.GetDirection() == 1) {
-					player.UpdatePlayerPosition(entities[i]->ECoords[0], entities[i]->ECoords[2] + 1);
-					std::cout << " collided down" << std::endl;
+				else if (player.D == 1) {
+					player.Z--;
 				}
-				else if (camera.GetDirection() == 2) {
-					player.UpdatePlayerPosition(entities[i]->ECoords[0] - 1, entities[i]->ECoords[2]);
-					std::cout << " collided left" << std::endl;
+				else if (player.D == 2) {
+					player.X++;
 				}
-				else if (camera.GetDirection() == 3) {
-					player.UpdatePlayerPosition(entities[i]->ECoords[0] + 1, entities[i]->ECoords[2]);
-					std::cout << " collided right" << std::endl;
+				else if (player.D == 3) {
+					player.X--;
 				}
 				else {}
 			}
@@ -332,6 +348,9 @@ void SceneGame::Update(double dt)
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
 	}
+
+	player.D = -1;
+
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	else
@@ -391,6 +410,21 @@ void SceneGame::Update(double dt)
 				RenderPermItem2 = false;
 				mousestate = "Police Deterrence Bought";
 				dollars -= 600;
+			}
+		}
+		if (upgrades == true) {
+			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
+			{
+				entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
+				std::cout << "worker tier upgrade" << std::endl;
+			}
+			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
+			{
+				entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
+				std::cout << "Station tier upgrade" << std::endl;
+			}
+			else {
+				upgrades = false;
 			}
 		}
 	}
@@ -506,31 +540,18 @@ void SceneGame::Render()
 			//These will be replaced by matrix stack soon
 			Mtx44 model, view, projection;
 			//Set view matrix using camera settings
-			if(cameranumber == 1){
-				view.SetToLookAt(
-					camera2.position.x, camera2.position.y, camera2.position.z,
-					camera2.target.x, camera2.target.y, camera2.target.z,
-					camera2.up.x, camera2.up.y, camera2.up.z
-				);
-				viewStack.LoadIdentity();
-				viewStack.LookAt(camera2.position.x, camera2.position.y, camera2.position.z,
-					camera2.target.x, camera2.target.y, camera2.target.z,
-					camera2.up.x, camera2.up.y, camera2.up.z);
-				modelStack.LoadIdentity();
-				renderworker(player.GetPlayerX(), 5, player.GetPlayerZ(), 1);
-			}
-			else if (cameranumber){
-				view.SetToLookAt(
-					camera.position.x, camera.position.y, camera.position.z,
-					camera.target.x, camera.target.y, camera.target.z,
-					camera.up.x, camera.up.y, camera.up.z
-				);
-				viewStack.LoadIdentity();
-				viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
-					camera.target.x, camera.target.y, camera.target.z,
-					camera.up.x, camera.up.y, camera.up.z);
-				modelStack.LoadIdentity();
-			}
+			view.SetToLookAt(
+				camera.position.x, camera.position.y, camera.position.z,
+				camera.target.x, camera.target.y, camera.target.z,
+				camera.up.x, camera.up.y, camera.up.z
+			);
+			viewStack.LoadIdentity();
+			viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
+				camera.target.x, camera.target.y, camera.target.z,
+				camera.up.x, camera.up.y, camera.up.z);
+			modelStack.LoadIdentity();
+			renderworker(player.X, 5, player.Z, 1);
+		
 		}
 		{
 			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
@@ -563,7 +584,7 @@ void SceneGame::Render()
 		}
 
 		//text render
-		string coord = to_string(camera.position.x) + "," + to_string(camera.position.y) + "," + to_string(camera.position.z);
+		string coord = to_string(player.X) + "," + to_string(player.Z);
 		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
 
 		//render mesh on screen
@@ -576,18 +597,22 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
 
-		if ((camera.position.x < 98 && camera.position.x > 27) && (camera.position.z < 74 && camera.position.z > 20)) {
+		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();
 		}
 		else {
 			for (int i = 0; i < size(entities); i++) {
 				//distance
-				float distance = sqrt((camera.position.x - entities[i]->ECoords[0] + 5) * (camera.position.x - entities[i]->ECoords[0] + 5) +
-					(camera.position.z - entities[i]->ECoords[2]) * (camera.position.z - entities[i]->ECoords[2]));
+				float distance = sqrt((player.X - entities[i]->ECoords[0] + 5) * (player.X - entities[i]->ECoords[0] + 5) +
+					(player.Z - entities[i]->ECoords[2]) * (player.Z - entities[i]->ECoords[2]));
+				entitynumber = i;
 				if (distance <= 5) {
 					RenderUpgrade();
+					upgrades = true;
 					//get upgrade cost and tier
 					//render the name and attach it to unique entity
+				}
+				else {
 				}
 			}
 		}
