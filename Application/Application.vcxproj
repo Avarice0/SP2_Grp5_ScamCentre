@@ -160,6 +160,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\ScenePC.cpp" />
     <ClCompile Include="Source\PoliceMeter.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\ScenePC.h" />
     <ClInclude Include="Source\PoliceMeter.h" />
     <ClInclude Include="Source\Scene.h" />

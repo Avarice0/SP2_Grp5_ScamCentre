@@ -87,18 +87,22 @@ void Camera3::Update(double dt)
 	if (Application::IsKeyPressed('W'))
 	{
 		position += pos * ZOOM_SPEED * static_cast<float>(dt);
+		direction = 0;
 	}
 	if (Application::IsKeyPressed('S'))
 	{
 		position -= pos * ZOOM_SPEED * static_cast<float>(dt);
+		direction = 1;
 	}
 	if (Application::IsKeyPressed('A'))
 	{
 		position -= right * ZOOM_SPEED * static_cast<float>(dt);
+		direction = 2;
 	}
 	if (Application::IsKeyPressed('D'))
 	{
 		position += right * ZOOM_SPEED * static_cast<float>(dt);
+		direction = 3;
 	}
 	if (Application::IsKeyPressed('R'))
 	{
@@ -128,4 +132,9 @@ void Camera3::Reset()
 	position = defaultPosition;
 	target = defaultTarget;
 	up = defaultUp;
+}
+
+
+int Camera3::GetDirection(void) {
+	return direction;
 }

@@ -12,10 +12,14 @@
 #include "SceneGame.h"
 #include "SceneMainMenu.h"
 #include "ScenePC.h"
+#include "SceneEnd.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
+
+//change this for scene number
+int Application::scenenum = 2;
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -131,18 +135,21 @@ void Application::Init()
 	}
 }
 
+
 void Application::Run()
 {
 	//Main Loop
 	Scene *scene1 = new SceneMainMenu();
 	Scene *scene2 = new SceneGame();
 	Scene* scene3 = new ScenePC();
+	Scene* scene4 = new SceneEnd();
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
+	scene4->Init();
 	Scene* scene = scene1;
 
-	
+
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		//Converting Viewport space to UI space
@@ -171,25 +178,20 @@ void Application::Run()
 			}
 
 		}
-		if (Application::IsKeyPressed('E')) {
-			if (scenenum == 2) {
-				//if ((posX > 27 && posX < 97) && (posY > -74 && posY < -36)) {
-					scenenum = 3;
-				//}
-			}
-		}
-		
 		if (scenenum == 1) {
 			scene = scene1;
 		}
 		else if (scenenum == 2) {
 			scene = scene2;
-			
+
 		}
 		else if (scenenum == 3) {
 			scene = scene3;
 		}
-		else{}
+		else if (scenenum == 4) {
+			scene = scene4;
+		}
+		else {}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 
@@ -201,9 +203,10 @@ void Application::Run()
         m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.   
 
 	} //Check if the ESC key had been pressed or if the window had been closed
+
+
 	scene->Exit();
 	delete scene;
-	
 }
 
 void Application::Exit()

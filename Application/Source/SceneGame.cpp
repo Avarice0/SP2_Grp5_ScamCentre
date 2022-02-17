@@ -70,7 +70,7 @@ void SceneGame::Init()
 	}
 
 	//Initialize camera settings
-	camera.Init(Vector3(0, 10, 1), Vector3(0, 10, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(30, 10, -10), Vector3(0, 10, 0), Vector3(0, 1, 0));
 	camera2.Init(Vector3(0, 120, 160), Vector3(0, 0, 25), Vector3(0, 1, 0));
 
 	// Init VBO
@@ -213,8 +213,23 @@ void SceneGame::Init()
 		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
 	}
 	{
-		//meshList[GEO_QUILL] = MeshBuilder::GenerateOBJ("quill", "OBJ//Quill.obj");
-		//meshList[GEO_PHONE] = MeshBuilder::GenerateOBJ("phone", "OBJ//Phone.obj");
+		meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1);
+		meshList[GEO_PHONE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE]->material.kShininess = 1.f;
+
+		meshList[GEO_PHONE1] = MeshBuilder::GenerateCube("phone1", Color(0.7, 0.7, 0.7), 1);
+		meshList[GEO_PHONE1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE1]->material.kShininess = 1.f;
+
+		meshList[GEO_PHONE2] = MeshBuilder::GenerateCube("phone2", Color(0.6, 0.2, 0.2), 1);
+		meshList[GEO_PHONE2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE2]->material.kShininess = 1.f;
 
 		meshList[GEO_PAPERSTACK] = MeshBuilder::GenerateCube("paperstack", Color(0.9, 0.9, 0.9), 1);
 		//meshList[GEO_PAPERSTACK]->textureID = LoadTGA("Image//color.tga");
@@ -266,8 +281,37 @@ void SceneGame::Update(double dt)
 	camera.Update(dt);
 
 	player.UpdatePlayerPosition(camera.position.x, camera.position.z);
-
-
+	for (int i = 0; i < size(entities); i++) {
+		if ((player.GetPlayerX() > entities[i]->ECoords[0] - 10) && (player.GetPlayerX() < entities[i]->ECoords[0] - 5)) {
+			if ((player.GetPlayerZ() > entities[i]->ECoords[2] - 2.5) && (player.GetPlayerZ() < entities[i]->ECoords[2] + 2.5)) {
+				if (camera.GetDirection() == 0) {
+					player.UpdatePlayerPosition(entities[i]->ECoords[0], entities[i]->ECoords[2] - 1);
+					std::cout << " collided up" << std::endl;
+				}
+				else if (camera.GetDirection() == 1) {
+					player.UpdatePlayerPosition(entities[i]->ECoords[0], entities[i]->ECoords[2] + 1);
+					std::cout << " collided down" << std::endl;
+				}
+				else if (camera.GetDirection() == 2) {
+					player.UpdatePlayerPosition(entities[i]->ECoords[0] - 1, entities[i]->ECoords[2]);
+					std::cout << " collided left" << std::endl;
+				}
+				else if (camera.GetDirection() == 3) {
+					player.UpdatePlayerPosition(entities[i]->ECoords[0] + 1, entities[i]->ECoords[2]);
+					std::cout << " collided right" << std::endl;
+				}
+				else {}
+			}
+		}
+	}
+	if (metre.GetMP() == 1000) {
+		SceneEnd::EndingScene(1);
+		Application::changescene(4);
+	}
+	if (dollars <=-1) {
+		SceneEnd::EndingScene(2);
+		Application::changescene(4);
+	}
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	if (dollars >= 600)
@@ -278,7 +322,7 @@ void SceneGame::Update(double dt)
 			NoobCount++;
 		}
 		else if (entities[i]->getworkertier() == 2) {
-			ExperiencedCount	++;
+			ExperiencedCount++;
 		}
 		else if (entities[i]->getworkertier() == 3) {
 			ExpertCount++;
@@ -406,6 +450,13 @@ void SceneGame::Update(double dt)
 	}
 	else if(Application::IsKeyPressed('8')) {
 		cameranumber = 1;
+	}
+
+	if (Application::IsKeyPressed('E')) {		
+		if ((camera.position.x > 27 && camera.position.x < 97) && (camera.position.z > -74 && camera.position.z < -36)) {
+			Application::changescene(3);
+
+		}
 	}
 }
 
@@ -793,9 +844,100 @@ void SceneGame::RenderQuillPaper()
 
 void SceneGame::RenderPhone()
 {
-	/*modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(0.1, 0.1, 0.1);
-	RenderMesh(meshList[GEO_PHONE], true);*/
+	// phone base
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.1, 0);
+	modelStack.Scale(2, 0.2, 2);
+	RenderMesh(meshList[GEO_PHONE], true);
+	// phone screen
+	modelStack.PushMatrix();
+	modelStack.Translate(0.25, 0.4, -0.35);
+	modelStack.Scale(0.4, 0.5, 0.2);
+	RenderMesh(meshList[GEO_LAPTOP2], true);
+	modelStack.PopMatrix();
+	// numpad keys
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.5, 0.25);
+	modelStack.PushMatrix();
+	modelStack.Translate(0.1, 0, -0.35);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.25, 0, -0.35);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.4, 0, -0.35);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.1, 0, -0.2);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.25, 0, -0.2);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.4, 0, -0.2);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.1, 0, -0.05);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.25, 0, -0.05);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.4, 0, -0.05);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.1, 0, 0.1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE2], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.25, 0, 0.1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE1], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0.4, 0, 0.1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_PHONE2], true);
+	modelStack.PopMatrix();
+
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+
+	//phone
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.5, 0.4, 0);
+	modelStack.Scale(0.75, 0.15, 1.75);
+	RenderMesh(meshList[GEO_PHONE], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.5, 0.25, -0.6);
+	modelStack.Scale(0.75, 0.4, 0.55);
+	RenderMesh(meshList[GEO_PHONE], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.5, 0.25, 0.6);
+	modelStack.Scale(0.75, 0.4, 0.55);
+	RenderMesh(meshList[GEO_PHONE], true);
+	modelStack.PopMatrix();
 }
 
 void SceneGame::RenderLaptop()

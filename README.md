@@ -23,3 +23,5 @@ Jail Scene:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprison&psig=AOvVaw2T6Jyeh2kv-Yh6Osmd02H1&ust=1645074507343000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDJrae6g_YCFQAAAAAdAAAAABAa
 Thermometer:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freeiconspng.com%2Fimg%2F17045&psig=AOvVaw1d3Mv95b-ueNR0hl_iQaba&ust=1645063426550000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOik_oC7g_YCFQAAAAAdAAAAABAD
+Bankrupt Scene:
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fresearchoutreach.org%2Farticles%2Fbehavioural-sciences%2Fhomelessness-western-society-the-dark-side-of-the-moon%2F&psig=AOvVaw10gvGbzyFOAUz-47cYYxav&ust=1645151503249000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLiNponZhfYCFQAAAAAdAAAAABAD

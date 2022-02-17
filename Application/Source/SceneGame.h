@@ -2,6 +2,7 @@
 #define SCENE_17_H
 
 #include "Scene.h"
+#include "SceneEnd.h"
 #include "Camera3.h"
 #include "Camera2.h"
 #include "Mesh.h"
@@ -81,10 +82,12 @@ class SceneGame : public Scene
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
 		GEO_LAPTOP3,
+		
+		GEO_PHONE,
+		GEO_PHONE1,
+		GEO_PHONE2,
 
 		//objs
-		GEO_QUILL,
-		GEO_PHONE,
 
 		NUM_GEOMETRY,
 	};
