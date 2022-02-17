@@ -259,6 +259,24 @@ void SceneGame::Init()
 		meshList[GEO_LAPTOP3]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_LAPTOP3]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_LAPTOP3]->material.kShininess = 1.f;
+		
+		meshList[GEO_INKJAR] = MeshBuilder::GenerateCylinder("inkjar", Color(0.1,0.1, 0.1), 8, 1, 1.f);
+		meshList[GEO_INKJAR]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_INKJAR]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_INKJAR]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_INKJAR]->material.kShininess = 1.f;
+
+		meshList[GEO_PENBASE] = MeshBuilder::GenerateCylinder("penbase", Color(0.9, 0.9, 0.9), 8, 1, 1.f);
+		meshList[GEO_PENBASE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PENBASE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PENBASE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PENBASE]->material.kShininess = 1.f;
+
+		meshList[GEO_FEATHER] = MeshBuilder::GenerateCube("feather", Color(0.7, 0.7, 0.7), 1);
+		meshList[GEO_FEATHER]->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
+		meshList[GEO_FEATHER]->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+		meshList[GEO_FEATHER]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_FEATHER]->material.kShininess = 1.f;
 	}
 	
 	Mtx44 projection;
@@ -838,12 +856,32 @@ void SceneGame::RenderTable(int x, int y, int z)
 
 void SceneGame::RenderQuillPaper()
 {
-	/*modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Rotate(0, 1, 0, 0);
-	modelStack.Scale(0.0218, 0.0218, 0.0218);
-	RenderMesh(meshList[GEO_QUILL], true);
-	modelStack.PopMatrix();*/
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.8, 0.25, 0);
+	modelStack.Scale(0.25, 0.5, 0.25);
+	RenderMesh(meshList[GEO_INKJAR], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1, 1, 0);
+	modelStack.Rotate(20, 0, 0, 1);
+	modelStack.Scale(0.01, 1.75, 0.01);
+	RenderMesh(meshList[GEO_PENBASE], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1.15, 1.4, 0);
+	modelStack.Rotate(20, 0, 0, 1);
+	modelStack.Scale(0.01, 1, 0.25);
+	modelStack.Rotate(45, 1, 0, 0);
+	RenderMesh(meshList[GEO_FEATHER], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 0);
+	modelStack.Scale(2.9, 1, 2.1);
+	RenderMesh(meshList[GEO_PAPERSTACK], true);
+	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(2, 0.5, 0);
