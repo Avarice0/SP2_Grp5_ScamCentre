@@ -1,4 +1,5 @@
 #include "SceneGame.h"
+#include <math.h> 
 
 SceneGame::SceneGame()
 {
@@ -212,8 +213,23 @@ void SceneGame::Init()
 		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
 	}
 	{
-		//meshList[GEO_QUILL] = MeshBuilder::GenerateOBJ("quill", "OBJ//Quill.obj");
-		//meshList[GEO_PHONE] = MeshBuilder::GenerateOBJ("phone", "OBJ//Phone.obj");
+		meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1);
+		meshList[GEO_PHONE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE]->material.kShininess = 1.f;
+
+		meshList[GEO_PHONE1] = MeshBuilder::GenerateCube("phone1", Color(0.7, 0.7, 0.7), 1);
+		meshList[GEO_PHONE1]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE1]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE1]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE1]->material.kShininess = 1.f;
+
+		meshList[GEO_PHONE2] = MeshBuilder::GenerateCube("phone2", Color(0.6, 0.2, 0.2), 1);
+		meshList[GEO_PHONE2]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PHONE2]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PHONE2]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PHONE2]->material.kShininess = 1.f;
 
 		meshList[GEO_PAPERSTACK] = MeshBuilder::GenerateCube("paperstack", Color(0.9, 0.9, 0.9), 1);
 		//meshList[GEO_PAPERSTACK]->textureID = LoadTGA("Image//color.tga");
@@ -242,6 +258,24 @@ void SceneGame::Init()
 		meshList[GEO_LAPTOP3]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_LAPTOP3]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_LAPTOP3]->material.kShininess = 1.f;
+		
+		meshList[GEO_INKJAR] = MeshBuilder::GenerateCylinder("inkjar", Color(0.1,0.1, 0.1), 8, 1, 1.f);
+		meshList[GEO_INKJAR]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_INKJAR]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_INKJAR]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_INKJAR]->material.kShininess = 1.f;
+
+		meshList[GEO_PENBASE] = MeshBuilder::GenerateCylinder("penbase", Color(0.9, 0.9, 0.9), 8, 1, 1.f);
+		meshList[GEO_PENBASE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PENBASE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PENBASE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PENBASE]->material.kShininess = 1.f;
+
+		meshList[GEO_FEATHER] = MeshBuilder::GenerateCube("feather", Color(0.7, 0.7, 0.7), 1);
+		meshList[GEO_FEATHER]->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
+		meshList[GEO_FEATHER]->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+		meshList[GEO_FEATHER]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_FEATHER]->material.kShininess = 1.f;
 	}
 	
 	Mtx44 projection;
@@ -285,7 +319,6 @@ void SceneGame::Update(double dt)
 		player.D = 3;
 		player.X++;
 	}
-
 	for (int i = 0; i < size(entities); i++) {
 		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
 			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
@@ -304,6 +337,28 @@ void SceneGame::Update(double dt)
 				else {}
 			}
 		}
+	}
+	if (player.X > 100) {
+		player.X = 100;
+	}
+	if (player.X < -100) {
+		player.X = -100;
+	}
+	if (player.Z > 75) {
+		player.Z = 75;
+	}
+	if (player.Z < -75) {
+		player.Z = -75;
+	}
+	else{}
+
+	if (metre.GetMP() == 1000) {
+		SceneEnd::EndingScene(1);
+		Application::changescene(4);
+	}
+	if (dollars <=-1) {
+		SceneEnd::EndingScene(2);
+		Application::changescene(4);
 	}
 
 	player.D = -1;
@@ -396,10 +451,18 @@ void SceneGame::Update(double dt)
 			ExpertCount++;
 		}
 	}
-	Application::GetTime(); // in seconds (supposedly)
-	totalframe++;
-	if (Application::GetTime() >= 5) {
-		Application::SetTime(0);
+
+	int times = Application::GetTime(); // in seconds 
+	
+	if (times / 5 == daydivide && times != 0)
+	{
+		dayUp = true;
+		daydivide++;
+		//Application::getday();
+	}
+	if (dayUp == true) {
+
+	//	Application::SetTime(0);
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
@@ -413,9 +476,10 @@ void SceneGame::Update(double dt)
 
 			}
 		}
+		dayUp = false;
 	}
 	//time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
-	time = "Day:" + to_string(day) + ",Hour:" + to_string(Application::GetTime());
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(times);
 
 	if (playerMoving == true)
 	{
@@ -446,6 +510,13 @@ void SceneGame::Update(double dt)
 	}
 	else if(Application::IsKeyPressed('8')) {
 		cameranumber = 1;
+	}
+
+	if (Application::IsKeyPressed('E')) {		
+		if ((camera.position.x > 27 && camera.position.x < 97) && (camera.position.z > -74 && camera.position.z < -36)) {
+			Application::changescene(3);
+
+		}
 	}
 }
 
@@ -804,12 +875,32 @@ void SceneGame::RenderTable(int x, int y, int z)
 
 void SceneGame::RenderQuillPaper()
 {
-	/*modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	modelStack.Rotate(0, 1, 0, 0);
-	modelStack.Scale(0.0218, 0.0218, 0.0218);
-	RenderMesh(meshList[GEO_QUILL], true);
-	modelStack.PopMatrix();*/
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.8, 0.25, 0);
+	modelStack.Scale(0.25, 0.5, 0.25);
+	RenderMesh(meshList[GEO_INKJAR], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1, 1, 0);
+	modelStack.Rotate(20, 0, 0, 1);
+	modelStack.Scale(0.01, 1.75, 0.01);
+	RenderMesh(meshList[GEO_PENBASE], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1.15, 1.4, 0);
+	modelStack.Rotate(20, 0, 0, 1);
+	modelStack.Scale(0.01, 1, 0.25);
+	modelStack.Rotate(45, 1, 0, 0);
+	RenderMesh(meshList[GEO_FEATHER], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 0);
+	modelStack.Scale(2.9, 1, 2.1);
+	RenderMesh(meshList[GEO_PAPERSTACK], true);
+	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(2, 0.5, 0);

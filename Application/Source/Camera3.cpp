@@ -21,7 +21,6 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 
 void Camera3::Update(double dt)
 {
-	float minx = -100, maxx = 100, minz = -75, maxz = 75;
 	float CAMERA_SPEED = 45.f;
 	float ZOOM_SPEED = 20.f;
 	view = (target - position).Normalized();
