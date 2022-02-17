@@ -223,8 +223,10 @@ void ScenePC::Update(double dt)
 		if (seconds < 0) {
 			seconds = 0;
 			coinStarted = false;
-			coinx = 100; coiny = 100;
+			coinx = 45; coiny = 50;
+			seconds = 5;
 		}
+
 
 	}
 	
