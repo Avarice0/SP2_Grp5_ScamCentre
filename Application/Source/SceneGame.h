@@ -87,6 +87,10 @@ class SceneGame : public Scene
 		GEO_PHONE1,
 		GEO_PHONE2,
 
+		GEO_INKJAR,
+		GEO_PENBASE,
+		GEO_FEATHER,
+		
 		//objs
 
 		NUM_GEOMETRY,

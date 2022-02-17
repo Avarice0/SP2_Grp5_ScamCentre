@@ -111,8 +111,6 @@ void SceneMainMenu::Init()
 		meshList[GEO_PLAY]->textureID = LoadTGA("Image//Play.tga");
 		meshList[GEO_QUIT] = MeshBuilder::GenerateQuad("quit", Color(0, 0, 0), 1.f);
 		meshList[GEO_QUIT]->textureID = LoadTGA("Image//Quit.tga");
-		meshList[GEO_SETTINGS] = MeshBuilder::GenerateQuad("Settings", Color(0, 0, 0), 1.f);
-		meshList[GEO_SETTINGS]->textureID = LoadTGA("Image//Settings.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -227,7 +225,6 @@ void SceneMainMenu::Render()
 
 	RenderMeshOnScreen(meshList[GEO_QUIT], 15, 15, 14, 7);
 
-	RenderMeshOnScreen(meshList[GEO_SETTINGS], 70, 10, 10, 10);
 
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);

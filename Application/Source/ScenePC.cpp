@@ -208,6 +208,7 @@ void ScenePC::Update(double dt)
 		daydivide++;
 		//Application::getday();
 	}
+
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(times);
 	
 
