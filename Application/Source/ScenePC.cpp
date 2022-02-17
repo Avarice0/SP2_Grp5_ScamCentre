@@ -190,6 +190,9 @@ void ScenePC::Update(double dt)
 			SceneGame::totalearned += score * 2;
 			SceneGame::totalearned += textscore * 4;
 			SceneGame::totalearned += minescore * 2;
+			score = 0;
+			textscore = 0;
+			minescore = 0;
 		}
 	}
 

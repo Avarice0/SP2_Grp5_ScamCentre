@@ -2,8 +2,6 @@
 
 entity::entity(float X, float Y, float Z) {
     ECoords[0] = X; ECoords[1] = Y; ECoords[2] = Z;
-    stationtier = 1;
-    workertier = 1;
 }
 entity::~entity() {
 
@@ -23,19 +21,35 @@ void entity::setworkertier(int newtier) {
 }
 
 float entity::getprofit(void) {
-    profit = stationtier * workertier;
+    profit = (stationtier + 1) * (workertier  + 2);
     return profit;
 }
-
-void entity::setstationcost(float newcost) {
-    stationcost = newcost;
-}
+//
+//void entity::setstationcost(float newcost) {
+//    stationcost = newcost;
+//}
 float entity::getstationcost(void) {
-    return stationcost;
-}
+    if (stationtier == 0)
+        return StationUpgrade0;
+    else if (stationtier == 1)
+        return StationUpgrade1;
+    else if (stationtier == 2)
+        return StationUpgrade2;
+    else if (stationtier == 3)
+        return StationUpgrade3;
+    else
+        return 0;
+}/*
 void entity::setworkercost(float newcost) {
     workercost = newcost;
-}
+}*/
 float entity::getworkercost() {
-    return workercost;
+    if (workertier == 0)
+        return WorkerUpgrade0;
+    else if (workertier == 1)
+        return WorkerUpgrade1;
+    else if (workertier == 2)
+        return Workerupgrade2;
+    else
+        return 0;
 }
