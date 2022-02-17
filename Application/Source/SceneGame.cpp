@@ -497,9 +497,11 @@ void SceneGame::Update(double dt)
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+					totalearned += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
+					totalearned += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -1118,7 +1120,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
 
-
+	
 }
 
 void SceneGame::RenderPoliceMetre()

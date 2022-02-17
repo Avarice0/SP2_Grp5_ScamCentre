@@ -34,6 +34,7 @@ private:
 	//Declare a window object
 	StopWatch m_timer;
 	/*	int time=0;*/
+
 };
 
 #endif
