@@ -187,7 +187,7 @@ private:
 
 	//entities
 	entity* entities[20];
-	float dollars = 0;
+	static float dollars;
 	float policemeter = 0;		//0-100% 
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;

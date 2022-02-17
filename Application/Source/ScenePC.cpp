@@ -179,6 +179,7 @@ void ScenePC::Update(double dt)
 				miningScale = 20;
 			}
 		}
+		
 	}
 
 	else if (bLButtonState && !Application::IsMousePressed(0))

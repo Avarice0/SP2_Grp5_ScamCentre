@@ -2,6 +2,8 @@
 
 entity::entity(float X, float Y, float Z) {
     ECoords[0] = X; ECoords[1] = Y; ECoords[2] = Z;
+    stationtier = 1;
+    workertier = 1;
 }
 entity::~entity() {
 

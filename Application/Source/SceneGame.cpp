@@ -9,6 +9,8 @@ SceneGame::~SceneGame()
 {
 }
 
+float SceneGame::dollars = 0;
+
 void SceneGame::Init()
 {
 	{
@@ -534,7 +536,7 @@ void SceneGame::Update(double dt)
 	}
 
 	if (Application::IsKeyPressed('E')) {		
-		if ((camera.position.x > 27 && camera.position.x < 97) && (camera.position.z > -74 && camera.position.z < -36)) {
+		if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36)) {
 			Application::changescene(3);
 
 		}
