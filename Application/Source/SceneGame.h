@@ -2,6 +2,7 @@
 #define SCENE_17_H
 
 #include "Scene.h"
+#include "SceneEnd.h"
 #include "Camera3.h"
 #include "Camera2.h"
 #include "Mesh.h"
@@ -86,6 +87,11 @@ class SceneGame : public Scene
 		GEO_PHONE1,
 		GEO_PHONE2,
 
+		GEO_INKJAR,
+		GEO_PENBASE,
+		GEO_FEATHER,
+		GEO_PAPERSTACK,
+		
 		//objs
 
 		NUM_GEOMETRY,
@@ -194,6 +200,9 @@ private:
 	bool playerMoving = false;
 	bool legBack = false;
 	float debugRot;
+
+	bool dayUp = false;
+	int daydivide = 1;
 
 	Mesh* shirtrarity[3];			//increases with number of shirts
 };

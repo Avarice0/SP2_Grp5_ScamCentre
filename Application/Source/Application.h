@@ -11,24 +11,28 @@ public:
 	void Init();
 	void Run();
 	void Exit();
-	void changescene(int newscene);
+
+	static int scenenum;
+
 
 	//input
 	static bool IsKeyPressed(unsigned short key);
 	static bool IsMousePressed(unsigned short key);
 	static void GetCursorPos(double* xpos, double* ypos);
 	static double GetTime();
+	//int getday();
 	static void SetTime(double time);
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 	static unsigned m_width;
 	static unsigned m_height;
-  
+
+	static void changescene(int newscene);
+
 private:
 
 	//Declare a window object
 	StopWatch m_timer;
-	int scenenum = 1;
 	/*	int time=0;*/
 };
 

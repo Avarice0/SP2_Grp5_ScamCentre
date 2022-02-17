@@ -1,20 +1,20 @@
-#include "ScenePC.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include "SceneEnd.h"
 
-ScenePC::ScenePC()
+int SceneEnd::EndingNumber = 0;
+
+SceneEnd::SceneEnd()
 {
 }
 
-ScenePC::~ScenePC()
+SceneEnd::~SceneEnd()
 {
 }
 
-void ScenePC::Init()
+void SceneEnd::Init()
 {
 	{
-
-		glClearColor(1.f, 1.0f, 1.0f, 0.0f);
+		// Set background color to dark blue
+		glClearColor(0.1f, 0.0f, 0.4f, 0.0f);
 
 		//Enable depth buffer and depth testing
 		glEnable(GL_DEPTH_TEST);
@@ -44,6 +44,18 @@ void ScenePC::Init()
 		m_parameters[U_MATERIAL_SHININESS] = glGetUniformLocation(m_programID, "material.kShininess");
 		m_parameters[U_LIGHTENABLED] = glGetUniformLocation(m_programID, "lightEnabled");
 
+		m_parameters[U_LIGHT0_POSITION] = glGetUniformLocation(m_programID, "lights[0].position_cameraspace");
+		m_parameters[U_LIGHT0_COLOR] = glGetUniformLocation(m_programID, "lights[0].color");
+		m_parameters[U_LIGHT0_POWER] = glGetUniformLocation(m_programID, "lights[0].power");
+		m_parameters[U_LIGHT0_KC] = glGetUniformLocation(m_programID, "lights[0].kC");
+		m_parameters[U_LIGHT0_KL] = glGetUniformLocation(m_programID, "lights[0].kL");
+		m_parameters[U_LIGHT0_KQ] = glGetUniformLocation(m_programID, "lights[0].kQ");
+		m_parameters[U_LIGHT0_TYPE] = glGetUniformLocation(m_programID, "lights[0].type");
+		m_parameters[U_LIGHT0_SPOTDIRECTION] = glGetUniformLocation(m_programID, "lights[0].spotDirection");
+		m_parameters[U_LIGHT0_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[0].cosCutoff");
+		m_parameters[U_LIGHT0_COSINNER] = glGetUniformLocation(m_programID, "lights[0].cosInner");
+		m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
+
 		m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
 		// Get a handle for our "colorTexture" uniform
 		m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
@@ -56,26 +68,51 @@ void ScenePC::Init()
 		m_parameters[U_MVP] = glGetUniformLocation(m_programID, "MVP");
 		// Use our shader
 		glUseProgram(m_programID);
-		glUniform1i(m_parameters[U_NUMLIGHTS], 0);
+		glUniform1i(m_parameters[U_NUMLIGHTS], 3);
 	}
-	srand(time(NULL));
+
+	//Initialize camera settings
+	camera.Init(Vector3(50, 50, 50), Vector3(0, 10, 0), Vector3(0, 1, 0));
+
 	// Init VBO
+	{
+		light[0].type = Light::LIGHT_DIRECTIONAL;
+		light[0].position.Set(10, 10 , 10);
+		light[0].color.Set(1, 1, 1);
+		light[0].power = 1.5f;
+		light[0].kC = 1.f;
+		light[0].kL = 0.01;
+		light[0].kQ = 0.001f;
+		light[0].cosCutoff = cos(Math::DegreeToRadian(12.5));
+		light[0].cosInner = cos(Math::DegreeToRadian(10));
+		light[0].exponent = 1.f;
+		light[0].spotDirection.Set(0, 1, 0);
+
+		glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
+		glUniform3fv(m_parameters[U_LIGHT0_COLOR], 1, &light[0].color.r);
+		glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
+		glUniform1f(m_parameters[U_LIGHT0_KC], light[0].kC);
+		glUniform1f(m_parameters[U_LIGHT0_KL], light[0].kL);
+		glUniform1f(m_parameters[U_LIGHT0_KQ], light[0].kQ);
+		glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
+		glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
+		glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
+	}
 	for (int i = 0; i < NUM_GEOMETRY; ++i) {
 		meshList[i] = nullptr;
 	}
 	{
-		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
-		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
-		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
-		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
-		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
-		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
-		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("greentext", 16, 16);
-		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
-		meshList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("pickaxe", Color(0, 0, 0), 1.f);
-		meshList[GEO_PICKAXE]->textureID = LoadTGA("Image//Pickaxe.tga");
-		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
-		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
+		meshList[GEO_SCENE1] = MeshBuilder::GenerateQuad("scene1", Color(1, 1, 1), 1.f);
+		meshList[GEO_SCENE1]->textureID = LoadTGA("Image//JailScene.tga");
+		meshList[GEO_SCENE2] = MeshBuilder::GenerateQuad("scene2", Color(1, 1, 1), 1.f);
+		meshList[GEO_SCENE2]->textureID = LoadTGA("Image//Bankrupt.tga");
+
+		meshList[GEO_STATSBG] = MeshBuilder::GenerateQuad("statsbg", Color(0.2, 0.2, 0.2), 1.f);
+		meshList[GEO_BUTTONBG] = MeshBuilder::GenerateQuad("buttonbg", Color(1, 0, 0), 1.f);
+		meshList[GEO_PLAYAGAIN] = MeshBuilder::GenerateQuad("play again", Color(1, 1, 1), 1.f);
+		meshList[GEO_PLAYAGAIN]->textureID = LoadTGA("Image//Play.tga");
+		meshList[GEO_QUIT] = MeshBuilder::GenerateQuad("quit", Color(1, 1, 1), 1.f);
+		meshList[GEO_QUIT]->textureID = LoadTGA("Image//Quit.tga");
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -84,13 +121,9 @@ void ScenePC::Init()
 		meshList[GEO_MOUSEPOS]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_MOUSESTATE] = MeshBuilder::GenerateText("mousestate", 16, 16);
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_SCORE] = MeshBuilder::GenerateText("score", 16, 16);
-		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_MINING] = MeshBuilder::GenerateQuad("mining", 16, 16);
-		meshList[GEO_MINING]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_COORDS] = MeshBuilder::GenerateText("coordinates", 16, 16);
+		meshList[GEO_COORDS]->textureID = LoadTGA("Image//calibri.tga");
 	}
-
-
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -99,7 +132,7 @@ void ScenePC::Init()
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 }
 
-void ScenePC::Update(double dt)
+void SceneEnd::Update(double dt)
 {
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -112,80 +145,19 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
+		//converting viewport space to UI space
+		if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30))
 		{
-			gamenum = 1; //coins
-			coinx = rand() % 25 + 45;
-			coiny = rand() % 35 + 15;
-		}
-		else if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
-		{
-			gamenum = 2; //texting
-		}
-		else if ((posX > 25 && posX < 35) && (posY > 44.5 && posY < 52))
-		{
-			gamenum = 3; //clicker mining
-		}
-		else {}
-
-		if (gamenum == 1) {
-
-			if ((posX > (coinx - 2.5) && posX < (coinx + 2.5)) && (posY > (coiny - 2.5) && posY < (coiny + 2.5)))
-			{
-				coinx = rand() % 25 + 45;
-				coiny = rand() % 35 + 15;
-				score++;
-				coinStarted = true;
-			}
-			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && coinStarted == true))
-			{
-				score--;
-			}
-		}
-		else if (gamenum == 2)
-		{
-			coinx = 100; coiny = 100;
-			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
-			{
-				if (correctPos == true) {
-					textscore++;
-				}
-				else
-				{
-					textscore--;
-				}
-				RNGmsg = rand() % 8;
-				correctPos = rand() % 2;
-			}
-			if ((posX > 38 && posX < 74) && (posY > 8 && posY < 22))
-			{
-				if (correctPos == true) {
-					textscore--;
-				}
-				else
-				{
-					textscore++;
-				}
-				coinx = 40;
-				coiny = 30;
-				RNGmsg = rand() % 8;
-				correctPos = rand() % 2;
-			}
-		}
-		else if (gamenum == 3)
-		{
-			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
-				minescore++;
-				miningScale = 20;
-			}
+			//trigger user action or function
+			mousestate = "play clicked";
+			//Application::changescene(2);
+			//error when uncommented
 		}
 	}
-
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
 		mousestate = "";
-		miningScale = 25;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
@@ -198,38 +170,9 @@ void ScenePC::Update(double dt)
 		bRButtonState = false;
 		mousestate = "";
 	}
-
-
-	int times = Application::GetTime(); // in seconds 
-
-	if (times / 5 == daydivide && times != 0)
-	{
-		day++;
-		daydivide++;
-		//Application::getday();
-	}
-
-	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(times);
-	
-
-	if (coinStarted == true) {
-		totalframe++;
-		if (totalframe >= 60)
-		{
-			totalframe = 0;
-			seconds--;
-		}
-		if (seconds < 0) {
-			seconds = 0;
-			coinStarted = false;
-			coinx = 100; coiny = 100;
-		}
-
-	}
-	
 }
 
-void ScenePC::Render()
+void SceneEnd::Render()
 {
 	{
 		// Render VBO here
@@ -242,69 +185,49 @@ void ScenePC::Render()
 		//These will be replaced by matrix stack soon
 		Mtx44 model, view, projection;
 		//Set view matrix using camera settings
+		view.SetToLookAt(
+			camera.position.x, camera.position.y, camera.position.z,
+			camera.target.x, camera.target.y, camera.target.z,
+			camera.up.x, camera.up.y, camera.up.z
+		);
+		viewStack.LoadIdentity();
+		viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
+			camera.target.x, camera.target.y, camera.target.z,
+			camera.up.x, camera.up.y, camera.up.z);
+		modelStack.LoadIdentity();
 	}
-	//text render
-	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
+	{			//spot light
+		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
+	}
+
+	//----------------------------------------
+	//RenderMesh(meshList[GEO_AXES], false);
+	if(EndingNumber == 1){
+		RenderMeshOnScreen(meshList[GEO_SCENE1], 40, 30, 80, 60);
+	}
+	else if (EndingNumber == 2) {
+		RenderMeshOnScreen(meshList[GEO_SCENE2], 40, 30, 80, 60);
+	}
+	RenderMeshOnScreen(meshList[GEO_STATSBG], 68, 33, 20, 35);
+	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 23, 7, 20, 10);
+	RenderMeshOnScreen(meshList[GEO_PLAYAGAIN], 23, 7, 20, 10);
+	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 57, 7, 20, 10);
+	RenderMeshOnScreen(meshList[GEO_QUIT], 57, 7, 25, 14);
+
+
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
 	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
-	
-	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
-
-	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0.5, 0.5, 1), 2, 40, 30);
-	if (gamenum == 1) 
-	{
-		string coinTimer = "Secs left: " + to_string(seconds);
-		string scoreText = "Score: " + to_string(score);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
-		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
-		if (coinStarted == false)
-		{
-			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
-		}
-		RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
-	}
-	else if (gamenum == 2)
-	{
-		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
-		
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 41, 46);
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 41, 43);
-
-		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
-	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
-
-		string scoreText = "Score: " + to_string(textscore);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 30);
-
-		if (correctPos == true) {
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
-		}
-		if (correctPos == false) {
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
-		}
-	}
-	else if (gamenum == 3)
-	{
-		string scoreText = "Score: " + to_string(minescore);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
-		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
-		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
-		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
-		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, miningScale, miningScale);
-	}
-
-
-	
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
 
 
-void ScenePC::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneEnd::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -327,7 +250,7 @@ void ScenePC::RenderText(Mesh* mesh, std::string text, Color color)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
 
-void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
+void SceneEnd::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
 	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
@@ -359,7 +282,12 @@ void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
-void ScenePC::Exit()
+void SceneEnd::EndingScene(int scenenumber)
+{
+	EndingNumber = scenenumber;
+}
+
+void SceneEnd::Exit()
 {
 	// Cleanup VBO here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -373,7 +301,7 @@ void ScenePC::Exit()
 	glDeleteProgram(m_programID);
 }
 
-void ScenePC::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneEnd::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -412,7 +340,7 @@ void ScenePC::RenderMesh(Mesh* mesh, bool enableLight)
 	}
 }
 
-void ScenePC::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+void SceneEnd::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
