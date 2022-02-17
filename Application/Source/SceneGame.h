@@ -138,9 +138,8 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
-	static void editDollars(int amount);
-
 	static float dollars;
+	static float totalearned;
 
 private:
 	unsigned m_vertexArrayID;
@@ -198,7 +197,7 @@ private:
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
-	bool workerupgrade = false, stationupgrade = false;
+	bool workerupgrade = false, stationupgrade = false, baseupgraderendered = false;;
 
 	int cameranumber = 1;
 
@@ -208,8 +207,8 @@ private:
 
 	bool dayUp = false;
 	int daydivide = 1;
-
 	Mesh* shirtrarity[3];			//increases with number of shirts
+
 };
 
 
