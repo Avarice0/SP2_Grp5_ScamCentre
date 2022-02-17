@@ -441,15 +441,17 @@ void SceneGame::Update(double dt)
 
 	int times = Application::GetTime(); // in seconds 
 	
+	hours = times % 5;
 	if (times / 5 == daydivide && times != 0)
 	{
 		dayUp = true;
 		daydivide++;
-		//Application::getday();
+		
 	}
+
 	if (dayUp == true) {
 
-	//	Application::SetTime(0);
+	
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
@@ -466,7 +468,7 @@ void SceneGame::Update(double dt)
 		dayUp = false;
 	}
 	//time = "Day:" + to_string(day) + ",Hour:" + to_string(totalframe / 60);
-	time = "Day:" + to_string(day) + ",Hour:" + to_string(times);
+	time = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
 	if (playerMoving == true)
 	{
