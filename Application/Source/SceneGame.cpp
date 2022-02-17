@@ -76,7 +76,7 @@ void SceneGame::Init()
 	// Init VBO
 	{
 		light[0].type = Light::LIGHT_SPOT;
-		light[0].position.Set(camera.position.x, camera.position.y, camera.position.z);
+		light[0].position.Set(0, 0, -90);
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 1.0f;
 		light[0].kC = 1.f;
@@ -319,7 +319,6 @@ void SceneGame::Update(double dt)
 		player.D = 3;
 		player.X++;
 	}
-
 	for (int i = 0; i < size(entities); i++) {
 		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
 			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
@@ -339,6 +338,20 @@ void SceneGame::Update(double dt)
 			}
 		}
 	}
+	if (player.X > 100) {
+		player.X = 100;
+	}
+	if (player.X < -100) {
+		player.X = -100;
+	}
+	if (player.Z > 75) {
+		player.Z = 75;
+	}
+	if (player.Z < -75) {
+		player.Z = -75;
+	}
+	else{}
+
 	if (metre.GetMP() == 1000) {
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
@@ -352,8 +365,12 @@ void SceneGame::Update(double dt)
 
 	if (dollars >= 600)
 		RenderPermItem1 = true;
+	else
+		RenderPermItem1 = false;
 	if (dollars >= 600)
 		RenderPermItem2 = true;
+	else
+		RenderPermItem2 = false;
 
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i]->getworkertier() == 1) {
@@ -405,6 +422,21 @@ void SceneGame::Update(double dt)
 				RenderPermItem2 = false;
 				mousestate = "Police Deterrence Bought";
 				dollars -= 600;
+			}
+		}
+		if (upgrades == true) {
+			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
+			{
+				entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
+				std::cout << "worker tier upgrade" << std::endl;
+			}
+			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
+			{
+				entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
+				std::cout << "Station tier upgrade" << std::endl;
+			}
+			else {
+				upgrades = false;
 			}
 		}
 	}
@@ -587,10 +619,14 @@ void SceneGame::Render()
 				//distance
 				float distance = sqrt((player.X - entities[i]->ECoords[0] + 5) * (player.X - entities[i]->ECoords[0] + 5) +
 					(player.Z - entities[i]->ECoords[2]) * (player.Z - entities[i]->ECoords[2]));
+				entitynumber = i;
 				if (distance <= 5) {
 					RenderUpgrade();
+					upgrades = true;
 					//get upgrade cost and tier
 					//render the name and attach it to unique entity
+				}
+				else {
 				}
 			}
 		}

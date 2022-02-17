@@ -78,7 +78,6 @@ class SceneGame : public Scene
 		GEO_METREBARBULB,
 		
 		// quill, paperstack, laptop and phone
-		GEO_PAPERSTACK,
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
 		GEO_LAPTOP3,
@@ -90,7 +89,7 @@ class SceneGame : public Scene
 		GEO_INKJAR,
 		GEO_PENBASE,
 		GEO_FEATHER,
-		//GEO_PAPERSTACK,
+		GEO_PAPERSTACK,
 		
 		//objs
 
@@ -191,6 +190,8 @@ private:
 	float dollars = 0;
 	float policemeter = 0;		//0-100% 
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
+	int entitynumber;
+	bool upgrades = false;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;

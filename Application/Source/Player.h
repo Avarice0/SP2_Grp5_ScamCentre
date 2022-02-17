@@ -6,6 +6,6 @@ private:
 public:
 	Player();
 	~Player();
-	int X, Z;
+	float X, Z;
 	int D;
 };
