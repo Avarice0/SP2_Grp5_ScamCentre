@@ -141,29 +141,34 @@ void ScenePC::Update(double dt)
 
 		if (gamenum == 1) {
 
-			if (((posX > (coin1x - 2.5) && posX < (coin1x + 2.5)) && (posY > (coin1y - 2.5) && posY < (coin1y + 2.5)))   || ((posX > (coin2x - 2.5) && posX < (coin2x + 2.5)) && (posY > (coin2y - 2.5) && posY < (coin2y + 2.5))))
+			if ( ( (posX > coin1x - 2.5) && (posX < coin1x + 2.5) && (posY > coin1y - 2.5) && (posY < coin1y + 2.5) )   || 
+		       ( (posX > coin2x - 2.5) && (posX < coin2x + 2.5) && (posY > coin2y - 2.5) && (posY < coin2y + 2.5) ) )
 			{
 				coin1x = rand() % 25 + 45;
 				coin1y = rand() % 35 + 15;
 
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
-				while ((coin2x > (coin1x - 2.5) && coin2x < (coin1x + 2.5)) && (coin2y > (coin1y - 2.5) && coin2y < (coin1y + 2.5)))
+				cout << "coin1 ok" << endl;
+				while ( (coin2x > coin1x - 2.5) && (coin2x < coin1x + 2.5) && (coin2y > coin1y - 2.5) && (coin2y < coin1y + 2.5) )
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
+					
 				}
+				cout << "coin2 ok" << endl;
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
-				while ((coinbombx > (coin1x - 2.5) && coinbombx < (coin1x + 2.5)) && (coinbomby > (coin1y - 2.5) && coinbomby < (coin1y + 2.5)))
+				while ( (coinbombx > coin1x - 2.5) && (coinbombx < coin1x + 2.5) && (coinbomby > coin1y - 2.5) && (coinbomby < coin1y + 2.5) )
 				{
-					while ((coinbombx > (coin2x - 2.5) && coinbombx < (coin2x + 2.5)) && (coinbomby > (coin2y - 2.5) && coinbomby < (coin2y + 2.5)))
+					while ( (coinbombx > coin2x - 2.5) && (coinbombx < coin2x + 2.5) && (coinbomby > coin2y - 2.5) && (coinbomby < coin2y + 2.5) )
 					{
 						coinbombx = rand() % 25 + 45;
 						coinbomby = rand() % 35 + 15;
+
 					}
 				}
-
+				cout << "coin3 ok" << endl;
 				score++;
 
 				coinStarted = true;

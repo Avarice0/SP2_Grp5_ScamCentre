@@ -287,7 +287,7 @@ void SceneGame::Init()
 	}
 
 	{
-		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+	//	meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -588,10 +588,7 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 		RenderRoom();
 
-		modelStack.PushMatrix();
-		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(meshList[GEO_VAN], true);
-		modelStack.PopMatrix();
+	
 
 		for (int i = 0; i < size(entities); i++) {
 			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());

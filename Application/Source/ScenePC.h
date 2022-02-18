@@ -119,7 +119,7 @@ private:
 
 	int coinbombx = 100;
 	int coinbomby = 100;
-
+	
 
 	int score = 0;
 	int minescore = 0;
