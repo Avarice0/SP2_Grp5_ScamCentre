@@ -493,14 +493,16 @@ void SceneGame::Update(double dt)
 	}
 
 	if (dayUp == true) {
-		
+		profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
 				dollars += entities[i]->getprofit();
-				profit += entities[i]->getprofit();
+				/*profit += entities[i]->getprofit();*/
 				dailyprofit += entities[i]->getprofit();
+				profit = dailyprofit;
 			}
 			else {
 				dollars += entities[i]->getprofit() * 1.1;
