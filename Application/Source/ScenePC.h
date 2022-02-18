@@ -39,7 +39,9 @@ class ScenePC : public Scene
 		GEO_COINBOMB,
 		GEO_EXPLOSION,
 		GEO_WALLPAPER,
-		GEO_PICKAXE,
+		GEO_HEADS,
+		GEO_TAILS,
+		GEO_HT,
 	
 		//text
 		GEO_TEXT,			//debug for text
@@ -130,12 +132,13 @@ private:
 	int minescore = 0;
 	int textscore = 0;
 
+	int heady = 30;
+	int taily = 100;
+
 	int dollarsClone=0;
 
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
-
-	int miningScale = 25;
 
 	int daydivide = 1;
 
