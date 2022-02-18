@@ -484,7 +484,7 @@ void SceneGame::Update(double dt)
 	}
 
 	if (dayUp == true) {
-		day++;
+		
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		profit = 0;
 		dailyprofit = 0;
