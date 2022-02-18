@@ -202,7 +202,7 @@ private:
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
-	bool workerupgrade = false, stationupgrade = false, baseupgraderendered = false;;
+	bool workerupgrade = false, stationupgrade = false, PermUpgrade = false;
 
 	int cameranumber = 1;
 

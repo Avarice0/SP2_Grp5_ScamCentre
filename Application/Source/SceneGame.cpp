@@ -399,23 +399,25 @@ void SceneGame::Update(double dt)
 			mousestate = "shop click";
 		}*/
 
-		if (RenderPermItem1 == true && coffee == false) {
-			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
-			{
-				coffee = true;
-				RenderPermItem1 = false;
-				mousestate = "Coffee Bought";
-				dollars -= 600;
+		if(PermUpgrade == true){
+			if (RenderPermItem1 == true && coffee == false) {
+				if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
+				{
+					coffee = true;
+					RenderPermItem1 = false;
+					mousestate = "Coffee Bought";
+					dollars -= 600;
+				}
 			}
-		}
-		if (RenderPermItem2 == true && policedeter == false) {
-			if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
-			{
-				//Add to police meter later
-				policedeter = true;
-				RenderPermItem2 = false;
-				mousestate = "Police Deterrence Bought";
-				dollars -= 600;
+			if (RenderPermItem2 == true && policedeter == false) {
+				if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
+				{
+					//Add to police meter later
+					policedeter = true;
+					RenderPermItem2 = false;
+					mousestate = "Police Deterrence Bought";
+					dollars -= 600;
+				}
 			}
 		}
 		if (upgrades == true) {
@@ -424,7 +426,7 @@ void SceneGame::Update(double dt)
 				if (entities[entitynumber]->getworkertier() >= 0 && entities[entitynumber]->getworkertier() < 3) {
 					if(dollars > entities[entitynumber]->getworkercost()){
 						entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
-						std::cout << "worker tier upgrade" << std::endl;
+						std::cout << entitynumber << " worker tier upgrade" << std::endl;
 						dollars -= entities[entitynumber]->getworkercost();
 					}
 				}
@@ -434,7 +436,7 @@ void SceneGame::Update(double dt)
 				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 4){
 					if (dollars > entities[entitynumber]->getstationcost()) {
 						entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
-						std::cout << "Station tier upgrade" << std::endl;
+						std::cout  << entitynumber << " Station tier upgrade" << std::endl;
 						dollars -= entities[entitynumber]->getstationcost();
 					}
 				}
@@ -626,6 +628,7 @@ void SceneGame::Render()
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();
+			PermUpgrade = true;
 		}
 		else {
 			for (int i = 0; i < size(entities); i++) {
@@ -638,10 +641,13 @@ void SceneGame::Render()
 					upgrades = true;
 					//get upgrade cost and tier
 					//render the name and attach it to unique entity
+					break;
 				}
 				else {
+					upgrades = false;
 				}
 			}
+			PermUpgrade = false;
 		}
 		RenderPoliceMetre();
 
@@ -817,7 +823,6 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		modelStack.Rotate(debugRot, 0, 0, 1);
 		modelStack.Rotate(-20, 1, 0, 0);
 		modelStack.Translate(0, -1.5, 0); modelStack.Scale(0.833, 0.666, 0.833);
-
 		modelStack.Scale(0.6, 1, 0.6);
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix();
@@ -1130,7 +1135,6 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_LOCK], 30, 5, 15, 11);
 	}
-	baseupgraderendered = true;
 	
 }
 
