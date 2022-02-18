@@ -359,11 +359,11 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 
-	if (metre.GetMP() == 1000) {
+	if (metre.GetMP() > 999) {
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
 	}
-	if (dollars <=-1) {
+	if (dollars < 0) {
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
 	}
@@ -392,13 +392,6 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-
-		//converting viewport space to UI space
-		/*if ((posX > 30 && posX < 50) && (posY > 25 && posY < 35))
-		{
-			mousestate = "shop click";
-		}*/
-
 		if(PermUpgrade == true){
 			if (RenderPermItem1 == true && coffee == false) {
 				if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
@@ -425,9 +418,9 @@ void SceneGame::Update(double dt)
 			{
 				if (entities[entitynumber]->getworkertier() >= 0 && entities[entitynumber]->getworkertier() < 3) {
 					if(dollars > entities[entitynumber]->getworkercost()){
+						dollars -= entities[entitynumber]->getworkercost();
 						entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
 						std::cout << entitynumber << " worker tier upgrade" << std::endl;
-						dollars -= entities[entitynumber]->getworkercost();
 					}
 				}
 			}
@@ -435,9 +428,9 @@ void SceneGame::Update(double dt)
 			{
 				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 4){
 					if (dollars > entities[entitynumber]->getstationcost()) {
+						dollars -= entities[entitynumber]->getstationcost();
 						entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
 						std::cout  << entitynumber << " Station tier upgrade" << std::endl;
-						dollars -= entities[entitynumber]->getstationcost();
 					}
 				}
 			}
@@ -1116,7 +1109,7 @@ void SceneGame::RenderPermUpgrade() {
 
 void SceneGame::RenderUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
-	if (dollars >= entities[entitynumber]->getworkercost() && entities[entitynumber]->getworkertier() < 3) {
+	if (dollars > entities[entitynumber]->getworkercost() && entities[entitynumber]->getworkertier() < 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
 	}
@@ -1125,7 +1118,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if (dollars >= entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 4) {
+	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 4) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
 	}
@@ -1135,12 +1128,13 @@ void SceneGame::RenderUpgrade() {
 	}
 	
 }
-
+//enderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 void SceneGame::RenderPoliceMetre()
 {
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
+	std::cout << metre.GetMP() << std::endl;
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
 
