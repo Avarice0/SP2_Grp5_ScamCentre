@@ -391,7 +391,10 @@ void SceneGame::Update(double dt)
 		RenderPermItem2 = true;
 	else
 		RenderPermItem2 = false;
-
+	if (dollars > metre.GetBribeCost())
+		Canbribe = true;
+	else
+		Canbribe = false;
 	//mouse inputs
 	{
 		Application::GetCursorPos(&x, &y);
@@ -600,16 +603,9 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 		RenderRoom();
 
-		renderworker(player.X, 5, player.Z, 1);
-
-		if (vehiclex > 200) {
-			vehiclex = -200;
-			vehiclemodel = rand() % 3;
-		}
-		vehiclex++;
 		modelStack.PushMatrix();
-		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(vehicletype[vehiclemodel], true);
+		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(meshList[GEO_VAN], true);
 		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
@@ -660,10 +656,7 @@ void SceneGame::Render()
 		}
 
 		RenderPoliceMetre();
-
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 1, 48);
+		RenderBribe();
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -1181,5 +1174,18 @@ void SceneGame::RenderPoliceMetre()
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
+}
+
+void SceneGame::RenderBribe()
+{
+	if(Canbribe == true){
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 1, 48);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 50, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 50, 15, 11);
+	}
 }
 
