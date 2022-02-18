@@ -10,8 +10,8 @@ SceneGame::~SceneGame()
 }
 
 float SceneGame::dollars = 10000;
-float SceneGame::profit = 40;
 float SceneGame::totalearned = 0;
+float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
 void SceneGame::Init()
 {
@@ -134,7 +134,7 @@ void SceneGame::Init()
 		meshList[GEO_BRIBE] = MeshBuilder::GenerateQuad("bribe", Color(1, 0.4, 0.4), 1.f);
 		meshList[GEO_BRIBE]->textureID = LoadTGA("Image//Bribe.tga");
 
-		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("shopfg", Color(1, 0, 0), 1.f);
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("shopfg", Color(0, 0, 0), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -285,7 +285,16 @@ void SceneGame::Init()
 		meshList[GEO_FEATHER]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_FEATHER]->material.kShininess = 1.f;
 	}
-	
+
+	{
+		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
+		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
+
+		vehicletype[0] = meshList[GEO_VAN];
+		vehicletype[1] = meshList[GEO_POLICECAR];
+		vehicletype[2] = meshList[GEO_SEDAN];
+	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -395,6 +404,13 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		if(dollars > metre.GetBribeCost()){
+			if ((posX > 2.3 && posX < 17.4) && (posY > 46.4 && posY < 53.6))
+			{
+				dollars -= metre.GetBribeCost();
+				metre.Bribe();
+			}
+		}
 		if(PermUpgrade == true){
 			if (RenderPermItem1 == true && coffee == false) {
 				if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
@@ -485,14 +501,16 @@ void SceneGame::Update(double dt)
 	}
 
 	if (dayUp == true) {
-		
+		profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
 				dollars += entities[i]->getprofit();
-				profit += entities[i]->getprofit();
+				/*profit += entities[i]->getprofit();*/
 				dailyprofit += entities[i]->getprofit();
+				profit = dailyprofit;
 			}
 			else {
 				dollars += entities[i]->getprofit() * 1.1;
@@ -582,6 +600,16 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
 		RenderRoom();
+		
+		if (vehiclex > 200) {
+			vehiclex = -200;
+			vehiclemodel = rand() % 3;
+		}
+		vehiclex++;
+		modelStack.PushMatrix();
+		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(vehicletype[vehiclemodel], true);
+		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
 			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());
@@ -593,10 +621,7 @@ void SceneGame::Render()
 		//text render
 		string coord = to_string(player.X) + "," + to_string(player.Z);
 		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
-
-		//render mesh on screen
-		//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
-
+		
 		//UI buttons test
 		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
@@ -638,7 +663,8 @@ void SceneGame::Render()
 		RenderPoliceMetre();
 
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
-		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 50, 14, 5);
+		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 1, 48);
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();

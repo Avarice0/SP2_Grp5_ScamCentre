@@ -96,6 +96,10 @@ class SceneGame : public Scene
 		GEO_PAPERSTACK,
 		
 		//objs
+		GEO_VAN,
+		GEO_POLICECAR,
+		GEO_SEDAN,
+
 
 		NUM_GEOMETRY,
 	};
@@ -213,6 +217,10 @@ private:
 	bool dayUp = false;
 	int daydivide = 1;
 	Mesh* shirtrarity[3];			//increases with number of shirts
+
+	float vehiclex = 250;
+	int vehiclemodel;
+	Mesh* vehicletype[3];
 
 };
 

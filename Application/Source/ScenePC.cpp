@@ -67,6 +67,8 @@ void ScenePC::Init()
 	{
 		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
+		meshList[GEO_COINBOMB] = MeshBuilder::GenerateQuad("coinbomb", Color(0, 0, 0), 1.f);
+		meshList[GEO_COINBOMB]->textureID = LoadTGA("Image//coinbomb.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
@@ -110,6 +112,12 @@ void ScenePC::Update(double dt)
 	posX = x / w * 80; //convert (0,800) to (0,80)
 	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
 	static bool bLButtonState = false;
+
+	if (Application::IsKeyPressed('E'))
+	{
+		dollarsClone = SceneGame::dollars;
+	}
+
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
@@ -117,8 +125,9 @@ void ScenePC::Update(double dt)
 		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
 		{
 			gamenum = 1; //coins
-			coinx = rand() % 25 + 45;
-			coiny = rand() % 35 + 15;
+			coin1x = rand() % 25 + 45;
+			coin1y = rand() % 35 + 15;
+
 		}
 		else if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
 		{
@@ -132,14 +141,37 @@ void ScenePC::Update(double dt)
 
 		if (gamenum == 1) {
 
-			if ((posX > (coinx - 2.5) && posX < (coinx + 2.5)) && (posY > (coiny - 2.5) && posY < (coiny + 2.5)))
+			if (((posX > (coin1x - 2.5) && posX < (coin1x + 2.5)) && (posY > (coin1y - 2.5) && posY < (coin1y + 2.5)))   || ((posX > (coin2x - 2.5) && posX < (coin2x + 2.5)) && (posY > (coin2y - 2.5) && posY < (coin2y + 2.5))))
 			{
-				coinx = rand() % 25 + 45;
-				coiny = rand() % 35 + 15;
+				coin1x = rand() % 25 + 45;
+				coin1y = rand() % 35 + 15;
+
+				coin2x = rand() % 25 + 45;
+				coin2y = rand() % 35 + 15;
+				while ((coin2x > (coin1x - 2.5) && coin2x < (coin1x + 2.5)) && (coin2y > (coin1y - 2.5) && coin2y < (coin1y + 2.5)))
+				{
+					coin2x = rand() % 25 + 45;
+					coin2y = rand() % 35 + 15;
+				}
+				coinbombx = rand() % 25 + 45;
+				coinbomby = rand() % 35 + 15;
+				while ((coinbombx > (coin1x - 2.5) && coinbombx < (coin1x + 2.5)) && (coinbomby > (coin1y - 2.5) && coinbomby < (coin1y + 2.5)))
+				{
+					while ((coinbombx > (coin2x - 2.5) && coinbombx < (coin2x + 2.5)) && (coinbomby > (coin2y - 2.5) && coinbomby < (coin2y + 2.5)))
+					{
+						coinbombx = rand() % 25 + 45;
+						coinbomby = rand() % 35 + 15;
+					}
+				}
+
 				score++;
 
 				coinStarted = true;
 				//gameended = false;
+			}
+			if ( (posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) )
+			{
+				//do what lol
 			}
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
@@ -151,7 +183,9 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 2)
 		{
 			gameended = true;
-			coinx = 100; coiny = 100;
+			coin1x = 100; coin1y = 100;
+			coin2x = 100; coin2y = 100;
+			coinbombx = 100; coinbomby = 100;
 			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
 			{
 				if (correctPos == true) {
@@ -191,7 +225,7 @@ void ScenePC::Update(double dt)
 			SceneGame::dollars += score * 2;
 			SceneGame::dollars += textscore * 4;
 			SceneGame::dollars += minescore * 2;
-
+			
 			dollarsClone += score * 2;
 			dollarsClone += textscore * 4;
 			dollarsClone += minescore * 2;
@@ -227,15 +261,11 @@ void ScenePC::Update(double dt)
 	if (day == daydivide && times != 0)
 	{
 		daydivide++;
-		
 		dollarsClone += SceneGame::profit;
-
+		
 	}
 
-	if (Application::IsKeyPressed('E') )
-	{
-		dollarsClone = SceneGame::dollars;
-	}
+
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 	
@@ -250,7 +280,14 @@ void ScenePC::Update(double dt)
 		if (seconds < 0) {
 			seconds = 0;
 			coinStarted = false;
-			coinx = 45; coiny = 50;
+			coin1x = rand() % 25 + 45;
+			coin1y = rand() % 35 + 15;
+
+
+			coin2x = rand() % 25 + 45;
+			coin2y = rand() % 35 + 15;
+			coinbombx = rand() % 25 + 45;
+			coinbomby = rand() % 35 + 15;
 			seconds = 5;
 		}
 
@@ -282,7 +319,7 @@ void ScenePC::Render()
 	
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
-	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0.5, 0.5, 1), 2, 40, 30);
+	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0,0,0), 2, 10,37);
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
@@ -293,7 +330,9 @@ void ScenePC::Render()
 		{
 			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
 		}
-		RenderMeshOnScreen(meshList[GEO_COIN], coinx, coiny, 5, 5);
+		RenderMeshOnScreen(meshList[GEO_COIN], coin1x, coin1y, 5, 5);
+		RenderMeshOnScreen(meshList[GEO_COIN], coin2x, coin2y, 5, 5);
+		RenderMeshOnScreen(meshList[GEO_COINBOMB], coinbombx, coinbomby, 5, 5);
 	}
 	else if (gamenum == 2)
 	{
