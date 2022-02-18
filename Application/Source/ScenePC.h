@@ -37,6 +37,7 @@ class ScenePC : public Scene
 
 		GEO_COIN,
 		GEO_COINBOMB,
+		GEO_EXPLOSION,
 		GEO_WALLPAPER,
 		GEO_PICKAXE,
 	
@@ -120,6 +121,10 @@ private:
 	int coinbombx = 100;
 	int coinbomby = 100;
 	
+	int explosionx = 100;
+	int explosiony = 100;
+
+	bool boom = false;
 
 	int score = 0;
 	int minescore = 0;

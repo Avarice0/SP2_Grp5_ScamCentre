@@ -69,6 +69,8 @@ void ScenePC::Init()
 		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
 		meshList[GEO_COINBOMB] = MeshBuilder::GenerateQuad("coinbomb", Color(0, 0, 0), 1.f);
 		meshList[GEO_COINBOMB]->textureID = LoadTGA("Image//coinbomb.tga");
+		meshList[GEO_EXPLOSION] = MeshBuilder::GenerateQuad("explosion", Color(0, 0, 0), 1.f);
+		meshList[GEO_EXPLOSION]->textureID = LoadTGA("Image//explosion.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
@@ -129,11 +131,11 @@ void ScenePC::Update(double dt)
 			coin1y = rand() % 35 + 15;
 
 		}
-		else if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52))
+		else if ((posX > 17 && posX < 25) && (posY > 44.5 && posY < 52) && boom == false)
 		{
 			gamenum = 2; //texting
 		}
-		else if ((posX > 25 && posX < 35) && (posY > 44.5 && posY < 52))
+		else if ((posX > 25 && posX < 35) && (posY > 44.5 && posY < 52) && boom == false)
 		{
 			gamenum = 3; //clicker mining
 		}
@@ -141,8 +143,17 @@ void ScenePC::Update(double dt)
 
 		if (gamenum == 1) {
 
-			if ( ( (posX > coin1x - 2.5) && (posX < coin1x + 2.5) && (posY > coin1y - 2.5) && (posY < coin1y + 2.5) )   || 
-		       ( (posX > coin2x - 2.5) && (posX < coin2x + 2.5) && (posY > coin2y - 2.5) && (posY < coin2y + 2.5) ) )
+			if ((posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) && boom == false)
+			{
+				explosionx = 55;
+				explosiony = 35;
+				SceneGame::dollars -= 500;
+				dollarsClone -= 500;
+				boom = true;
+			}
+
+			if ( ( (posX > coin1x - 2.5) && (posX < coin1x + 2.5) && (posY > coin1y - 2.5) && (posY < coin1y + 2.5) && boom == false)   || 
+		       ( (posX > coin2x - 2.5) && (posX < coin2x + 2.5) && (posY > coin2y - 2.5) && (posY < coin2y + 2.5) &&boom==false) )
 			{
 				coin1x = rand() % 25 + 45;
 				coin1y = rand() % 35 + 15;
@@ -150,7 +161,7 @@ void ScenePC::Update(double dt)
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
 				cout << "coin1 ok" << endl;
-				while ( (coin2x > coin1x - 2.5) && (coin2x < coin1x + 2.5) && (coin2y > coin1y - 2.5) && (coin2y < coin1y + 2.5) )
+				while ( (coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5) )
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
@@ -159,14 +170,11 @@ void ScenePC::Update(double dt)
 				cout << "coin2 ok" << endl;
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
-				while ( (coinbombx > coin1x - 2.5) && (coinbombx < coin1x + 2.5) && (coinbomby > coin1y - 2.5) && (coinbomby < coin1y + 2.5) )
-				{
-					while ( (coinbombx > coin2x - 2.5) && (coinbombx < coin2x + 2.5) && (coinbomby > coin2y - 2.5) && (coinbomby < coin2y + 2.5) )
-					{
+				
+				while ( (coinbombx > coin1x - 5) && (coinbombx < coin1x + 5) && (coinbomby > coin1y - 5) && (coinbomby < coin1y + 5) && (coinbombx > coin2x - 5) && (coinbombx < coin2x + 5) && (coinbomby > coin2y - 5) && (coinbomby < coin2y + 5) )
+				{					
 						coinbombx = rand() % 25 + 45;
 						coinbomby = rand() % 35 + 15;
-
-					}
 				}
 				cout << "coin3 ok" << endl;
 				score++;
@@ -174,10 +182,7 @@ void ScenePC::Update(double dt)
 				coinStarted = true;
 				//gameended = false;
 			}
-			if ( (posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) )
-			{
-				//do what lol
-			}
+		
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
 				score--;
@@ -267,7 +272,14 @@ void ScenePC::Update(double dt)
 	{
 		daydivide++;
 		dollarsClone += SceneGame::profit;
+
+		explosionx = 100;
+		explosiony = 100;
 		
+
+		boom = false;
+
+
 	}
 
 
@@ -338,6 +350,7 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_COIN], coin1x, coin1y, 5, 5);
 		RenderMeshOnScreen(meshList[GEO_COIN], coin2x, coin2y, 5, 5);
 		RenderMeshOnScreen(meshList[GEO_COINBOMB], coinbombx, coinbomby, 5, 5);
+	
 	}
 	else if (gamenum == 2)
 	{
@@ -371,7 +384,7 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, miningScale, miningScale);
 	}
 
-
+	RenderMeshOnScreen(meshList[GEO_EXPLOSION], explosionx, explosiony, 90, 90);
 	
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
