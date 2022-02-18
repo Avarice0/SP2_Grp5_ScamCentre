@@ -1,5 +1,5 @@
 #include "SceneEnd.h"
-
+#include "SceneGame.h"
 int SceneEnd::EndingNumber = 0;
 
 SceneEnd::SceneEnd()
@@ -127,6 +127,8 @@ void SceneEnd::Init()
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
+
+
 	//-------------------------------------------------
 
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
@@ -198,13 +200,25 @@ void SceneEnd::Render()
 
 	//----------------------------------------
 	//RenderMesh(meshList[GEO_AXES], false);
+
 	if(EndingNumber == 1){
 		RenderMeshOnScreen(meshList[GEO_SCENE1], 40, 30, 80, 60);
 	}
 	else if (EndingNumber == 2) {
 		RenderMeshOnScreen(meshList[GEO_SCENE2], 40, 30, 80, 60);
 	}
+
+	string lifetimeEarnings = to_string(SceneGame::totalearned);
 	RenderMeshOnScreen(meshList[GEO_STATSBG], 68, 33, 20, 35);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Lifetime", Color(1, 1, 1), 2, 63, 48);
+	RenderTextOnScreen(meshList[GEO_TEXT], "earnings", Color(1, 1, 1), 2, 63, 46);
+	RenderTextOnScreen(meshList[GEO_TEXT], lifetimeEarnings, Color(1,1,1), 2, 60, 43);
+
+	RenderTextOnScreen(meshList[GEO_TEXT], "Time", Color(1, 1, 1), 2, 66, 39);
+	RenderTextOnScreen(meshList[GEO_TEXT], "played", Color(1, 1, 1), 2, 64, 37);
+	RenderTextOnScreen(meshList[GEO_TEXT], to_string(timeSec), Color(1, 1, 1), 2, 62, 35);
+
+
 	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 23, 7, 20, 10);
 	RenderMeshOnScreen(meshList[GEO_PLAYAGAIN], 23, 7, 20, 10);
 	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 57, 7, 20, 10);
