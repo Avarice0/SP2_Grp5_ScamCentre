@@ -96,6 +96,9 @@ class SceneGame : public Scene
 		GEO_PAPERSTACK,
 		
 		//objs
+		GEO_VAN,
+		GEO_POLICE_CAR,
+
 
 		NUM_GEOMETRY,
 	};
