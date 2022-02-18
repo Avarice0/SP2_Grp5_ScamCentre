@@ -79,7 +79,7 @@ void SceneGame::Init()
 
 	// Init VBO
 	{
-		light[0].type = Light::LIGHT_SPOT;
+		light[0].type = Light::LIGHT_DIRECTIONAL;
 		light[0].position.Set(0, 0, -90);
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 1.0f;
@@ -560,7 +560,6 @@ void SceneGame::Update(double dt)
 				profit += entities[i]->getprofit() * 1.1;
 				dailyprofit += entities[i]->getprofit() * 1.1;
 			}
-
 		}
 		dayUp = false;
 	}
@@ -642,7 +641,6 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
 		RenderRoom();
-
 		renderworker(player.X, 5, player.Z, 3);
 
 		if (vehiclex > 200) {
@@ -670,8 +668,6 @@ void SceneGame::Render()
 		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
-		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-
 
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
