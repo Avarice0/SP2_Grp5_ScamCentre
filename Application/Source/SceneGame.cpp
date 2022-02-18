@@ -11,7 +11,7 @@ SceneGame::~SceneGame()
 
 float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
-float SceneGame::profit = 40;
+float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
 void SceneGame::Init()
 {
