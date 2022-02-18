@@ -12,9 +12,7 @@ public:
     int getworkertier(void);
     void setworkertier(int newtier);
 
-    //void setstationcost(float newcost);
-    float getstationcost(void);/*
-    void setworkercost(float newcost);*/
+    float getstationcost(void);
     float getworkercost(void);
 
     float getprofit(void);
