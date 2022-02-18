@@ -220,7 +220,7 @@ private:
 	Mesh* shirtrarity[3];			//increases with number of shirts
 
 	float vehiclex = 250;
-	int vehiclemodel;
+	int vehiclemodel = 0;
 	Mesh* vehicletype[3];
 
 };

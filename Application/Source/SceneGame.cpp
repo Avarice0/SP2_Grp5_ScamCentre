@@ -603,9 +603,16 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 		RenderRoom();
 
+		renderworker(player.X, 5, player.Z, 3);
+
+		if (vehiclex > 200) {
+			vehiclex = -200;
+			vehiclemodel = rand() % 3;
+		}
+		vehiclex++;
 		modelStack.PushMatrix();
-		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(meshList[GEO_VAN], true);
+		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(vehicletype[vehiclemodel], true);
 		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
