@@ -1148,6 +1148,7 @@ void SceneGame::RenderPoliceMetre()
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
+	std::cout << metre.GetMP() << std::endl;
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
 
