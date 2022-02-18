@@ -13,7 +13,6 @@ float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
 float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
-
 void SceneGame::Init()
 {
 	{
@@ -132,9 +131,10 @@ void SceneGame::Init()
 		meshList[GEO_METREBARBG]->textureID = LoadTGA("Image//Metrebar.tga");
 		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
-		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
+		meshList[GEO_BRIBE] = MeshBuilder::GenerateQuad("bribe", Color(1, 0.4, 0.4), 1.f);
+		meshList[GEO_BRIBE]->textureID = LoadTGA("Image//Bribe.tga");
 
-		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("UI_BG", Color(0.1, 0.1, 0.1), 1);
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("shopfg", Color(0, 0, 0), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -287,7 +287,13 @@ void SceneGame::Init()
 	}
 
 	{
-	//	meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
+		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
+
+		vehicletype[0] = meshList[GEO_VAN];
+		vehicletype[1] = meshList[GEO_POLICECAR];
+		vehicletype[2] = meshList[GEO_SEDAN];
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -310,6 +316,7 @@ void SceneGame::Update(double dt)
 	camera.Update(dt);
 
 	//player update code
+	player.D = -1;
 	if (Application::IsKeyPressed('W'))
 	{
 		player.D = 0;
@@ -330,19 +337,20 @@ void SceneGame::Update(double dt)
 		player.D = 3;
 		player.X++;
 	}
+	else {}
 	for (int i = 0; i < size(entities); i++) {
 		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
 			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 				if (player.D == 0) {
 					player.Z++;
 				}
-				else if (player.D == 1) {
+				if (player.D == 1) {
 					player.Z--;
 				}
-				else if (player.D == 2) {
+				if (player.D == 2) {
 					player.X++;
 				}
-				else if (player.D == 3) {
+				if (player.D == 3) {
 					player.X--;
 				}
 				else {}
@@ -362,7 +370,7 @@ void SceneGame::Update(double dt)
 		player.Z = -75;
 	}
 	else{}
-
+	
 	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
 		SceneEnd::EndingScene(1);
@@ -374,8 +382,6 @@ void SceneGame::Update(double dt)
 		Application::changescene(4);
 	}
 
-	player.D = -1;
-
 	if (dollars >= 600)
 		RenderPermItem1 = true;
 	else
@@ -384,7 +390,10 @@ void SceneGame::Update(double dt)
 		RenderPermItem2 = true;
 	else
 		RenderPermItem2 = false;
-
+	if (dollars > metre.GetBribeCost())
+		Canbribe = true;
+	else
+		Canbribe = false;
 	//mouse inputs
 	{
 		Application::GetCursorPos(&x, &y);
@@ -398,6 +407,13 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		if(dollars > metre.GetBribeCost()){
+			if ((posX > 2.3 && posX < 17.4) && (posY > 46.4 && posY < 53.6))
+			{
+				dollars -= metre.GetBribeCost();
+				metre.Bribe();
+			}
+		}
 		if(PermUpgrade == true){
 			if (RenderPermItem1 == true && coffee == false) {
 				if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
@@ -462,7 +478,6 @@ void SceneGame::Update(double dt)
 		mousestate = "";
 	}
 
-	//worker counter
 	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i]->getworkertier() == 1) {
@@ -572,7 +587,6 @@ void SceneGame::Render()
 				camera.target.x, camera.target.y, camera.target.z,
 				camera.up.x, camera.up.y, camera.up.z);
 			modelStack.LoadIdentity();
-			renderworker(player.X, 5, player.Z, 1);
 		
 		}
 		{
@@ -588,7 +602,10 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 		RenderRoom();
 
-	
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(meshList[GEO_VAN], true);
+		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
 			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());
@@ -628,8 +645,6 @@ void SceneGame::Render()
 					entitynumber = i;
 					RenderUpgrade();
 					upgrades = true;
-					//get upgrade cost and tier
-					//render the name and attach it to unique entity
 					break;
 				}
 				else {
@@ -638,7 +653,9 @@ void SceneGame::Render()
 			}
 			PermUpgrade = false;
 		}
+
 		RenderPoliceMetre();
+		RenderBribe();
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -823,12 +840,6 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix();
 
-		modelStack.PushMatrix();
-		modelStack.Translate(0, -1.65, 0);
-		modelStack.Rotate(-90, 1, 0, 0);
-		modelStack.Scale(4, 5, 5);
-		RenderMesh(meshList[GEO_UPGRADEAREA], true);
-		modelStack.PopMatrix();
 
 		modelStack.PopMatrix();
 	}
@@ -932,6 +943,13 @@ void SceneGame::RenderTable(int x, int y, int z, int tier)
 
 	modelStack.Translate(0, 0, 8);
 	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(7, 0, -1);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(20, 10, 17);
+	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+	modelStack.PopMatrix();
 
 	modelStack.PopMatrix();
 }
@@ -1138,7 +1156,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 4) {
+	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
 	}
@@ -1154,7 +1172,19 @@ void SceneGame::RenderPoliceMetre()
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
-	std::cout << metre.GetMP() << std::endl;
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
+}
+
+void SceneGame::RenderBribe()
+{
+	if(Canbribe == true){
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 1, 48);
+	}
+	else {
+		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 50, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 50, 15, 11);
+	}
 }
 
