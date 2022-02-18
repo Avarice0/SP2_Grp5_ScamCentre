@@ -91,6 +91,7 @@ void ScenePC::Init()
 		meshList[GEO_MINING]->textureID = LoadTGA("Image//calibri.tga");
 	}
 
+	
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -215,14 +216,21 @@ void ScenePC::Update(double dt)
 		mousestate = "";
 	}
 
-
+	
 	int times = Application::GetTime(); // in seconds 
 	hours = times % 5;
 	day = times / 5;
-	if (times / 5 == daydivide && times != 0)
+	if (day == daydivide && times != 0)
 	{
 		daydivide++;
-		SceneGame::dollars += SceneGame::profit;
+		
+		dollarsClone += SceneGame::profit;
+
+	}
+
+	if (Application::IsKeyPressed('E') )
+	{
+		dollarsClone = SceneGame::dollars;
 	}
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
@@ -293,7 +301,7 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
 
-		string scoreText = "Score: " + to_string(int(SceneGame::dollars));
+		string scoreText = "Score: " + to_string(int(dollarsClone));
 		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
 
 		if (correctPos == true) {
