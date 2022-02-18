@@ -75,12 +75,12 @@ class SceneGame : public Scene
 
 		GEO_QUAD_BG,
 
-		//HUD
+		//Police stuff
 		GEO_METREBARBG,
 		GEO_METREBARFG,
 		GEO_METREBARBGBG,
-		GEO_METREBARBULB,
-		
+		GEO_BRIBE,
+
 		// quill, paperstack, laptop and phone
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
