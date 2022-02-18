@@ -544,7 +544,9 @@ void SceneGame::Update(double dt)
 	if (dayUp == true) {
 		profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
-
+		if (dailyprofit > 0){
+			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		}
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
@@ -1165,6 +1167,50 @@ void SceneGame::RenderLaptop()
 		modelStack.Scale(0.85, 0.3, 0.85);
 		RenderMesh(meshList[GEO_LAPTOP2], true);
 		modelStack.PopMatrix();
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderChair()
+{
+	modelStack.PushMatrix();
+	modelStack.Rotate(-90, 0, 1, 0);
+	// chair leg 1
+	modelStack.PushMatrix();
+	modelStack.Translate(0.3, 0.3, -0.3);
+	modelStack.Scale(0.1, 0.6, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+	// chair leg 2
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.3, 0.3, 0.3);
+	modelStack.Scale(0.1, 0.6, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+	// chair leg 3
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.3, 0.3, -0.3);
+	modelStack.Scale(0.1, 0.6, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+	// chair leg 4
+	modelStack.PushMatrix();
+	modelStack.Translate(0.3, 0.3, 0.3);
+	modelStack.Scale(0.1, 0.6, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+	// chair seat
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.55, 0);
+	modelStack.Scale(0.8, 0.1, 0.8);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+	// chair back
+	modelStack.PushMatrix();
+	modelStack.Translate(0.3, 1, 0);
+	modelStack.Scale(0.07, 0.92, 0.7);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
 	modelStack.PopMatrix();
 }
 

@@ -200,6 +200,7 @@ private:
 	void RenderUpgrade();
 	void RenderPoliceMetre();
 	void RenderBribe();
+	void RenderChair();
 	//mouse input
 	double x, y;
 	float posX, posY;
