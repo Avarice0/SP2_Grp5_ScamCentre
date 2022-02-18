@@ -11,6 +11,7 @@ SceneGame::~SceneGame()
 
 float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
+float SceneGame::profit = 0;
 
 void SceneGame::Init()
 {
@@ -499,14 +500,17 @@ void SceneGame::Update(double dt)
 
 	
 		day++;
+		profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
+					profit += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
+					profit += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -623,7 +627,9 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
+
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();

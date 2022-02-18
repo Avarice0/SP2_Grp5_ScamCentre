@@ -136,11 +136,14 @@ void ScenePC::Update(double dt)
 				coinx = rand() % 25 + 45;
 				coiny = rand() % 35 + 15;
 				score++;
+
 				coinStarted = true;
+				gameended = false;
 			}
-			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && coinStarted == true))
+			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
 				score--;
+				
 			}
 			gameended = true;
 		}
@@ -168,8 +171,6 @@ void ScenePC::Update(double dt)
 				{
 					textscore++;
 				}
-				coinx = 40;
-				coiny = 30;
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
@@ -220,9 +221,8 @@ void ScenePC::Update(double dt)
 	day = times / 5;
 	if (times / 5 == daydivide && times != 0)
 	{
-		
 		daydivide++;
-
+		SceneGame::dollars += SceneGame::profit;
 	}
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
@@ -274,8 +274,8 @@ void ScenePC::Render()
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
-		string scoreText = "Score: " + to_string(score);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
+		string scoreText = "cash: " + to_string(int(SceneGame::dollars));
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
 		if (coinStarted == false)
 		{
@@ -293,8 +293,8 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
 
-		string scoreText = "Score: " + to_string(textscore);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 30);
+		string scoreText = "Score: " + to_string(int(SceneGame::dollars));
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
 
 		if (correctPos == true) {
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
@@ -307,8 +307,8 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 3)
 	{
-		string scoreText = "Score: " + to_string(minescore);
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 13, 10);
+		string scoreText = "Score: " + to_string(int(SceneGame::dollars));
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
 		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
 		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
