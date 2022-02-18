@@ -358,9 +358,8 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 
-	if (metre.GetMP() == 1000) {
+	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
-	if (metre.GetMP() > 20) {
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
 	}
