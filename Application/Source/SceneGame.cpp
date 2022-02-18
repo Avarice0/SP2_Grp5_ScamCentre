@@ -13,7 +13,6 @@ float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
 float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
-float SceneGame::totalearned = 0;
 void SceneGame::Init()
 {
 	{
@@ -288,6 +287,12 @@ void SceneGame::Init()
 
 	{
 		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
+		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
+
+		vehicletype[0] = meshList[GEO_VAN];
+		vehicletype[1] = meshList[GEO_POLICECAR];
+		vehicletype[2] = meshList[GEO_SEDAN];
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -585,10 +590,15 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
 		RenderRoom();
-
+		
+		if (vehiclex > 200) {
+			vehiclex = -200;
+			vehiclemodel = rand() % 3;
+		}
+		vehiclex++;
 		modelStack.PushMatrix();
-		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(meshList[GEO_VAN], true);
+		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(vehicletype[vehiclemodel], true);
 		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
