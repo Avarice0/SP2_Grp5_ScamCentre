@@ -11,6 +11,7 @@ SceneGame::~SceneGame()
 
 float SceneGame::dollars = 10000;
 float SceneGame::profit = 40;
+float SceneGame::totalearned = 0;
 int SceneGame::endtime = 0;
 void SceneGame::Init()
 {
@@ -130,9 +131,10 @@ void SceneGame::Init()
 		meshList[GEO_METREBARBG]->textureID = LoadTGA("Image//Metrebar.tga");
 		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
-		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
+		meshList[GEO_BRIBE] = MeshBuilder::GenerateQuad("bribe", Color(1, 0.4, 0.4), 1.f);
+		meshList[GEO_BRIBE]->textureID = LoadTGA("Image//Bribe.tga");
 
-		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("UI_BG", Color(0.1, 0.1, 0.1), 1);
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("shopfg", Color(1, 0, 0), 1.f);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -632,7 +634,11 @@ void SceneGame::Render()
 			}
 			PermUpgrade = false;
 		}
+
 		RenderPoliceMetre();
+
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
+		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 50, 14, 5);
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -817,12 +823,6 @@ void SceneGame::renderworker(int x, int y, int z, int rarity) {
 		RenderMesh(meshList[GEO_PANTS], true);
 		modelStack.PopMatrix();
 
-		modelStack.PushMatrix();
-		modelStack.Translate(0, -1.65, 0);
-		modelStack.Rotate(-90, 1, 0, 0);
-		modelStack.Scale(4, 5, 5);
-		RenderMesh(meshList[GEO_UPGRADEAREA], true);
-		modelStack.PopMatrix();
 
 		modelStack.PopMatrix();
 	}
@@ -926,6 +926,13 @@ void SceneGame::RenderTable(int x, int y, int z, int tier)
 
 	modelStack.Translate(0, 0, 8);
 	RenderMesh(meshList[GEO_TABLE], true);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(7, 0, -1);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(20, 10, 17);
+	RenderMesh(meshList[GEO_UPGRADEAREA], true);
+	modelStack.PopMatrix();
 
 	modelStack.PopMatrix();
 }
