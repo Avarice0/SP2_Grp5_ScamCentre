@@ -114,6 +114,8 @@ private:
 	double x, y;
 	float posX, posY;
 	string mousestate;
+
+	int timeSec = 0;
 	
 };
 

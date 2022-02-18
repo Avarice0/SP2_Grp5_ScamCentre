@@ -141,7 +141,8 @@ public:
 	virtual void Render();
 	virtual void Exit();
 	static float dollars;
-
+	static float totalearned;
+	static int endtime;
 	static float profit;
 
 private:

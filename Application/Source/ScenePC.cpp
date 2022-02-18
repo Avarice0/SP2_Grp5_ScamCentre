@@ -139,7 +139,7 @@ void ScenePC::Update(double dt)
 				score++;
 
 				coinStarted = true;
-				gameended = false;
+				//gameended = false;
 			}
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
@@ -187,6 +187,7 @@ void ScenePC::Update(double dt)
 			gameended = true;
 		}
 		if (gameended == true) {
+
 			SceneGame::dollars += score * 2;
 			SceneGame::dollars += textscore * 4;
 			SceneGame::dollars += minescore * 2;

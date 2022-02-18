@@ -160,9 +160,12 @@ void Application::Run()
 		float posX = (x / w) * 80; //convert (0,800) to (0,80)
 		float posY = 60 - (y / h) * 60; //convert (600,0) to (0,60)
 		static bool bLButtonState = false;
+		
 		if (!bLButtonState && Application::IsMousePressed(0))
 		{
+			
 			if(scenenum == 1){
+
 				if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
 					scenenum = 2;
 					Application::SetTime(0);
