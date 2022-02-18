@@ -150,6 +150,7 @@ void ScenePC::Update(double dt)
 		}
 		else if (gamenum == 2)
 		{
+			gameended = true;
 			coinx = 100; coiny = 100;
 			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
 			{
@@ -175,7 +176,7 @@ void ScenePC::Update(double dt)
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
-			gameended = true;
+			
 		}
 		else if (gamenum == 3)
 		{
@@ -189,9 +190,15 @@ void ScenePC::Update(double dt)
 			SceneGame::dollars += score * 2;
 			SceneGame::dollars += textscore * 4;
 			SceneGame::dollars += minescore * 2;
+
+			dollarsClone += score * 2;
+			dollarsClone += textscore * 4;
+			dollarsClone += minescore * 2;
+
 			SceneGame::totalearned += score * 2;
 			SceneGame::totalearned += textscore * 4;
 			SceneGame::totalearned += minescore * 2;
+
 			score = 0;
 			textscore = 0;
 			minescore = 0;
@@ -282,7 +289,7 @@ void ScenePC::Render()
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
-		string scoreText = "cash: " + to_string(int(SceneGame::dollars));
+		string scoreText = "cash: " + to_string(int(dollarsClone));
 		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
 		if (coinStarted == false)
@@ -315,7 +322,7 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 3)
 	{
-		string scoreText = "Score: " + to_string(int(SceneGame::dollars));
+		string scoreText = "Score: " + to_string(int(dollarsClone));
 		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
 		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
