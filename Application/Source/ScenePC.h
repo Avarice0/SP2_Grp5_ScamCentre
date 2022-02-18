@@ -36,6 +36,7 @@ class ScenePC : public Scene
 		GEO_QUAD,
 
 		GEO_COIN,
+		GEO_COINBOMB,
 		GEO_WALLPAPER,
 		GEO_PICKAXE,
 	
@@ -110,8 +111,15 @@ private:
 
 	int gamenum = 2;
 
-	int coinx = rand() % 25 + 45;
-	int coiny = rand() % 50 + 10;
+	int coin1x = rand() % 25 + 45;
+	int coin1y = rand() % 50 + 10;
+
+	int coin2x = 100;
+	int coin2y = 100;
+
+	int coinbombx = 100;
+	int coinbomby = 100;
+
 
 	int score = 0;
 	int minescore = 0;
