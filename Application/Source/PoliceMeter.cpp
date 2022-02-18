@@ -44,7 +44,7 @@ void PoliceMeter::Bribe(void)
 	}
 	else
 	{
-		MeterPercentage = MeterPercentage + 5;
+		MeterPercentage = MeterPercentage + 50;
 	}
 }
 
