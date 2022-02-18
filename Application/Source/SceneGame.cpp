@@ -12,7 +12,7 @@ SceneGame::~SceneGame()
 float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
 float SceneGame::profit = 40;
-
+int SceneGame::endtime = 0;
 void SceneGame::Init()
 {
 	{
@@ -473,7 +473,8 @@ void SceneGame::Update(double dt)
 	int times = Application::GetTime(); // in seconds 
 	
 	hours = times % 5;
-	if (times / 5 == daydivide && times != 0)
+	day = times / 5;
+	if (day == daydivide && times != 0)
 	{
 		dayUp = true;
 		daydivide++;
@@ -481,7 +482,7 @@ void SceneGame::Update(double dt)
 	}
 
 	if (dayUp == true) {
-		day++;
+		
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		profit = 0;
 		dailyprofit = 0;
