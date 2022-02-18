@@ -75,10 +75,19 @@ void ScenePC::Init()
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
-		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("greentext", 16, 16);
+		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
-		meshList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("pickaxe", Color(0, 0, 0), 1.f);
-		meshList[GEO_PICKAXE]->textureID = LoadTGA("Image//Pickaxe.tga");
+
+		meshList[GEO_HEADS] = MeshBuilder::GenerateQuad("coinheads", 16, 16);
+		meshList[GEO_HEADS]->textureID = LoadTGA("Image//coinhead.tga");
+		meshList[GEO_TAILS] = MeshBuilder::GenerateQuad("cointails", 16, 16);
+		meshList[GEO_TAILS]->textureID = LoadTGA("Image//cointail.tga"); 
+		
+		meshList[GEO_HT] = MeshBuilder::GenerateQuad("HT", 16, 16);
+		meshList[GEO_HT]->textureID = LoadTGA("Image//headtailsbutton.tga");
+
+
+		
 		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
 		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
 	}
@@ -91,8 +100,7 @@ void ScenePC::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_SCORE] = MeshBuilder::GenerateText("score", 16, 16);
 		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
-		meshList[GEO_MINING] = MeshBuilder::GenerateQuad("mining", 16, 16);
-		meshList[GEO_MINING]->textureID = LoadTGA("Image//calibri.tga");
+		
 	}
 
 	
@@ -160,14 +168,14 @@ void ScenePC::Update(double dt)
 
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
-				cout << "coin1 ok" << endl;
+			//	cout << "coin1 ok" << endl;
 				while ( (coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5) )
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
 					
 				}
-				cout << "coin2 ok" << endl;
+				//cout << "coin2 ok" << endl;
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
 				
@@ -176,7 +184,7 @@ void ScenePC::Update(double dt)
 						coinbombx = rand() % 25 + 45;
 						coinbomby = rand() % 35 + 15;
 				}
-				cout << "coin3 ok" << endl;
+		//		cout << "coin3 ok" << endl;
 				score++;
 
 				coinStarted = true;
@@ -225,8 +233,19 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
-				minescore++;
-				miningScale = 20;
+
+				if (rand() % 2 == true) 
+				{
+					cout << "heads" << endl;
+					heady = 30;
+					taily = 100;
+				}
+				else
+				{
+					cout << "tails" << endl;
+					taily = 30;
+					heady = 100;
+				}
 			}
 			gameended = true;
 		}
@@ -250,7 +269,6 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = false;
 		mousestate = "";
-		miningScale = 25;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
@@ -301,10 +319,10 @@ void ScenePC::Update(double dt)
 			coin1y = rand() % 35 + 15;
 
 
-			coin2x = rand() % 25 + 45;
-			coin2y = rand() % 35 + 15;
-			coinbombx = rand() % 25 + 45;
-			coinbomby = rand() % 35 + 15;
+			coin2x = 100;
+			coin2y = 100;
+			coinbombx = 100;
+			coinbomby = 100;
 			seconds = 5;
 		}
 
@@ -377,11 +395,11 @@ void ScenePC::Render()
 	else if (gamenum == 3)
 	{
 		string scoreText = "Score: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
-		RenderTextOnScreen(meshList[GEO_SCORE], "Press the", Color(0.5, 0.5, 1), 3, 7, 17);
-		RenderTextOnScreen(meshList[GEO_SCORE], "pickaxe to", Color(0.5, 0.5, 1), 3, 7, 15);
-		RenderTextOnScreen(meshList[GEO_SCORE], "start mining", Color(0.5, 0.5, 1), 3, 7, 13);
-		RenderMeshOnScreen(meshList[GEO_PICKAXE], 55, 30, miningScale, miningScale);
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
+		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
+
 	}
 
 	RenderMeshOnScreen(meshList[GEO_EXPLOSION], explosionx, explosiony, 90, 90);
