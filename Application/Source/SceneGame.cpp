@@ -286,6 +286,44 @@ void SceneGame::Init()
 		meshList[GEO_FEATHER]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_FEATHER]->material.kShininess = 1.f;
 	}
+	
+	{
+		meshList[GEO_PLANTPOT] = MeshBuilder::GenerateCylinder("plantpot", Color(0.8, 0.4, 0), 20, 1, 1);
+		meshList[GEO_PLANTPOT]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PLANTPOT]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PLANTPOT]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PLANTPOT]->material.kShininess = 1.f;
+
+		meshList[GEO_PLANTSTEM] = MeshBuilder::GenerateCylinder("plantstem", Color(0.4, 0.2, 0), 20, 1, 1);
+		meshList[GEO_PLANTSTEM]->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+		meshList[GEO_PLANTSTEM]->material.kDiffuse.Set(0.4f, 0.4f, 0.4f);
+		meshList[GEO_PLANTSTEM]->material.kSpecular.Set(0.4f, 0.4f, 0.4f);
+		meshList[GEO_PLANTSTEM]->material.kShininess = 1.f;
+
+		meshList[GEO_PLANTLEAF] = MeshBuilder::GenerateCube("plantleaf", Color(0, 0.8, 0), 1);
+		meshList[GEO_PLANTLEAF]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_PLANTLEAF]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_PLANTLEAF]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_PLANTLEAF]->material.kShininess = 1.f;
+
+		meshList[GEO_BLUEPRINTS] = MeshBuilder::GenerateCube("blueprints", Color(0, 0.5, 1), 1);
+		meshList[GEO_BLUEPRINTS]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_BLUEPRINTS]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_BLUEPRINTS]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_BLUEPRINTS]->material.kShininess = 1.f;
+
+		meshList[GEO_TOOLBOX] = MeshBuilder::GenerateCube("toolbox", Color(0.9, 0, 0), 1);
+		meshList[GEO_TOOLBOX]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_TOOLBOX]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_TOOLBOX]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_TOOLBOX]->material.kShininess = 1.f;
+
+		meshList[GEO_TOOLBOXHANDLE] = MeshBuilder::GenerateCube("toolboxhandle", Color(0.05, 0.05, 0.05), 1);
+		meshList[GEO_TOOLBOXHANDLE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
+		meshList[GEO_TOOLBOXHANDLE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
+		meshList[GEO_TOOLBOXHANDLE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_TOOLBOXHANDLE]->material.kShininess = 1.f;
+	}
 
 	{
 		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
@@ -1127,6 +1165,291 @@ void SceneGame::RenderLaptop()
 		modelStack.Scale(0.85, 0.3, 0.85);
 		RenderMesh(meshList[GEO_LAPTOP2], true);
 		modelStack.PopMatrix();
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderSingleTable()
+{
+	// table leg 1
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 2
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 3
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, -1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// table leg 4
+	modelStack.PushMatrix();
+	modelStack.Translate(-2, 0.5, 1);
+	modelStack.Scale(0.1, 1, 0.1);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+	// tabletop
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.1, 0);
+	modelStack.Scale(5, 0.2, 2.5);
+	RenderMesh(meshList[GEO_TABLE], true);
+	modelStack.PopMatrix();
+
+}
+
+void SceneGame::RenderPlant()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.75, 0);
+
+	modelStack.PushMatrix();
+	modelStack.Scale(0.75, 1.5, 0.75);
+	RenderMesh(meshList[GEO_PLANTPOT], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.7, 0);
+	modelStack.Scale(0.6, 0.2, 0.6);
+	RenderMesh(meshList[GEO_PLANTSTEM], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.5, 0);
+	modelStack.Scale(0.05, 3, 0.05);
+	RenderMesh(meshList[GEO_PLANTSTEM], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.2, 0);
+	modelStack.Rotate(15, 0, 1, 0);
+	modelStack.Scale(1.8, 0.05, 1.8);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.56, 0);
+	modelStack.Rotate(30, 0, 1, 0);
+	modelStack.Scale(1.6, 0.05, 1.6);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.92, 0);
+	modelStack.Rotate(45, 0, 1, 0);
+	modelStack.Scale(1.4, 0.05, 1.4);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.28, 0);
+	modelStack.Rotate(60, 0, 1, 0);
+	modelStack.Scale(1.2, 0.05, 1.2);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.64, 0);
+	modelStack.Rotate(75, 0, 1, 0);
+	modelStack.Scale(1, 0.05, 1);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 3, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(0.8, 0.05, 0.8);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+
+	modelStack.Translate(0, -0.175, 0);
+	modelStack.Rotate(20, 0, 1, 0);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.2, 0);
+	modelStack.Rotate(15, 0, 1, 0);
+	modelStack.Scale(1.8, 0.05, 1.8);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.56, 0);
+	modelStack.Rotate(30, 0, 1, 0);
+	modelStack.Scale(1.6, 0.05, 1.6);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.92, 0);
+	modelStack.Rotate(45, 0, 1, 0);
+	modelStack.Scale(1.4, 0.05, 1.4);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.28, 0);
+	modelStack.Rotate(60, 0, 1, 0);
+	modelStack.Scale(1.2, 0.05, 1.2);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2.64, 0);
+	modelStack.Rotate(75, 0, 1, 0);
+	modelStack.Scale(1, 0.05, 1);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 3, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(0.8, 0.05, 0.8);
+	RenderMesh(meshList[GEO_PLANTLEAF], true);
+	modelStack.PopMatrix();
+
+	modelStack.PopMatrix();
+
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderToolbox()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.5, 0);
+	modelStack.Scale(2.5, 1, 1);
+	RenderMesh(meshList[GEO_TOOLBOX], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.7, 0);
+	modelStack.Scale(2.6, 0.1, 1.1);
+	RenderMesh(meshList[GEO_TOOLBOXHANDLE], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.7, 0.55);
+	modelStack.Scale(0.3, 0.3, 0.1);
+	RenderMesh(meshList[GEO_TOOLBOXHANDLE], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1.2, 0);
+	modelStack.Scale(0.8, 0.15, 0.2);
+	RenderMesh(meshList[GEO_TOOLBOXHANDLE], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0.3, 1.05, 0);
+	modelStack.Scale(0.2, 0.25, 0.2);
+	RenderMesh(meshList[GEO_TOOLBOXHANDLE], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.3, 1.05, 0);
+	modelStack.Scale(0.2, 0.25, 0.2);
+	RenderMesh(meshList[GEO_TOOLBOXHANDLE], true);
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderOfficeTable()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	RenderSingleTable();
+	modelStack.Translate(0, 1.2, 0.4);
+	modelStack.Scale(0.3, 0.3, 0.3);
+	RenderLaptop();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0.3, 0, 1.3);
+	modelStack.Rotate(20, 0, 1, 0);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(1.15, 1.2, 0.3);
+	modelStack.Rotate(-30, 0, 1, 0);
+	modelStack.Scale(0.3, 0.3, 0.3);
+	RenderPhone();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1.15, 1.3, 0.3);
+	modelStack.Rotate(-75, 0, 1, 0);
+	modelStack.Scale(0.97, 0.33, 0.7);
+	RenderMesh(meshList[GEO_PAPERSTACK], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-3.4, 0, 0);
+	modelStack.Scale(0.6, 0.6, 0.6);
+	RenderPlant();
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderUpgradeTable()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	modelStack.Scale(2, 1, 2);
+	RenderSingleTable();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-2.5, 1.2, 0);
+	modelStack.Rotate(-20, 0, 1, 0);
+	modelStack.Scale(3, 0.1, 3.5);
+	RenderMesh(meshList[GEO_BLUEPRINTS], true);
+	modelStack.Translate(0, 1, 0);
+	modelStack.Rotate(20, 0, 1, 0);
+	RenderMesh(meshList[GEO_BLUEPRINTS], true);
+	modelStack.Translate(0, 1, 0);
+	modelStack.Rotate(30, 0, 1, 0);
+	RenderMesh(meshList[GEO_BLUEPRINTS], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2, 1, 0);
+	modelStack.Rotate(-20, 0, 1, 0);
+	modelStack.Scale(0.8, 0.8, 0.8);
+	RenderToolbox();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-3, 0, 2.75);
+	modelStack.Rotate(-20, 0, 1, 0);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-1.75, 0, 2.85);
+	modelStack.Rotate(10, 0, 1, 0);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-0.75, 0, 2.85);
+	modelStack.Rotate(15, 0, 1, 0);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2.2, 1.2, 1.6);
+	modelStack.Scale(0.3, 0.3, 0.3);
+	RenderLaptop();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(2.25, 0, 2.65);
+	modelStack.Rotate(-20, 0, 1, 0);
+	RenderChair();
 	modelStack.PopMatrix();
 }
 
