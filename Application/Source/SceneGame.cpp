@@ -285,7 +285,10 @@ void SceneGame::Init()
 		meshList[GEO_FEATHER]->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_FEATHER]->material.kShininess = 1.f;
 	}
-	
+
+	{
+		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -585,6 +588,11 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 		RenderRoom();
 
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0, 0); modelStack.Rotate(0, 1, 0, 0); modelStack.Scale(10, 10, 10);
+		RenderMesh(meshList[GEO_VAN], true);
+		modelStack.PopMatrix();
+
 		for (int i = 0; i < size(entities); i++) {
 			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());
 			if (entities[i]->getworkertier() > 0) {
@@ -595,10 +603,7 @@ void SceneGame::Render()
 		//text render
 		string coord = to_string(player.X) + "," + to_string(player.Z);
 		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
-
-		//render mesh on screen
-		//RenderMeshOnScreen(meshList[GEO_QUAD], 40, 30, 20, 10);
-
+		
 		//UI buttons test
 		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);

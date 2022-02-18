@@ -29,3 +29,4 @@ Thermometer:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freeiconspng.com%2Fimg%2F17045&psig=AOvVaw1d3Mv95b-ueNR0hl_iQaba&ust=1645063426550000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOik_oC7g_YCFQAAAAAdAAAAABAD
 Bankrupt Scene:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fresearchoutreach.org%2Farticles%2Fbehavioural-sciences%2Fhomelessness-western-society-the-dark-side-of-the-moon%2F&psig=AOvVaw10gvGbzyFOAUz-47cYYxav&ust=1645151503249000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCLiNponZhfYCFQAAAAAdAAAAABAD
+
