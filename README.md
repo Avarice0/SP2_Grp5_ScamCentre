@@ -26,3 +26,6 @@ https://www.google.com/url?sa=i&url=https%3A%2F%2Fresearchoutreach.org%2Farticle
 
 Bribe:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fimage-vector%2Fhand-giving-money-other-handshake-hidden-1051220753&psig=AOvVaw3iOfFl-_CTSnRxnzDXndst&ust=1645242405053000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPDkjuuriPYCFQAAAAAdAAAAABAT
+
+Quote:
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fquotesgram.com%2Fscammers-quotes%2F&psig=AOvVaw1r6fjwU-Tr1kKytfF6dy2n&ust=1645259542978000&source=images&cd=vfe&ved=0CAsQjRxqGAoTCNiAwM3riPYCFQAAAAAdAAAAABCaAg

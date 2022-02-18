@@ -79,7 +79,7 @@ void SceneGame::Init()
 
 	// Init VBO
 	{
-		light[0].type = Light::LIGHT_SPOT;
+		light[0].type = Light::LIGHT_DIRECTIONAL;
 		light[0].position.Set(0, 0, -90);
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 1.0f;
@@ -220,6 +220,9 @@ void SceneGame::Init()
 		meshList[GEO_UPGRADEAREA]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
 		meshList[GEO_UPGRADEAREA]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_UPGRADEAREA]->material.kShininess = 1.f;
+
+		meshList[GEO_QUOTE] = MeshBuilder::GenerateQuad("quote", Color(1, 0.4, 0.4), 1.f);
+		meshList[GEO_QUOTE]->textureID = LoadTGA("Image//Quotes1.tga");
 	}
 	{
 		meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1);
@@ -560,7 +563,6 @@ void SceneGame::Update(double dt)
 				profit += entities[i]->getprofit() * 1.1;
 				dailyprofit += entities[i]->getprofit() * 1.1;
 			}
-
 		}
 		dayUp = false;
 	}
@@ -642,7 +644,6 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
 		RenderRoom();
-
 		renderworker(player.X, 5, player.Z, 3);
 
 		if (vehiclex > 200) {
@@ -670,8 +671,6 @@ void SceneGame::Render()
 		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
-		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-
 
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
@@ -929,12 +928,24 @@ void SceneGame::RenderRoom(void)
 		RenderMesh(meshList[GEO_ROOM], true);
 		modelStack.PopMatrix();
 
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 1.4, -7.4);
+		modelStack.Rotate(0, 0, 1, 0);
+		modelStack.Scale(15, 5, 1);
+		RenderMesh(meshList[GEO_QUOTE], true);
+		modelStack.PopMatrix();
+
 		// office area
 		modelStack.PushMatrix();
 		modelStack.Translate(6.25, 0.03, -5.5);
 		modelStack.Rotate(-90, 1, 0, 0);
 		modelStack.Scale(7, 3.5, 1);
 		RenderMesh(meshList[GEO_OFFICE], true);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.03, -6);
+		modelStack.Scale(0.4, 0.4, 0.4);
+		RenderOfficeTable();
 		modelStack.PopMatrix();
 
 		// upgrade area
@@ -943,6 +954,12 @@ void SceneGame::RenderRoom(void)
 		modelStack.Rotate(-90, 1, 0, 0);
 		modelStack.Scale(7, 5, 1);
 		RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(4.7, 0.03, 6);
+		modelStack.Rotate(180, 0, 1, 0);
+		modelStack.Scale(0.25, 0.25, 0.25);
+		RenderUpgradeTable();
 		modelStack.PopMatrix();
 
 	modelStack.PopMatrix();

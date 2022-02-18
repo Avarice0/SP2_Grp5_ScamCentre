@@ -102,6 +102,8 @@ class SceneGame : public Scene
 		GEO_BLUEPRINTS,
 		GEO_TOOLBOX,
 		GEO_TOOLBOXHANDLE,
+
+		GEO_QUOTE,
 		
 		//objs
 		GEO_VAN,
