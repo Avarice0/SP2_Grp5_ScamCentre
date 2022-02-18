@@ -73,6 +73,8 @@ class SceneGame : public Scene
 		GEO_PUPGRADE,
 		GEO_WUPGRADE,
 
+		GEO_QUAD_BG,
+
 		//HUD
 		GEO_METREBARBG,
 		GEO_METREBARFG,
@@ -139,7 +141,8 @@ public:
 	virtual void Render();
 	virtual void Exit();
 	static float dollars;
-	static float totalearned;
+
+	static float profit;
 
 private:
 	unsigned m_vertexArrayID;
@@ -168,7 +171,7 @@ private:
 	//automated render functions
 	void renderworker(int x, int y, int z, int rarity);		//call entities list
 	void RenderRoom(void);
-	void RenderTable(int x, int y, int z);
+	void RenderTable(int x, int y, int z, int tier);
 	void RenderQuillPaper();
 	void RenderPhone();
 	void RenderLaptop();
@@ -194,6 +197,7 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
 	bool upgrades = false;
+	float dailyprofit;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;

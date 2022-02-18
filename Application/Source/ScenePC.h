@@ -117,6 +117,8 @@ private:
 	int minescore = 0;
 	int textscore = 0;
 
+	int dollarsClone=0;
+
 	int seconds = 5; //coin game timer
 	bool coinStarted = false;
 

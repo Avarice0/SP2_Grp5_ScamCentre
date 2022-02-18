@@ -10,7 +10,7 @@ SceneGame::~SceneGame()
 }
 
 float SceneGame::dollars = 10000;
-float SceneGame::totalearned = 0;
+float SceneGame::profit = 40;
 
 void SceneGame::Init()
 {
@@ -131,6 +131,8 @@ void SceneGame::Init()
 		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
+
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("UI_BG", Color(0.1, 0.1, 0.1), 1);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -356,11 +358,11 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 
-	if (metre.GetMP() == 1000) {
+	if (metre.GetMP() > 999) {
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
 	}
-	if (dollars <=-1) {
+	if (dollars < 0) {
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
 	}
@@ -502,16 +504,19 @@ void SceneGame::Update(double dt)
 	
 		day++;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+		std::cout << metre.GetMP() << std::endl;
+		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
-					totalearned += entities[i]->getprofit();
-					std::cout << metre.GetMP();
+					profit += entities[i]->getprofit();
+					dailyprofit += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
-					totalearned += entities[i]->getprofit() * 1.1;
+					profit += entities[i]->getprofit() * 1.1;
+					dailyprofit += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -600,17 +605,7 @@ void SceneGame::Render()
 		RenderRoom();
 
 		for (int i = 0; i < size(entities); i++) {
-			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
-			if (entities[i]->getstationtier() == 0) {
-				//place obj above table
-			}
-			else if (entities[i]->getstationtier() == 1) {
-				//place obj above table
-			}
-			else if (entities[i]->getstationtier() == 2) {
-				//place obj above table
-			}
-			else {}		//statement break
+			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());
 			if (entities[i]->getworkertier() > 0) {
 				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
 			}
@@ -628,7 +623,14 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
+
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 60, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 10, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1, 1, 0), 2, 1, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "+" + to_string(dailyprofit), Color(1, 1, 0), 2, 1, 55.5);
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();
@@ -905,8 +907,31 @@ void SceneGame::RenderRoom(void)
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderTable(int x, int y, int z)
+void SceneGame::RenderTable(int x, int y, int z, int tier)
 {
+	if (tier == 1){
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z + 1);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderQuillPaper();
+		modelStack.PopMatrix();
+	}
+	else if (tier == 2) {
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(1.5, 1.5, 1.5);
+		RenderPhone();
+		modelStack.PopMatrix();
+	}
+	else if (tier == 0) {
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z + 1);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderLaptop();
+		modelStack.PopMatrix();
+	}
+
 	// tabletop
 	modelStack.PushMatrix();
 	modelStack.Translate(x, y, z);

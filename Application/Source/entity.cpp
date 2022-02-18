@@ -21,7 +21,7 @@ void entity::setworkertier(int newtier) {
 }
 
 float entity::getprofit(void) {
-    profit = (stationtier + 1) * (workertier  + 2);
+    profit = (stationtier) * (workertier );
     return profit;
 }
 //
