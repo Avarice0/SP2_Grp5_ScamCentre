@@ -81,7 +81,7 @@ class SceneGame : public Scene
 		GEO_METREBARBGBG,
 		GEO_BRIBE,
 
-		// quill, paperstack, laptop and phone
+		// quill, paperstack, laptop, phone, plant, toolbox
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
 		GEO_LAPTOP3,
@@ -94,6 +94,14 @@ class SceneGame : public Scene
 		GEO_PENBASE,
 		GEO_FEATHER,
 		GEO_PAPERSTACK,
+		
+		GEO_PLANTPOT,
+		GEO_PLANTSTEM,
+		GEO_PLANTLEAF,
+
+		GEO_BLUEPRINTS,
+		GEO_TOOLBOX,
+		GEO_TOOLBOXHANDLE,
 		
 		//objs
 		GEO_VAN,
@@ -180,6 +188,13 @@ private:
 	void RenderQuillPaper();
 	void RenderPhone();
 	void RenderLaptop();
+	
+	void RenderPlant();
+	void RenderToolbox();
+	void RenderSingleTable();
+	
+	void RenderOfficeTable(); // render the tables in office and upgrade areas
+	void RenderUpgradeTable();
 	
 	void RenderPermUpgrade();
 	void RenderUpgrade();
