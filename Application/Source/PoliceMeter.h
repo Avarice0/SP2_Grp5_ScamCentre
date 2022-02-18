@@ -33,5 +33,5 @@ public:
 private:
 	float MeterPercentage = 0;			// the police-meter "score"
 	float BribeSuccess = 100;				// global variable
-	float BribeCost = 1000;				// cost of activating bribe function
+	int BribeCost = 1000;				// cost of activating bribe function
 };

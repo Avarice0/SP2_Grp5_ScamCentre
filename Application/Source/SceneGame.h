@@ -75,12 +75,12 @@ class SceneGame : public Scene
 
 		GEO_QUAD_BG,
 
-		//HUD
+		//Police stuff
 		GEO_METREBARBG,
 		GEO_METREBARFG,
 		GEO_METREBARBGBG,
-		GEO_METREBARBULB,
-		
+		GEO_BRIBE,
+
 		// quill, paperstack, laptop and phone
 		GEO_LAPTOP,
 		GEO_LAPTOP2,
@@ -184,6 +184,7 @@ private:
 	void RenderPermUpgrade();
 	void RenderUpgrade();
 	void RenderPoliceMetre();
+	void RenderBribe();
 	//mouse input
 	double x, y;
 	float posX, posY;
@@ -206,7 +207,7 @@ private:
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
-	bool workerupgrade = false, stationupgrade = false, PermUpgrade = false;
+	bool workerupgrade = false, stationupgrade = false, PermUpgrade = false, Canbribe = false;
 
 	int cameranumber = 1;
 
