@@ -13,6 +13,7 @@ float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
 float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
+float SceneGame::totalearned = 0;
 void SceneGame::Init()
 {
 	{
@@ -359,12 +360,12 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 
-	if (metre.GetMP() == 1000) {
+	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
 	}
-	if (dollars <=-1) {
+	if (dollars < 0) {
 		endtime = Application::GetTime();
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
@@ -428,7 +429,7 @@ void SceneGame::Update(double dt)
 			}
 			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
-				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 4){
+				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 3){
 					if (dollars > entities[entitynumber]->getstationcost()) {
 						dollars -= entities[entitynumber]->getstationcost();
 						entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
@@ -486,7 +487,6 @@ void SceneGame::Update(double dt)
 	if (dayUp == true) {
 		
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
-		profit = 0;
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
@@ -584,17 +584,7 @@ void SceneGame::Render()
 		RenderRoom();
 
 		for (int i = 0; i < size(entities); i++) {
-			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2]);
-			if (entities[i]->getstationtier() == 0) {
-				//place obj above table
-			}
-			else if (entities[i]->getstationtier() == 1) {
-				//place obj above table
-			}
-			else if (entities[i]->getstationtier() == 2) {
-				//place obj above table
-			}
-			else {}		//statement break
+			RenderTable(entities[i]->ECoords[0] - 5, 3, entities[i]->ECoords[2], entities[i]->getstationtier());
 			if (entities[i]->getworkertier() > 0) {
 				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
 			}
@@ -895,8 +885,31 @@ void SceneGame::RenderRoom(void)
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderTable(int x, int y, int z)
+void SceneGame::RenderTable(int x, int y, int z, int tier)
 {
+	if (tier == 1){
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z + 1);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderQuillPaper();
+		modelStack.PopMatrix();
+	}
+	else if (tier == 2) {
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(1.5, 1.5, 1.5);
+		RenderPhone();
+		modelStack.PopMatrix();
+	}
+	else if (tier == 3) {
+		modelStack.PushMatrix();
+		modelStack.Translate(x, y, z);
+		modelStack.Rotate(90, 0, 1, 0);
+		RenderLaptop();
+		modelStack.PopMatrix();
+	}
+
 	// tabletop
 	modelStack.PushMatrix();
 	modelStack.Translate(x, y, z);
@@ -1137,6 +1150,7 @@ void SceneGame::RenderPoliceMetre()
 	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
+	std::cout << metre.GetMP() << std::endl;
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
 }
 

@@ -35,8 +35,6 @@ float entity::getstationcost(void) {
         return StationUpgrade1;
     else if (stationtier == 2)
         return StationUpgrade2;
-    else if (stationtier == 3)
-        return StationUpgrade3;
     else
         return 0;
 }/*

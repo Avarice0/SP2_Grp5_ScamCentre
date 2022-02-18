@@ -172,7 +172,7 @@ private:
 	//automated render functions
 	void renderworker(int x, int y, int z, int rarity);		//call entities list
 	void RenderRoom(void);
-	void RenderTable(int x, int y, int z);
+	void RenderTable(int x, int y, int z, int tier);
 	void RenderQuillPaper();
 	void RenderPhone();
 	void RenderLaptop();

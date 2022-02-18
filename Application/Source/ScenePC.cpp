@@ -196,10 +196,6 @@ void ScenePC::Update(double dt)
 			dollarsClone += textscore * 4;
 			dollarsClone += minescore * 2;
 
-			SceneGame::totalearned += score * 2;
-			SceneGame::totalearned += textscore * 4;
-			SceneGame::totalearned += minescore * 2;
-
 			score = 0;
 			textscore = 0;
 			minescore = 0;
