@@ -157,7 +157,7 @@ void ScenePC::Update(double dt)
 				coinbomby = rand() % 35 + 15;
 				while ((coinbombx > (coin1x - 2.5) && coinbombx < (coin1x + 2.5)) && (coinbomby > (coin1y - 2.5) && coinbomby < (coin1y + 2.5)))
 				{
-					if ((coinbombx > (coin2x - 2.5) && coinbombx < (coin2x + 2.5)) && (coinbomby > (coin2y - 2.5) && coinbomby < (coin2y + 2.5)))
+					while ((coinbombx > (coin2x - 2.5) && coinbombx < (coin2x + 2.5)) && (coinbomby > (coin2y - 2.5) && coinbomby < (coin2y + 2.5)))
 					{
 						coinbombx = rand() % 25 + 45;
 						coinbomby = rand() % 35 + 15;
@@ -168,6 +168,10 @@ void ScenePC::Update(double dt)
 
 				coinStarted = true;
 				//gameended = false;
+			}
+			if ( (posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) )
+			{
+				//do what lol
 			}
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
@@ -221,7 +225,7 @@ void ScenePC::Update(double dt)
 			SceneGame::dollars += score * 2;
 			SceneGame::dollars += textscore * 4;
 			SceneGame::dollars += minescore * 2;
-
+			
 			dollarsClone += score * 2;
 			dollarsClone += textscore * 4;
 			dollarsClone += minescore * 2;
