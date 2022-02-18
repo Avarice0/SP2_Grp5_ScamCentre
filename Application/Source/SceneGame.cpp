@@ -11,6 +11,7 @@ SceneGame::~SceneGame()
 
 float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
+float SceneGame::profit = 40;
 
 void SceneGame::Init()
 {
@@ -131,6 +132,8 @@ void SceneGame::Init()
 		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 		meshList[GEO_METREBARBULB] = MeshBuilder::GenerateCircle("circle", Color(1, 0.4, 0.4), 20, 1.f);
+
+		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("UI_BG", Color(0.1, 0.1, 0.1), 1);
 	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
@@ -501,17 +504,20 @@ void SceneGame::Update(double dt)
 
 	
 		day++;
+		profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (entities[i] != NULL) {
 				if (coffee == false) {
 					dollars += entities[i]->getprofit();
-					totalearned += entities[i]->getprofit();
-					std::cout << metre.GetMP();
+					profit += entities[i]->getprofit();
+					dailyprofit += entities[i]->getprofit();
 				}
 				else {
 					dollars += entities[i]->getprofit() * 1.1;
-					totalearned += entities[i]->getprofit() * 1.1;
+					profit += entities[i]->getprofit() * 1.1;
+					dailyprofit += entities[i]->getprofit() * 1.1;
 				}
 
 			}
@@ -628,7 +634,14 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 0.5, 1), 2, 60, 57.5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(0.5, 0.5, 1), 2, 2, 57.5);
+
+
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 60, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 10, 58, 20, 5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1, 1, 0), 2, 1, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "+" + to_string(dailyprofit), Color(1, 1, 0), 2, 1, 55.5);
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();
