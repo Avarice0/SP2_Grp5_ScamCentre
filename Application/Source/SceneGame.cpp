@@ -315,6 +315,7 @@ void SceneGame::Update(double dt)
 	camera.Update(dt);
 
 	//player update code
+	player.D = -1;
 	if (Application::IsKeyPressed('W'))
 	{
 		player.D = 0;
@@ -335,19 +336,20 @@ void SceneGame::Update(double dt)
 		player.D = 3;
 		player.X++;
 	}
+	else {}
 	for (int i = 0; i < size(entities); i++) {
 		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
 			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 				if (player.D == 0) {
 					player.Z++;
 				}
-				else if (player.D == 1) {
+				if (player.D == 1) {
 					player.Z--;
 				}
-				else if (player.D == 2) {
+				if (player.D == 2) {
 					player.X++;
 				}
-				else if (player.D == 3) {
+				if (player.D == 3) {
 					player.X--;
 				}
 				else {}
@@ -367,7 +369,7 @@ void SceneGame::Update(double dt)
 		player.Z = -75;
 	}
 	else{}
-
+	
 	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
 		SceneEnd::EndingScene(1);
@@ -378,8 +380,6 @@ void SceneGame::Update(double dt)
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
 	}
-
-	player.D = -1;
 
 	if (dollars >= 600)
 		RenderPermItem1 = true;
@@ -467,7 +467,6 @@ void SceneGame::Update(double dt)
 		mousestate = "";
 	}
 
-	//worker counter
 	NoobCount = 0; ExperiencedCount = 0; ExpertCount = 0;
 	for (int i = 0; i < size(entities); i++) {
 		if (entities[i]->getworkertier() == 1) {
@@ -577,7 +576,6 @@ void SceneGame::Render()
 				camera.target.x, camera.target.y, camera.target.z,
 				camera.up.x, camera.up.y, camera.up.z);
 			modelStack.LoadIdentity();
-			renderworker(player.X, 5, player.Z, 1);
 		
 		}
 		{
@@ -592,7 +590,9 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_FLOOR], true);
 		modelStack.PopMatrix();
 		RenderRoom();
-		
+
+		renderworker(player.X, 5, player.Z, 1);
+
 		if (vehiclex > 200) {
 			vehiclex = -200;
 			vehiclemodel = rand() % 3;
@@ -641,8 +641,6 @@ void SceneGame::Render()
 					entitynumber = i;
 					RenderUpgrade();
 					upgrades = true;
-					//get upgrade cost and tier
-					//render the name and attach it to unique entity
 					break;
 				}
 				else {
@@ -1151,7 +1149,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 4) {
+	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
 	}
