@@ -143,6 +143,8 @@ public:
 	static float dollars;
 	static float totalearned;
 
+	static float profit;
+
 private:
 	unsigned m_vertexArrayID;
 	Mesh *meshList[NUM_GEOMETRY];
