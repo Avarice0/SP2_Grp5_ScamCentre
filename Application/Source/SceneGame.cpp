@@ -223,6 +223,7 @@ void SceneGame::Init()
 
 		meshList[GEO_QUOTE] = MeshBuilder::GenerateQuad("quote", Color(1, 0.4, 0.4), 1.f);
 		meshList[GEO_QUOTE]->textureID = LoadTGA("Image//Quotes1.tga");
+		meshList[GEO_BJCARD] = MeshBuilder::GenerateCube("card", Color(0.2, 0.2, 0.8), 1.f);
 	}
 	{
 		meshList[GEO_PHONE] = MeshBuilder::GenerateCube("phone", Color(0.4, 0.4, 0.4), 1);
@@ -738,6 +739,11 @@ void SceneGame::Render()
 			PermUpgrade = false;
 		}
 
+		modelStack.PushMatrix();
+		modelStack.Translate(-40, 0, -40);
+		RenderBJTable();
+		modelStack.PopMatrix();
+
 		RenderPoliceMetre();
 		RenderBribe();
 		if (changetoPC == true) {
@@ -1022,6 +1028,15 @@ void SceneGame::RenderRoom(void)
 		RenderUpgradeTable();
 		modelStack.PopMatrix();
 
+		//BlackJack area
+		modelStack.PushMatrix();
+		modelStack.Translate(-4, 0.03, -4.5);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(4, 4, 1);
+		RenderMesh(meshList[GEO_UPGRADEAREA], true);
+		modelStack.PopMatrix();
+
+
 	modelStack.PopMatrix();
 }
 
@@ -1288,6 +1303,78 @@ void SceneGame::RenderChair()
 	RenderMesh(meshList[GEO_TABLE], true);
 	modelStack.PopMatrix();
 
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderBJTable()
+{
+	modelStack.PushMatrix();
+	modelStack.Scale(2, 3, 5);
+	RenderSingleTable();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 6);
+	modelStack.Scale(3, 3, 3);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(6, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(3, 3, 3);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-6, 0, 0);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Scale(3, 3, 3);
+	RenderChair();
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 4, 4);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(1.2, 1, 0.05);
+	RenderMesh(meshList[GEO_BJCARD], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(4, 4, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(1.2, 1, 0.05);
+	RenderMesh(meshList[GEO_BJCARD], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-4, 4, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(1.2, 1, 0.05);
+	RenderMesh(meshList[GEO_BJCARD], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 4, -4);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(1.2, 1, 0.05);
+	RenderMesh(meshList[GEO_BJCARD], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate( 2, 4, -4);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(1.2, 1, 1);
+	RenderMesh(meshList[GEO_BJCARD], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -7);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(1, 1, 1);
+	renderworker(0, 6, 0, 1);
 	modelStack.PopMatrix();
 }
 

@@ -104,6 +104,8 @@ class SceneGame : public Scene
 		GEO_TOOLBOXHANDLE,
 
 		GEO_QUOTE,
+
+		GEO_BJCARD,
 		
 		//objs
 		GEO_VAN,
@@ -203,6 +205,7 @@ private:
 	void RenderPoliceMetre();
 	void RenderBribe();
 	void RenderChair();
+	void RenderBJTable();
 	//mouse input
 	double x, y;
 	float posX, posY;
