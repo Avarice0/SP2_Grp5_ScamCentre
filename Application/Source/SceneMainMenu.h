@@ -41,6 +41,8 @@ class SceneMainMenu : public Scene
 		GEO_MOUSESTATE,		//debug for mouse
 		GEO_COORDS,			//debug for position
 
+		GEO_DOLLARSIGN,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -104,6 +106,7 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
+	void RenderDollarSign();
 
 	bool flashlighttoggle = false;
 	bool frametoggle = false;
