@@ -1,5 +1,5 @@
-#ifndef SCENE_CASINO_BJ_H
-#define SCENE_CASINO_BJ_H
+#ifndef SCENE_CASINOBJ_H
+#define SCENE_CASINOBJ_H
 
 #include "Scene.h"
 #include "Mesh.h"
@@ -54,6 +54,8 @@ class SceneCasinoBJ : public Scene
 		GEO_EXIT,
 		GEO_GREENTEXT,
 		GEO_BLUETEXT,
+
+		GEO_TABLE,
 
 
 		NUM_GEOMETRY,
