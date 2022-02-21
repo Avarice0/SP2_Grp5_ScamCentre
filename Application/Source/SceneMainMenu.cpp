@@ -122,6 +122,15 @@ void SceneMainMenu::Init()
 		meshList[GEO_COORDS] = MeshBuilder::GenerateText("coordinates", 16, 16);
 		meshList[GEO_COORDS]->textureID = LoadTGA("Image//calibri.tga");
 	}
+	
+	{
+		meshList[GEO_DOLLARSIGN] = MeshBuilder::GenerateCube("dollarsign", Color(0, 0.8, 0), 1);
+		meshList[GEO_DOLLARSIGN]->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
+		meshList[GEO_DOLLARSIGN]->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+		meshList[GEO_DOLLARSIGN]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_DOLLARSIGN]->material.kShininess = 1.f;
+	}
+	
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
 	projectionStack.LoadMatrix(projection);
@@ -360,4 +369,49 @@ void SceneMainMenu::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int 
 	viewStack.PopMatrix();
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
+}
+
+void SceneMainMenu::RenderDollarSign()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 1, 0);
+	modelStack.Scale(1, 1, 3);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 2, -1);
+	modelStack.Scale(1, 2, 1);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 3, 0);
+	modelStack.Scale(1, 1, 3);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 4, 1);
+	modelStack.Scale(1, 2, 1);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 5, 0);
+	modelStack.Scale(1, 1, 3);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 3, 0.25);
+	modelStack.Scale(0.8, 6, 0.25);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 3, -0.25);
+	modelStack.Scale(0.8, 6, 0.25);
+	RenderMesh(meshList[GEO_DOLLARSIGN], true);
+	modelStack.PopMatrix();
 }
