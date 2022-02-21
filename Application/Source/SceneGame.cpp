@@ -415,32 +415,32 @@ void SceneGame::Update(double dt)
 	else{}
 	
 	if ((player.X > 47 && player.X < 73) && (player.Z > -66 && player.Z < -55)) {
-		if ((player.X < 48) && (player.Z > -66 && player.Z < -55)) {
-			player.X = 46.9;
+		if ((player.X < 49) && (player.Z > -66 && player.Z < -55)) {
+			player.X = 47;
 		}
-		else if ((player.X > 71) && (player.Z > -66 && player.Z < -55)) {
-			player.X = 73.1;
+		if ((player.X > 71) && (player.Z > -66 && player.Z < -55)) {
+			player.X = 73;
 		}
 		if ((player.Z < -64) && (player.X > 47 && player.X < 73)) {
-			player.Z = -66.1;
+			player.Z = -66;
 		}
-		else if ((player.Z > -57) && (player.X > 47 && player.X < 73)) {
-			player.Z = -55.1;
+		if ((player.Z > -57) && (player.X > 47 && player.X < 73)) {
+			player.Z = -55;
 		}
 	}
 
 	if ((player.X > 34 && player.X < 60) && (player.Z > 54 && player.Z < 67)) {
-		if ((player.X < 35) && (player.Z > 54 && player.Z < 67)) {
-			player.X = 33.9;
+		if ((player.X < 36) && (player.Z > 54 && player.Z < 67)) {
+			player.X = 34;
 		}
-		else if ((player.X > 58) && (player.Z > 54 && player.Z < 67)) {
-			player.X = 60.1;
+		if ((player.X > 58) && (player.Z > 54 && player.Z < 67)) {
+			player.X = 60;
 		}
-		if ((player.Z < 55) && (player.X > 34 && player.X < 60)) {
-			player.Z =  53.9;
+		if ((player.Z < 56) && (player.X > 34 && player.X < 60)) {
+			player.Z =  54;
 		}
-		else if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
-			player.Z = 67.1;
+		if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
+			player.Z = 67;
 		}
 	}
 
