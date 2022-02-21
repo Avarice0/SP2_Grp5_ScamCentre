@@ -367,7 +367,7 @@ void ScenePC::Render()
 	
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
-	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0,0,0), 2, 10,37);
+	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0,0,0), 2, 7,19);
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
@@ -396,8 +396,8 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
 
-		string scoreText = "Score: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
+		string scoreText = "Cash: " + to_string(int(dollarsClone));
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 
 		if (correctPos == true) {
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
@@ -416,8 +416,8 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 3)
 	{
-		string scoreText = "Score: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
+		string scoreText = "Cash: " + to_string(int(dollarsClone));
+		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
