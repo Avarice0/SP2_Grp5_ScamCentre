@@ -162,12 +162,24 @@ private:
 	{
 		"Amazon",
 		"No",
-		"Give credit card no.",
-		"Give credit card no.",
-		"give a deposit",
-		"Give account details",
+		"Give credit",
+		"Give credit",
+		"give a",
+		"Give account",
 		"pay up",
-		"hand over the mooney",
+		"hand over",
+	};
+
+	std::string correctAns2[8]
+	{
+		"  ",
+		"  ",
+		"card no.",
+		"card no.",
+		"deposit",
+		"details",
+		"  ",
+		"the money",
 	};
 
 	std::string wrongAns[8]
@@ -175,15 +187,27 @@ private:
 		"amazoone",
 		"Yes",
 		"you can't",
-		"go to our office",
-		"It was a prank",
-		"buy it yourself",
+		"go to our ",
+		"It was a",
+		"buy it ",
 		"Nothing",
 		"no",
 	};
 
+	std::string wrongAns2[8]
+	{
+		"  ",
+		"  ",
+		"  ",
+		"office",
+		"prank",
+		"yourself",
+		"  ",
+		"  ",
+	};
+
 	int RNGmsg = 5;
-	bool correctPos = rand() % 2;
+	bool correctPos = 1;
 };
 
 
