@@ -332,7 +332,21 @@ void SceneGame::Init()
 		meshList[GEO_TOOLBOXHANDLE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
 		meshList[GEO_TOOLBOXHANDLE]->material.kShininess = 1.f;
 	}
+	{
+		meshList[GEO_VENDINGMACHINE] = MeshBuilder::GenerateCube("vendingmachine", Color(0, 0, 0), 1);
+		meshList[GEO_VENDINGMACHINE]->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
+		meshList[GEO_VENDINGMACHINE]->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+		meshList[GEO_VENDINGMACHINE]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_VENDINGMACHINE]->material.kShininess = 1.f;
 
+		meshList[GEO_VENDINGMACHINEFRONT] = MeshBuilder::GenerateQuad("vendingmachinefront", Color(0, 0.8, 0), 1);
+		meshList[GEO_VENDINGMACHINEFRONT]->textureID = LoadTGA("Image//vendingmachine.tga");
+		meshList[GEO_VENDINGMACHINEFRONT]->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
+		meshList[GEO_VENDINGMACHINEFRONT]->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+		meshList[GEO_VENDINGMACHINEFRONT]->material.kSpecular.Set(0.3f, 0.3f, 0.3f);
+		meshList[GEO_VENDINGMACHINEFRONT]->material.kShininess = 1.f;
+	}
+	
 	{
 		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
 		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
@@ -1663,6 +1677,21 @@ void SceneGame::RenderUpgradeTable()
 	modelStack.Translate(2.25, 0, 2.65);
 	modelStack.Rotate(-20, 0, 1, 0);
 	RenderChair();
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderVendingMachine()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.79, 0);
+	modelStack.Scale(1.22, 1.58, 1);
+	RenderMesh(meshList[GEO_VENDINGMACHINE], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0.79, 0.501);
+	modelStack.Scale(1.22, 1.58, 1);
+	RenderMesh(meshList[GEO_VENDINGMACHINEFRONT], true);
 	modelStack.PopMatrix();
 }
 
