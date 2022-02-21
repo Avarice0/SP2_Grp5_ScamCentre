@@ -443,6 +443,14 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36))
+		changetoPC = true;
+	else
+	{
+
+		changetoPC = false;
+	}
+
 	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
 		SceneEnd::EndingScene(1);
@@ -632,7 +640,6 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('E')) {		
 		if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36)) {
 			Application::changescene(3);
-
 		}
 	}
 }
@@ -733,6 +740,9 @@ void SceneGame::Render()
 
 		RenderPoliceMetre();
 		RenderBribe();
+		if (changetoPC == true) {
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 5);
+		}
 
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -963,6 +973,26 @@ void SceneGame::RenderRoom(void)
 		modelStack.Rotate(0, 0, 1, 0);
 		modelStack.Scale(15, 5, 1);
 		RenderMesh(meshList[GEO_QUOTE], true);
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(2.2, 0, 7);
+		modelStack.Rotate(0, 0, 1, 0);
+		modelStack.Scale(0.2, 0.3, 0.2);
+		RenderPlant();
+		modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Translate(0.5, 0, 7);
+		modelStack.Rotate(0, 0, 1, 0);
+		modelStack.Scale(0.2, 0.3, 0.2);
+		RenderPlant();
+		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(1.35, 0.03, 7);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(1.5, 1, 1);
+		RenderMesh(meshList[GEO_UPGRADESHOPFG], true);
 		modelStack.PopMatrix();
 
 		// office area
