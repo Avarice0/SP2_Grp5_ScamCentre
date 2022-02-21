@@ -107,6 +107,9 @@ class SceneGame : public Scene
 		GEO_PIZZA,
 		GEO_TEA,
 		
+		GEO_VENDINGMACHINE,
+		GEO_VENDINGMACHINEFRONT,
+		
 		//objs
 		GEO_VAN,
 		GEO_POLICECAR,
@@ -207,6 +210,8 @@ private:
 	void RenderBribe();
 	void RenderChair();
 	void RenderLoungeTable();
+	void RenderVendingMachine();
+	
 	//mouse input
 	double x, y;
 	float posX, posY;
