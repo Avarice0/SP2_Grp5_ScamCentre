@@ -445,6 +445,21 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	if ((player.X > -46 && player.X < -35) && (player.Z > -49 && player.Z < -33)) {
+		if ((player.X < - 44) && (player.Z > -49 && player.Z < -33)) {
+			player.X = -46;
+		}
+		if ((player.X > -37) && (player.Z > -49 && player.Z < -33)) {
+			player.X = -35;
+		}
+		if ((player.Z < -47) && (player.X > -46 && player.X < -35)) {
+			player.Z = -49;
+		}
+		if ((player.Z > -35) && (player.X > -46 && player.X < -35)) {
+			player.Z = -33;
+		}
+	}
+
 	if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36))
 		changetoPC = true;
 	else
@@ -452,6 +467,10 @@ void SceneGame::Update(double dt)
 
 		changetoPC = false;
 	}
+	if ((player.X > -60 && player.X < -20) && (player.Z > -65 && player.Z < -26))
+		changetoBJ = true;
+	else
+		changetoBJ = false;
 
 	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
@@ -643,6 +662,9 @@ void SceneGame::Update(double dt)
 		if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36)) {
 			Application::changescene(3);
 		}
+		else if ((player.X > -60 && player.X < -20) && (player.Z > -65 && player.Z < -26)) {
+			Application::changescene(5);
+		}
 	}
 }
 
@@ -750,7 +772,9 @@ void SceneGame::Render()
 		if (changetoPC == true) {
 			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 5);
 		}
-
+		if (changetoBJ == true) {
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to BJ", Color(1, 0.5, 0.5), 2, 25, 5);
+		}
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	
