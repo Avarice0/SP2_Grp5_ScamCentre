@@ -13,6 +13,7 @@ float SceneGame::dollars = 10000;
 float SceneGame::totalearned = 0;
 float SceneGame::profit = 0;
 int SceneGame::endtime = 0;
+int SceneGame::daydivide = 1;
 void SceneGame::Init()
 {
 	{
@@ -575,10 +576,10 @@ void SceneGame::Update(double dt)
 	
 	hours = times % 5;
 	day = times / 5;
-	if (day == daydivide && times != 0)
+	if (day == SceneGame::daydivide && times != 0)
 	{
 		dayUp = true;
-		daydivide++;
+		SceneGame::daydivide++;
 		
 	}
 

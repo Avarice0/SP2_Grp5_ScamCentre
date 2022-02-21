@@ -2,6 +2,7 @@
 #include "SceneGame.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <iostream>
 
 ScenePC::ScenePC()
 {
@@ -290,19 +291,21 @@ void ScenePC::Update(double dt)
 	int times = Application::GetTime(); // in seconds 
 	hours = times % 5;
 	day = times / 5;
-	if (day == daydivide && times != 0)
+	if (day == SceneGame::daydivide && times != 0)
 	{
-		daydivide++;
+
+		bool dayUp = true;
+		SceneGame::daydivide++;
 		dollarsClone += SceneGame::profit;
+		std::cout << (SceneGame::profit);
+		std::cout << "if is OK ";
 
 		explosionx = 100;
 		explosiony = 100;
 		
-
 		boom = false;
-
-
 	}
+
 
 
 
