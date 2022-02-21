@@ -108,6 +108,12 @@ void ScenePC::Init()
 		
 	}
 
+	{
+		meshList[GEO_METREBARBG] = MeshBuilder::GenerateQuad("metrebarbg", Color(1, 1, 1), 1.f);
+		meshList[GEO_METREBARBG]->textureID = LoadTGA("Image//Metrebar.tga");
+		meshList[GEO_METREBARFG] = MeshBuilder::GenerateQuad("quad", Color(1, 0.1, 0.1), 1.f);
+		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
+	}
 	
 
 	Mtx44 projection;
@@ -298,7 +304,7 @@ void ScenePC::Update(double dt)
 		SceneGame::daydivide++;
 		dollarsClone += SceneGame::profit;
 		std::cout << (SceneGame::profit);
-		std::cout << "if is OK ";
+		//std::cout << "if is OK ";
 
 		explosionx = 100;
 		explosiony = 100;

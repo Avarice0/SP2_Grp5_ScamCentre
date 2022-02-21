@@ -9,11 +9,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 //scene includes
-#include "SceneGame.h"
+
 #include "SceneMainMenu.h"
+#include "SceneGame.h"
 #include "ScenePC.h"
 #include "SceneEnd.h"
-#include "SceneCasinoBJ.h"
+//#include "SceneCasinoBJ.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -147,11 +148,10 @@ void Application::Run()
     Scene* scene2 = new SceneGame(); Scenelist[1] = scene2;
     Scene* scene3 = new ScenePC(); Scenelist[2] = scene3;
     Scene* scene4 = new SceneEnd(); Scenelist[3] = scene4;
+  // Scene* scene5 = new SceneCasinoBJ(); Scenelist[4] = scene5;    
+    scene1->Init();     scene2->Init();     scene3->Init();     scene4->Init(); //    scene5->Init();
     //Scene* scene5 = new SceneCasinoBJ(); Scenelist[4] = scene5;
-    scene1->Init();
-    scene2->Init();
-    scene3->Init();
-    scene4->Init();
+  
     //scene5->Init();
     Scene* scene = scene1;
 
@@ -203,7 +203,7 @@ void Application::Run()
             scene = scene3;
         }
         else if (scenenum == 4) {
-            scene = scene4;
+       //     scene = scene4;
         }
        /* else if (scenenum == 5) {
             scene = scene5;
