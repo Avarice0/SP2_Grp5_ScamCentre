@@ -433,13 +433,13 @@ void SceneGame::Update(double dt)
 		if ((player.X < 35) && (player.Z > 54 && player.Z < 67)) {
 			player.X = 33.9;
 		}
-		else if ((player.X > 58) && (player.Z > 54 && player.Z < 67)) {
+		if ((player.X > 58) && (player.Z > 54 && player.Z < 67)) {
 			player.X = 60.1;
 		}
 		if ((player.Z < 55) && (player.X > 34 && player.X < 60)) {
 			player.Z =  53.9;
 		}
-		else if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
+		if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
 			player.Z = 67.1;
 		}
 	}
