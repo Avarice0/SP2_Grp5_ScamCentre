@@ -49,7 +49,6 @@ class SceneCasinoBJ : public Scene
 		GEO_GREENTEXT,
 		GEO_BLUETEXT,
 
-		GEO_TABLE,
 
 
 		NUM_GEOMETRY,

@@ -214,13 +214,14 @@ void SceneMainMenu::Render()
 	//----------------------------------------
 	//RenderMesh(meshList[GEO_AXES], false);
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
+	modelStack.Translate(0, -15, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(2000, 2000, 1);
 	RenderMesh(meshList[GEO_FLOOR], true);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 5, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(10, 10, 10);
-	RenderMesh(meshList[GEO_QUAD], true);
+	modelStack.Translate(0, -10, 0); 
+	modelStack.Scale(3, 3, 3);
+	RenderDollarSign();
 	modelStack.PopMatrix();
 	
 	//text render
