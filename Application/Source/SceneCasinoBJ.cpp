@@ -66,14 +66,8 @@ void SceneCasinoBJ::Init()
 		meshList[i] = nullptr;
 	}
 	{
-		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
-		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
-		meshList[GEO_COINBOMB] = MeshBuilder::GenerateQuad("coinbomb", Color(0, 0, 0), 1.f);
-		meshList[GEO_COINBOMB]->textureID = LoadTGA("Image//coinbomb.tga");
-		meshList[GEO_EXPLOSION] = MeshBuilder::GenerateQuad("explosion", Color(0, 0, 0), 1.f);
-		meshList[GEO_EXPLOSION]->textureID = LoadTGA("Image//explosion.tga");
-		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
-		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+
+		meshList[GEO_TABLE] = MeshBuilder::GenerateQuad("greentext", Color(0.54, 0.27, 0.07), 16);
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
@@ -82,16 +76,6 @@ void SceneCasinoBJ::Init()
 
 		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
-
-		meshList[GEO_HEADS] = MeshBuilder::GenerateQuad("coinheads", 16, 16);
-		meshList[GEO_HEADS]->textureID = LoadTGA("Image//coinhead.tga");
-		meshList[GEO_TAILS] = MeshBuilder::GenerateQuad("cointails", 16, 16);
-		meshList[GEO_TAILS]->textureID = LoadTGA("Image//cointail.tga"); 
-		
-		meshList[GEO_HT] = MeshBuilder::GenerateQuad("HT", 16, 16);
-		meshList[GEO_HT]->textureID = LoadTGA("Image//headtailsbutton.tga");
-
-
 		
 		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
 		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
@@ -352,8 +336,7 @@ void SceneCasinoBJ::Render()
 		Mtx44 model, view, projection;
 		//Set view matrix using camera settings
 	}
-	//text render
-	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
+	RenderMeshOnScreen(meshList[GEO_TABLE], 40 ,30, 10, 10);
 	//UI buttons test
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
@@ -362,63 +345,6 @@ void SceneCasinoBJ::Render()
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
 	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0,0,0), 2, 10,37);
-	if (gamenum == 1) 
-	{
-		string coinTimer = "Secs left: " + to_string(seconds);
-		string scoreText = "cash: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
-		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
-		if (coinStarted == false)
-		{
-			RenderTextOnScreen(meshList[GEO_SCORE], "click coin to start", Color(0.5, 0.5, 1), 2, 7, 17);
-		}
-		RenderMeshOnScreen(meshList[GEO_COIN], coin1x, coin1y, 5, 5);
-		RenderMeshOnScreen(meshList[GEO_COIN], coin2x, coin2y, 5, 5);
-		RenderMeshOnScreen(meshList[GEO_COINBOMB], coinbombx, coinbomby, 5, 5);
-	
-	}
-	else if (gamenum == 2)
-	{
-		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
-		RenderMeshOnScreen(meshList[GEO_BLUETEXT], 46, 15, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_BLUETEXT], 66, 15, 1, 1);
-		
-		
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 41, 46);
-		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 41, 43);
-
-		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
-	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
-
-		string scoreText = "Score: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
-
-		if (correctPos == true) {
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
-
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
-		}
-		if (correctPos == false) {
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
-
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
-		}
-	}
-	else if (gamenum == 3)
-	{
-		string scoreText = "Score: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 30);
-		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
-
-	}
-
-	RenderMeshOnScreen(meshList[GEO_EXPLOSION], explosionx, explosiony, 90, 90);
 	
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -551,3 +477,137 @@ void SceneCasinoBJ::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int 
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
 }
+
+//#include <iostream>
+//#include <string>
+//#include <conio.h>
+//
+//#include "Deck.h"
+//using namespace std;
+//
+//int main(void) {
+//	int balance = 1000;
+//	int bettingvalue = 0;
+//	int playerinput; bool pass;
+//	Deck OpenDeck;
+//	OpenDeck.resetopen();
+//	while (balance > 0) {
+//		do {
+//			system("CLS");
+//			std::cout << "Welcome to BlackJack!" << std::endl;
+//			std::cout << "Press buttons to change bets." << std::endl;
+//			std::cout << "You have $" << balance << " in your account." << std::endl;
+//			std::cout << "You are betting $" << bettingvalue << std::endl;
+//			std::cout << "Q for -100, W for -50, E for -10, R to start the game, T for +10, Y for +50, U for +100" << std::endl;
+//			pass = false;
+//			playerinput = _getch();
+//			if (playerinput == 114) {		//A to continue next phase
+//				pass = true;
+//			}
+//			else {
+//				//reduce bet value
+//				if (playerinput == 113 && bettingvalue >= 100) {
+//					bettingvalue -= 100;
+//				}
+//				if (playerinput == 119 && bettingvalue >= 50) {
+//					bettingvalue -= 50;
+//				}
+//				if (playerinput == 101 && bettingvalue >= 10) {
+//					bettingvalue -= 10;
+//				}
+//				if (playerinput == 116 && bettingvalue + 10 <= balance) {
+//					bettingvalue += 10;
+//				}
+//				if (playerinput == 121 && bettingvalue + 50 <= balance) {
+//					bettingvalue += 50;
+//				}
+//				if (playerinput == 117 && bettingvalue + 100 <= balance) {
+//					bettingvalue += 100;
+//				}
+//			}
+//		} while (pass == false);
+//
+//		OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
+//		int result = 0;			//0 is no result, 1 is lose, 2 is tie, 3 is win
+//		OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);
+//		OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);
+//		bool stand = false;
+//		do {
+//			system("CLS");
+//			std::cout << "You have $" << balance << " in your account." << std::endl;
+//			std::cout << "You are betting $" << bettingvalue << std::endl;
+//			std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
+//			std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
+//			if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+//				result = 2;
+//			}
+//			else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+//				result = 3;
+//			}
+//			else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+//				result = 1;
+//			}
+//			else if (stand == true) {
+//				if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+//					result = 1;
+//				}
+//				else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+//					result = 2;
+//				}
+//				else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+//					result = 3;
+//				}
+//			}
+//			else if (stand == false) {
+//				if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
+//					std::cout << "Q to Hit, W to stand" << std::endl;
+//					playerinput = _getch();
+//					if (playerinput == 113) {
+//						OpenDeck.addcard(OpenDeck.playerhand);
+//					}
+//					else if (playerinput == 119) {
+//						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+//							OpenDeck.addcard(OpenDeck.dealerhand);
+//						}
+//						stand = true;
+//					}
+//				}
+//			}
+//
+//		} while (result == 0);
+//
+//		if (result == 1) {
+//			std::cout << "Player lost" << std::endl;
+//			balance -= bettingvalue;
+//		}
+//		else if (result == 2) {
+//			std::cout << "Tie/Push" << std::endl;
+//		}
+//		else if (result == 3) {
+//			std::cout << "Player won" << std::endl;
+//			balance += bettingvalue;
+//		}
+//
+//		std::cout << "Do you want to play again?: Q for yes, W for no";
+//		int playagain = 0;
+//		do {
+//			playerinput = _getch();
+//			if (playerinput == 113) {
+//				playagain = 1;
+//			}
+//			else if (playerinput == 119) {
+//				playagain = 2;
+//			}
+//		} while (playagain == 0);
+//		if (playagain == 2) {
+//			std::cout << "You left with $" << balance << std::endl;
+//			break;
+//		}
+//	}
+//	if (balance <= 0) {
+//		std::cout << "You ran out of money!" << std::endl;
+//	}
+//
+//
+//	return 0;
+//}

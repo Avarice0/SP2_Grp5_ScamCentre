@@ -35,13 +35,7 @@ class SceneCasinoBJ : public Scene
 		GEO_FLOOR,
 		GEO_QUAD,
 
-		GEO_COIN,
-		GEO_COINBOMB,
-		GEO_EXPLOSION,
-		GEO_WALLPAPER,
-		GEO_HEADS,
-		GEO_TAILS,
-		GEO_HT,
+		GEO_TABLE,
 	
 		//text
 		GEO_TEXT,			//debug for text
@@ -112,6 +106,7 @@ private:
 	int day;
 	int hours=0;
 
+	//time 
 
 	int gamenum = 2;
 

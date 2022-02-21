@@ -13,6 +13,7 @@
 #include "SceneMainMenu.h"
 #include "ScenePC.h"
 #include "SceneEnd.h"
+#include "SceneCasinoBJ.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -45,6 +46,7 @@ Application::Application()
 }
 Application::~Application()
 {
+	
 }
 
 //mouse input
@@ -140,10 +142,11 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene1 = new SceneMainMenu();
-	Scene *scene2 = new SceneGame();
-	Scene *scene3 = new ScenePC();
-	Scene *scene4 = new SceneEnd();
+	Scene* Scenelist[4];
+	Scene* scene1 = new SceneMainMenu(); Scenelist[0] = scene1;
+	Scene* scene2 = new SceneGame(); Scenelist[1] = scene2;
+	Scene* scene3 = new ScenePC(); Scenelist[2] = scene3;
+	Scene* scene4 = new SceneEnd(); Scenelist[3] = scene4;
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
@@ -216,8 +219,10 @@ void Application::Run()
 	} //Check if the ESC key had been pressed or if the window had been closed
 
 
-	scene->Exit();
-	delete scene;
+	for (size_t i = 0; i < size(Scenelist); i++) {
+		Scenelist[i]->Exit();
+		delete Scenelist[i];
+	}
 }
 
 void Application::Exit()
