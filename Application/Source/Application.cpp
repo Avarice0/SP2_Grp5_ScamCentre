@@ -13,7 +13,7 @@
 #include "SceneMainMenu.h"
 #include "ScenePC.h"
 #include "SceneEnd.h"
-#include "SceneCasinoBJ.h"
+//#include "SceneCasinoBJ.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -46,6 +46,7 @@ Application::Application()
 }
 Application::~Application()
 {
+	
 }
 
 //mouse input
