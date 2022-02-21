@@ -67,6 +67,8 @@ void SceneCasinoBJ::Init()
 	}
 	{
 
+		//meshList[GEO_TABLE] = MeshBuilder::GenerateQuad("greentext", Color(0.54, 0.27, 0.07), 16);
+
 		meshList[GEO_TABLE] = MeshBuilder::GenerateQuad("greentext", Color(0.54, 0.27, 0.07), 16);
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
@@ -76,6 +78,7 @@ void SceneCasinoBJ::Init()
 
 		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
+		
 		
 		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
 		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
