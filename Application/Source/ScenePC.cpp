@@ -73,8 +73,12 @@ void ScenePC::Init()
 		meshList[GEO_EXPLOSION]->textureID = LoadTGA("Image//explosion.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
+		meshList[GEO_BLUETEXT] = MeshBuilder::GenerateQuad("bluetext", 16, 16);
+		meshList[GEO_BLUETEXT]->textureID = LoadTGA("Image//bluetext.tga");
+
 		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
 
@@ -204,7 +208,7 @@ void ScenePC::Update(double dt)
 			coin1x = 100; coin1y = 100;
 			coin2x = 100; coin2y = 100;
 			coinbombx = 100; coinbomby = 100;
-			if ((posX > 7 && posX < 36) && (posY > 8 && posY < 21))
+			if ((posX > 38 && posX < 56) && (posY > 8 && posY < 21))
 			{
 				if (correctPos == true) {
 					textscore++;
@@ -216,7 +220,7 @@ void ScenePC::Update(double dt)
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
-			if ((posX > 38 && posX < 74) && (posY > 8 && posY < 22))
+			if ((posX > 56 && posX < 74) && (posY > 8 && posY < 22))
 			{
 				if (correctPos == true) {
 					textscore--;
@@ -373,6 +377,9 @@ void ScenePC::Render()
 	else if (gamenum == 2)
 	{
 		RenderMeshOnScreen(meshList[GEO_GREENTEXT], 55, 35, 2, 2);
+		RenderMeshOnScreen(meshList[GEO_BLUETEXT], 46, 15, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_BLUETEXT], 66, 15, 1, 1);
+		
 		
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][0], Color(1, 1, 1), 2, 41, 46);
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 41, 43);
@@ -387,12 +394,15 @@ void ScenePC::Render()
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
 
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 60, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 60, 14);
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
 		}
 		if (correctPos == false) {
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 1.5, 8, 14);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 40, 14);
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
+			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
+
+			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
+			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
 		}
 	}
 	else if (gamenum == 3)

@@ -53,6 +53,7 @@ class ScenePC : public Scene
 		GEO_LINE,
 		GEO_EXIT,
 		GEO_GREENTEXT,
+		GEO_BLUETEXT,
 
 
 		NUM_GEOMETRY,
