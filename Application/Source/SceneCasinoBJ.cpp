@@ -1,18 +1,18 @@
-#include "ScenePC.h"
+#include "SceneCasinoBJ.h"
 #include "SceneGame.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <iostream>
 
-ScenePC::ScenePC()
+SceneCasinoBJ::SceneCasinoBJ()
 {
 }
 
-ScenePC::~ScenePC()
+SceneCasinoBJ::~SceneCasinoBJ()
 {
 }
 
-void ScenePC::Init()
+void SceneCasinoBJ::Init()
 {
 	{
 
@@ -118,7 +118,7 @@ void ScenePC::Init()
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 }
 
-void ScenePC::Update(double dt)
+void SceneCasinoBJ::Update(double dt)
 {
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
@@ -338,7 +338,7 @@ void ScenePC::Update(double dt)
 	
 }
 
-void ScenePC::Render()
+void SceneCasinoBJ::Render()
 {
 	{
 		// Render VBO here
@@ -425,7 +425,7 @@ void ScenePC::Render()
 }
 
 
-void ScenePC::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneCasinoBJ::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -448,7 +448,7 @@ void ScenePC::RenderText(Mesh* mesh, std::string text, Color color)
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
 
-void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
+void SceneCasinoBJ::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
 	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
@@ -480,7 +480,7 @@ void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
-void ScenePC::Exit()
+void SceneCasinoBJ::Exit()
 {
 	// Cleanup VBO here
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -494,7 +494,7 @@ void ScenePC::Exit()
 	glDeleteProgram(m_programID);
 }
 
-void ScenePC::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneCasinoBJ::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -533,7 +533,7 @@ void ScenePC::RenderMesh(Mesh* mesh, bool enableLight)
 	}
 }
 
-void ScenePC::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+void SceneCasinoBJ::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;

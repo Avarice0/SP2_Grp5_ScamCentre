@@ -160,6 +160,7 @@ public:
 	static float totalearned;
 	static int endtime;
 	static float profit;
+	static int daydivide;
 
 private:
 	unsigned m_vertexArrayID;
@@ -237,7 +238,7 @@ private:
 	float debugRot;
 
 	bool dayUp = false;
-	int daydivide = 1;
+	//int daydivide = 1;
 	Mesh* shirtrarity[3];			//increases with number of shirts
 
 	float vehiclex = 250;

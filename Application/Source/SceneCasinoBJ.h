@@ -1,5 +1,5 @@
-#ifndef SCENE_PC_H
-#define SCENE_PC_H
+#ifndef SCENE_CASINO_BJ_H
+#define SCENE_CASINO_BJ_H
 
 #include "Scene.h"
 #include "Mesh.h"
@@ -27,7 +27,7 @@
 
 using namespace std;
 
-class ScenePC : public Scene
+class SceneCasinoBJ : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
@@ -80,8 +80,8 @@ class ScenePC : public Scene
 	};
 
 public:
-	ScenePC();
-	~ScenePC();
+	SceneCasinoBJ();
+	~SceneCasinoBJ();
 
 	virtual void Init();
 	virtual void Update(double dt);
