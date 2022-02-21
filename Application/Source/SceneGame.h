@@ -104,6 +104,8 @@ class SceneGame : public Scene
 		GEO_TOOLBOXHANDLE,
 
 		GEO_QUOTE,
+
+		GEO_BJCARD,
 		
 		//objs
 		GEO_VAN,
@@ -204,6 +206,7 @@ private:
 	void RenderPoliceMetre();
 	void RenderBribe();
 	void RenderChair();
+	void RenderBJTable();
 	//mouse input
 	double x, y;
 	float posX, posY;
@@ -226,7 +229,7 @@ private:
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;
-	bool workerupgrade = false, stationupgrade = false, PermUpgrade = false, Canbribe = false, changetoPC = false;
+	bool workerupgrade = false, stationupgrade = false, PermUpgrade = false, Canbribe = false, changetoPC = false, changetoBJ = false;
 
 	int cameranumber = 1;
 

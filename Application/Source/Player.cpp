@@ -2,8 +2,8 @@
 
 Player::Player()
 {
-	X = 50;
-	Z = 50;
+	X = -50;
+	Z = -20;
 }
 
 Player::~Player()

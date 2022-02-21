@@ -66,14 +66,8 @@ void SceneCasinoBJ::Init()
 		meshList[i] = nullptr;
 	}
 	{
-		meshList[GEO_COIN] = MeshBuilder::GenerateQuad("coin", Color(0, 0, 0), 1.f);
-		meshList[GEO_COIN]->textureID = LoadTGA("Image//coin.tga");
-		meshList[GEO_COINBOMB] = MeshBuilder::GenerateQuad("coinbomb", Color(0, 0, 0), 1.f);
-		meshList[GEO_COINBOMB]->textureID = LoadTGA("Image//coinbomb.tga");
-		meshList[GEO_EXPLOSION] = MeshBuilder::GenerateQuad("explosion", Color(0, 0, 0), 1.f);
-		meshList[GEO_EXPLOSION]->textureID = LoadTGA("Image//explosion.tga");
-		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
-		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+
+		meshList[GEO_TABLE] = MeshBuilder::GenerateQuad("greentext", Color(0.54, 0.27, 0.07), 16);
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
@@ -82,6 +76,7 @@ void SceneCasinoBJ::Init()
 
 		meshList[GEO_LINE] = MeshBuilder::GenerateQuad("line", 16, 16);
 		meshList[GEO_LINE]->textureID = LoadTGA("Image//line.tga");
+		
 
 		meshList[GEO_HEADS] = MeshBuilder::GenerateQuad("coinheads", 16, 16);
 		meshList[GEO_HEADS]->textureID = LoadTGA("Image//coinhead.tga");
