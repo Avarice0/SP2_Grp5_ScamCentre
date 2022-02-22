@@ -210,13 +210,14 @@ void SceneEnd::Render()
 
 	string lifetimeEarnings = to_string(Application::totalearned);
 	RenderMeshOnScreen(meshList[GEO_STATSBG], 68, 33, 20, 35);
-	RenderTextOnScreen(meshList[GEO_TEXT], "Lifetime", Color(1, 1, 1), 2, 63, 48);
-	RenderTextOnScreen(meshList[GEO_TEXT], "earnings", Color(1, 1, 1), 2, 63, 46);
-	RenderTextOnScreen(meshList[GEO_TEXT], lifetimeEarnings, Color(1,1,1), 2, 60, 43);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Lifetime", Color(1, 1, 1), 2, 61, 48);
+	RenderTextOnScreen(meshList[GEO_TEXT], "earnings", Color(1, 1, 1), 2, 61, 46);
+	RenderTextOnScreen(meshList[GEO_TEXT], lifetimeEarnings, Color(1, 1, 1), 2, 64, 42);
 
-	RenderTextOnScreen(meshList[GEO_TEXT], "Time", Color(1, 1, 1), 2, 66, 39);
-	RenderTextOnScreen(meshList[GEO_TEXT], "played", Color(1, 1, 1), 2, 64, 37);
-	RenderTextOnScreen(meshList[GEO_TEXT], to_string(timeSec), Color(1, 1, 1), 2, 62, 35);
+	timeSec = Application::endtime;
+	RenderTextOnScreen(meshList[GEO_TEXT], "Time", Color(1, 1, 1), 2, 62, 39);
+	RenderTextOnScreen(meshList[GEO_TEXT], "played", Color(1, 1, 1), 2, 62, 37);
+	RenderTextOnScreen(meshList[GEO_TEXT], to_string(timeSec), Color(1, 1, 1), 2, 64, 34);
 
 
 	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 23, 7, 20, 10);

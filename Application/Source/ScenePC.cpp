@@ -147,13 +147,12 @@ void ScenePC::Update(double dt)
 	unsigned h = Application::GetWindowHeight();
 	posX = x / w * 80; //convert (0,800) to (0,80)
 	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
-	static bool bLButtonState = false;
 
+	static bool bLButtonState = false;
 	if (Application::IsKeyPressed('E'))
 	{
 		dollarsClone = Application::dollars;
 	}
-
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
@@ -287,56 +286,45 @@ void ScenePC::Update(double dt)
 		{
 			//display betting value regardless
 			if (BJstate == 0) {
-				//if (button press change state) {		//go to dealing state
-				OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
-				OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);				//give 2 cards per
-				OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
-				BJstate = 0;
-			
-				
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
+					OpenDeck.addcard(OpenDeck.dealerhand);
+					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
+					BJstate = 1;
+				}
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
-				//all in
+					//if (button press) {			//all in 
+						//bettingvalue = balance;
+					//}
 				}
-
-				//if (button press && bettingvalue >= 100) {
-				if ((posX > 52 && posX < 62) && (posY >18 && posY < 23))
+				if ((posX > 52 && posX < 62) && (posY > 18 && posY < 23) && bettingvalue >= 100)
 				{
 					bettingvalue -= 100;
 				}
-				
-				//}
-				
-				//if (button press && bettingvalue >= 50) {
-				if ((posX > 40 && posX < 51) && (posY > 15 && posY < 20))
+				if ((posX > 40 && posX < 51) && (posY > 15 && posY < 20) && bettingvalue >= 50)
 				{
 					bettingvalue -= 50;
 				}
-				//}
-				
-				//if (button press && bettingvalue >= 10) {
-				if ((posX > 40 && posX < 51) && (posY > 21 && posY < 26))
+				if ((posX > 40 && posX < 51) && (posY > 21 && posY < 26) && bettingvalue >= 10)
 				{
 					bettingvalue -= 10;
 				}
-				//}
-				
-
-
 				//if (button press && bettingvalue + 10 <= balance) {
 				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40))
 				{
 					bettingvalue += 10;
 				}
 				//}
-				
+
 				//if (button press && bettingvalue + 50 <= balance) {
 				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46))
 				{
 					bettingvalue += 50;
 				}
 				//}
-				
+
 				//if (button press && bettingvalue + 100 <= balance) {
 				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43))
 				{
@@ -352,81 +340,84 @@ void ScenePC::Update(double dt)
 				//if (button press) {			//all in 
 					//bettingvalue = balance;
 				//}
-
-
-
-
 			}
 			if (BJstate == 1) {
 				//display cards
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-					result = 2;
-				}
-				else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
-					result = 3;
-				}
-				else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
-					result = 1;
-				}
-
-				if (stand == false) {
-					//cover 1 dealer card
-					std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
-					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
-
-					if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
-						//if (button press) {			//hit
-							OpenDeck.addcard(OpenDeck.playerhand);
-						//}
-						//else if (button press) {		//stand
-							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-								OpenDeck.addcard(OpenDeck.dealerhand);
-							}
-							stand = true;
-						//}
-					}
-				}
-				if (stand == true) {
-					//show covered dealer card		update dealer value
-					std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
-					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
-					if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
-						result = 1;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
-						result = 2;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+					//render both hands
+					if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
-				}
-			}
-			if (result == 1) {
-				std::cout << "Player lost" << std::endl;
-				//balance -= bettingvalue;
-			}
-			else if (result == 2) {
-				std::cout << "Tie/Push" << std::endl;
-				//balance += bettingvalue
-			}
-			else if (result == 3) {
-				std::cout << "Player won" << std::endl;
-				//balance += bettingvalue * 2;
-			}
-			//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
-			//if (deck size smaller than x) {
-				OpenDeck.resetopen();
-			//}
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+						result = 1;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+						result = 2;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
+						result = 3;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+						result = 1;
+					}
+					else {}
 
-			if (gameended == true) {
+					if (stand == false) {
+						//render 1 empty covered dealer card
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
+							//if (button press) {			//hit
+							OpenDeck.addcard(OpenDeck.playerhand);
+							//}
+							//else if (button press) {		//stand
+							stand = true;
+							OpenDeck.addcard(OpenDeck.dealerhand);
+							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+								OpenDeck.addcard(OpenDeck.dealerhand);						//add 2nd dealer card
+							}
+							//}
+						}
+					}
+					if (stand == true) {
+						//stop render of empty card
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+							result = 1;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+							result = 2;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+							result = 3;
+						}
+					}
+				}
+				if (result == 1) {
+					std::cout << "Player lost" << std::endl;
+					//loses bet
+				}
+				else if (result == 2) {
+					std::cout << "Tie/Push" << std::endl;
+					//refunds bet
+					//balance += bettingvalue
+				}
+				else if (result == 3) {
+					std::cout << "Player won" << std::endl;
+					//gives back bet and extra value
+					//balance += bettingvalue * 2;
+				}
+				//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
+				//if (deck size smaller than x) {
+				OpenDeck.resetopen();
+				//}
+
+				if (gameended == true) {
 
 				Application::dollars += score * 2;
 				Application::dollars += textscore * 4;
 				Application::dollars += minescore * 2;
 
-				dollarsClone += score * 2;
-				dollarsClone += textscore * 4;
-				dollarsClone += minescore * 2;
+					dollarsClone += score * 2;
+					dollarsClone += textscore * 4;
+					dollarsClone += minescore * 2;
 
 				score = 0;
 				textscore = 0;
@@ -435,65 +426,65 @@ void ScenePC::Update(double dt)
 			}
 		}
 	}
-
+		
+	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
+		{
 		bLButtonState = false;
 		mousestate = "";
-	}
-	static bool bRButtonState = false;
-	if (!bRButtonState && Application::IsMousePressed(1))
-	{
-		bRButtonState = true;
-		mousestate = "RBUTTON DOWN";
-	}
-	else if (bRButtonState && !Application::IsMousePressed(1))
-	{
-		bRButtonState = false;
-		mousestate = "";
-	}
-
-	
-	int times = Application::GetTime(); // in seconds 
-	hours = times % 5;
-	day = times / 5;
-	if (day == Application::daydivide && times != 0)
-	{
-
-		bool dayUp = true;
-		Application::daydivide++;
-		dollarsClone += Application::profit;
-		//std::cout << "if is OK ";
-
-		explosionx = 100;
-		explosiony = 100;
-		
-		boom = false;
-	}
-
-	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
-
-	if (coinStarted == true) {
-		totalframe++;
-		if (totalframe >= 60)
+		}
+		static bool bRButtonState = false;
+		if (!bRButtonState && Application::IsMousePressed(1))
 		{
-			totalframe = 0;
-			seconds--;
+			bRButtonState = true;
+			mousestate = "RBUTTON DOWN";
 		}
-		if (seconds < 0) {
-			seconds = 0;
-			coinStarted = false;
-			coin1x = rand() % 25 + 45;
-			coin1y = rand() % 35 + 15;
+		else if (bRButtonState && !Application::IsMousePressed(1))
+		{
+			bRButtonState = false;
+			mousestate = "";
+		}
 
 
-			coin2x = 100;
-			coin2y = 100;
-			coinbombx = 100;
-			coinbomby = 100;
-			seconds = 5;
+		int times = Application::GetTime(); // in seconds 
+		hours = times % 5;
+		day = times / 5;
+		if (day == Application::daydivide && times != 0) {
+
+			bool dayUp = true;
+			Application::daydivide++;
+			dollarsClone += Application::profit;
+			//std::cout << "if is OK ";
+
+			explosionx = 100;
+			explosiony = 100;
+
+			boom = false;
 		}
-	}
+
+		timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
+
+		if (coinStarted == true) {
+			totalframe++;
+			if (totalframe >= 60)
+			{
+				totalframe = 0;
+				seconds--;
+			}
+			if (seconds < 0) {
+				seconds = 0;
+				coinStarted = false;
+				coin1x = rand() % 25 + 45;
+				coin1y = rand() % 35 + 15;
+
+
+				coin2x = 100;
+				coin2y = 100;
+				coinbombx = 100;
+				coinbomby = 100;
+				seconds = 5;
+			}
+		}
 }
 
 void ScenePC::Render()
