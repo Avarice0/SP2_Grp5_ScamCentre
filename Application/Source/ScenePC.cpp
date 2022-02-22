@@ -176,7 +176,7 @@ void ScenePC::Update(double dt)
 		{
 			gamenum = 4; //blackjack
 			//game start declarations
-			bettingvalue = 0;
+			//bettingvalue = 0;
 		}
 		else {}
 		if (gamenum == 1) {
@@ -327,6 +327,7 @@ void ScenePC::Update(double dt)
 			}
 			if (BJstate == 1) {
 				//render both hands
+
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 					if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
@@ -530,7 +531,8 @@ void ScenePC::Render()
 		else if (BJstate == 1) {
 			//dealing phase
 			string betvalue = "Bet:" + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 42, 29);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 50, 29);
+
 		}
 		else {}
 	}
