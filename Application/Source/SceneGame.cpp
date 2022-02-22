@@ -681,6 +681,7 @@ void SceneGame::Update(double dt)
 				dailyprofit += entities[i]->getprofit() * 1.1;
 			}
 		}
+		Application::totalearned += dailyprofit;
 		dayUp = false;
 	}
 	else {

@@ -222,7 +222,7 @@ void ScenePC::Update(double dt)
 				score++;
 
 				coinStarted = true;
-				//gameended = false;
+				gameended = true;
 			}
 
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
@@ -291,39 +291,9 @@ void ScenePC::Update(double dt)
 				OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
 				OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);				//give 2 cards per
 				OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
-				BJstate = 1;
-			/*	
-				x, y
-
-					57, 52
-					74, 45
-
-
-					40, 46
-					50, 41
-
-					52.43
-					62, 38
-
-					40, 40
-					50, 35
-
-
-					61, 34
-					73, 27
-
-
-					40, 26
-					51, 21
-
-					52, 23
-					62, 18
-
-					40, 20
-					51, 15*/
-
-				//}
-				// 
+				BJstate = 0;
+			
+				
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
 				//all in
@@ -374,9 +344,15 @@ void ScenePC::Update(double dt)
 				}
 				//}
 				
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					BJstate = 1;
+				}
+
 				//if (button press) {			//all in 
 					//bettingvalue = balance;
 				//}
+
 
 
 
@@ -455,6 +431,7 @@ void ScenePC::Update(double dt)
 				score = 0;
 				textscore = 0;
 				minescore = 0;
+
 			}
 		}
 	}
@@ -591,8 +568,8 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
 			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
-			string scoreText = "Cash: " + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
+			string betvalue = "Bet:" + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 42, 29);
 
 		}
 		else if (BJstate == 1) {
