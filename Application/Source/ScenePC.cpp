@@ -323,9 +323,9 @@ void ScenePC::Update(double dt)
 				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
 				{
 					OpenDeck.resetopen();
-					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
-					OpenDeck.addcard(OpenDeck.dealerhand);
-					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
+					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
+					OpenDeck.addcard(OpenDeck.dealerhand);		//add blank card
+					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);
 					BJstate = 1;
 					Application::dollars -= bettingvalue;
 				}
@@ -349,7 +349,6 @@ void ScenePC::Update(double dt)
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 1;
 					}
-				//	else {}
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
@@ -536,49 +535,32 @@ void ScenePC::Render()
 		else if (BJstate == 1) {
 			//dealing phase
 			//H, D, C, S     3,4,5,6
+			for (size_t i = 0; i < size(OpenDeck.playerhand); i++) {
+				if ((OpenDeck.playerhand[i].getsuit() == 3) || (OpenDeck.playerhand[i].getsuit() == 4)) {
+					RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[i], 15, 10, 10);
+					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
+					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 12);
+					if (OpenDeck.playerhand[i].getsuit() == 3) {
+						RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[i] - 2, 19, 1, 1); 
+					}
+					if (OpenDeck.playerhand[i].getsuit() == 4) {
+						RenderMeshOnScreen(meshList[GEO_SUITD], cardCoordsX[i] - 2, 19, 1, 1); 
+					}
+				}
+				else if ((OpenDeck.playerhand[i].getsuit() == 5) || (OpenDeck.playerhand[i].getsuit() == 6)) {
+					RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[i], 15, 10, 10);
+					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
+					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 12);
+					if (OpenDeck.playerhand[i].getsuit() == 5){
+						RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[i] - 2, 19, 1, 1);
+					}
+					if (OpenDeck.playerhand[i].getsuit() == 6){
+						RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[i] - 2, 19, 1, 1);
+					}
+				}
+			}
 			string betvalue = "Bet:" + to_string(bettingvalue);
 			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 5, 46, 29);
-
-			if ((OpenDeck.playerhand[0].getsuit() == 3) || (OpenDeck.playerhand[0].getsuit()==4))
-			{
-				
-				RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[0], 15, 10, 10);
-				string cardnumber = to_string(OpenDeck.playerhand[0].getvalue());
-				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, 42, 12);
-				if (OpenDeck.playerhand[0].getsuit() == 3)
-				{
-					RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[0]-2, 19, 1,1);
-
-				}
-				if (OpenDeck.playerhand[0].getsuit() == 4)
-				{
-					RenderMeshOnScreen(meshList[GEO_SUITD], cardCoordsX[0]-2, 19, 1,1);
-
-				}
-			
-
-			}
-
-			if ((OpenDeck.playerhand[0].getsuit() == 5) || (OpenDeck.playerhand[0].getsuit() == 6))
-			{
-			
-			
-				RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[0], 15, 10, 10);
-				string cardnumber = to_string(OpenDeck.playerhand[0].getvalue());
-				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0,0,0), 5, 42, 12);
-				if (OpenDeck.playerhand[0].getsuit() == 5)
-				{
-					RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[0]-2, 19, 1,1);
-
-				}
-				if (OpenDeck.playerhand[0].getsuit() == 6)
-				{
-					RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[0]-2, 19, 1,1);
-
-				}
-
-			}
-
 		}
 		else {}
 	}
