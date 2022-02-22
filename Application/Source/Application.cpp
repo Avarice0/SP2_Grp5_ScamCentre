@@ -173,7 +173,11 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
-                    SceneGame::dollars = 10000;
+                    SceneGame::dollars = 500;
+                    SceneGame::totalearned = 0;
+                    SceneGame::profit = 0;
+                    SceneGame::endtime = 0;
+                    SceneGame::daydivide = 1;
                     scene2 = new SceneGame(); Scenelist[1] = scene2;
                     scene3 = new ScenePC(); Scenelist[2] = scene3;
                     scene4 = new SceneEnd(); Scenelist[3] = scene4;
