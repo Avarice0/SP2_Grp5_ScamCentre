@@ -568,6 +568,8 @@ void ScenePC::Render()
 		}
 		else {}
 	}
+		
+	
 	string scoreText = "Cash: " + to_string(int(dollarsClone));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
