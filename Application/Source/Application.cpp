@@ -166,7 +166,6 @@ void Application::Run()
 
         if (!bLButtonState && Application::IsMousePressed(0))
         {
-
             if (scenenum == 1) {
 
                 if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
@@ -177,7 +176,7 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
-                    Application::dollars = 10000;
+                    Application::dollars = 500;
                     Application::totalearned = 0;
                     Application::profit = 0;
                     Application::endtime = 0;

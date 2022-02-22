@@ -226,18 +226,12 @@ void ScenePC::Update(double dt)
 
 
 
-				dollarsClone += 2;
-				Application::dollars += 2;
+				dollarsClone += 5;
+				Application::dollars += 5;
 
 				coinStarted = true;
 
 			}
-
-			//else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
-			//{
-			//	score--;
-
-			//}
 		}
 
 		else if (gamenum == 2)
@@ -333,6 +327,7 @@ void ScenePC::Update(double dt)
 					OpenDeck.addcard(OpenDeck.dealerhand);
 					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
 					BJstate = 1;
+					Application::dollars -= bettingvalue;
 				}
 			}
 			if (BJstate == 1) {
