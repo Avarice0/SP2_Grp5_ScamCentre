@@ -289,7 +289,7 @@ void ScenePC::Update(double dt)
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
 					//all in 
-					//bettingvalue = balance;
+					bettingvalue = Application::dollars;
 				}
 				if ((posX > 52 && posX < 62) && (posY > 18 && posY < 23) && bettingvalue >= 100)
 				{
@@ -303,26 +303,18 @@ void ScenePC::Update(double dt)
 				{
 					bettingvalue -= 10;
 				}
-				//if (button press && bettingvalue + 10 <= balance) {
-				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40))
+				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40) && bettingvalue + 10 <= Application::dollars)
 				{
 					bettingvalue += 10;
 				}
-				//}
-
-				//if (button press && bettingvalue + 50 <= balance) {
-				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46))
+				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46) && bettingvalue + 50 <= Application::dollars)
 				{
 					bettingvalue += 50;
 				}
-				//}
-
-				//if (button press && bettingvalue + 100 <= balance) {
-				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43))
+				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43) && bettingvalue + 100 <= Application::dollars)
 				{
 					bettingvalue += 100;
 				}
-				//}
 				
 				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
 				{
@@ -334,9 +326,8 @@ void ScenePC::Update(double dt)
 				}
 			}
 			if (BJstate == 1) {
-				//display cards
+				//render both hands
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-					//render both hands
 					if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
@@ -389,12 +380,12 @@ void ScenePC::Update(double dt)
 				else if (result == 2) {
 					std::cout << "Tie/Push" << std::endl;
 					//refunds bet
-					//balance += bettingvalue
+					Application::dollars += bettingvalue;
 				}
 				else if (result == 3) {
 					std::cout << "Player won" << std::endl;
 					//gives back bet and extra value
-					//balance += bettingvalue * 2;
+					Application::dollars += bettingvalue * 2;
 				}
 
 			}
@@ -538,6 +529,8 @@ void ScenePC::Render()
 		}
 		else if (BJstate == 1) {
 			//dealing phase
+			string betvalue = "Bet:" + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 42, 29);
 		}
 		else {}
 	}
