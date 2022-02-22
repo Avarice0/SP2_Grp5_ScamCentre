@@ -24,6 +24,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
+#include "Deck.h"
 
 using namespace std;
 
@@ -231,6 +232,7 @@ private:
 	bool correctPos = 1;
 
 	int BJstate = 0;
+	//0 for betting, 1 for dealng
 };
 
 
