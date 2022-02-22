@@ -283,7 +283,10 @@ void ScenePC::Update(double dt)
 		else if (gamenum == 4)
 		{
 			if (BJstate == 0) {
+				if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
+				{
 
+				}
 			}
 			if (BJstate == 1) {
 
