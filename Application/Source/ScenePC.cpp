@@ -199,52 +199,50 @@ void ScenePC::Update(double dt)
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
 
-				dollarsClone += 2;
-				Application::dollars += 2;
-				//	cout << "coin1 ok" << endl;
 				while ((coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5))
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
-
 				}
-				//cout << "coin2 ok" << endl;
+
+
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
-
 				while ((coinbombx > coin1x - 5) && (coinbombx < coin1x + 5) && (coinbomby > coin1y - 5) && (coinbomby < coin1y + 5) && (coinbombx > coin2x - 5) && (coinbombx < coin2x + 5) && (coinbomby > coin2y - 5) && (coinbomby < coin2y + 5))
 				{
 					coinbombx = rand() % 25 + 45;
 					coinbomby = rand() % 35 + 15;
 				}
-				//		cout << "coin3 ok" << endl;
-			
+
+
+
+				dollarsClone += 2;
+				Application::dollars += 2;
 
 				coinStarted = true;
-				//gameended = false;
-			}
-
-			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
-			{
-				score--;
 
 			}
-			gameended = true;
+
+			//else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
+			//{
+			//	score--;
+
+			//}
 		}
+
 		else if (gamenum == 2)
 		{
-			gameended = true;
-			coin1x = 100; coin1y = 100;
-			coin2x = 100; coin2y = 100;
-			coinbombx = 100; coinbomby = 100;
+			
 			if ((posX > 38 && posX < 56) && (posY > 8 && posY < 21))
 			{
 				if (correctPos == true) {
-					textscore++;
+					dollarsClone += 4;
+					Application::dollars += 4;
 				}
 				else
 				{
-					textscore--;
+					dollarsClone -= 4;
+					Application::dollars -= 4;
 				}
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
@@ -252,11 +250,13 @@ void ScenePC::Update(double dt)
 			if ((posX > 56 && posX < 74) && (posY > 8 && posY < 22))
 			{
 				if (correctPos == true) {
-					textscore--;
+					dollarsClone += 4;
+					Application::dollars += 4;
 				}
 				else
 				{
-					textscore++;
+					dollarsClone -= 4;
+					Application::dollars -= 4;
 				}
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
@@ -397,20 +397,6 @@ void ScenePC::Update(double dt)
 					//balance += bettingvalue * 2;
 				}
 
-				/*if (gameended == true) {
-
-					Application::dollars += score * 2;
-					Application::dollars += textscore * 4;
-					Application::dollars += minescore * 2;
-
-					dollarsClone += score * 2;
-					dollarsClone += textscore * 4;
-					dollarsClone += minescore * 2;
-
-					score = 0;
-					textscore = 0;
-					minescore = 0;
-				}*/
 			}
 		}
 	}
