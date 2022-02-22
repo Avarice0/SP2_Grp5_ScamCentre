@@ -75,7 +75,7 @@ void ScenePC::Init()
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_CASINOBG] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
-		meshList[GEO_CASINOBG]->textureID = LoadTGA("Image//casinobg.tga");
+		meshList[GEO_CASINOBG]->textureID = LoadTGA("Image//casinoBG.tga");
 
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
@@ -163,7 +163,7 @@ void ScenePC::Update(double dt)
 		{
 			gamenum = 3; //coin flip
 		}
-		else if ((posX > 17 && posX < 25) && (posY > 34 && posY < 42) && boom == false)
+		else if ((posX > 8 && posX < 15) && (posY > 34 && posY < 42) && boom == false)
 		{
 			gamenum = 4; //blackjack
 		}
@@ -371,18 +371,10 @@ void ScenePC::Render()
 	//text render
 	RenderMeshOnScreen(meshList[GEO_WALLPAPER], 40, 30, 80, 60);
 	//UI buttons test
-	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
-	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
 	
-	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
-
-	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0,0,0), 2, 7,19);
 	if (gamenum == 1) 
 	{
 		string coinTimer = "Secs left: " + to_string(seconds);
-		string scoreText = "cash: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 		RenderTextOnScreen(meshList[GEO_SCORE], coinTimer, Color(0.5, 0.5, 1), 3, 7, 13);
 		if (coinStarted == false)
 		{
@@ -404,10 +396,7 @@ void ScenePC::Render()
 		RenderTextOnScreen(meshList[GEO_SCORE], victimMsg[RNGmsg][1], Color(1, 1, 1), 2, 41, 43);
 
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
-	//	RenderMeshOnScreen(meshList[GEO_LINE], 65, 14, 1, 1);
-
-		string scoreText = "Cash: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
+	
 
 		if (correctPos == true) {
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
@@ -434,8 +423,18 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 4)
 	{
-
+		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
+		
 	}
+	string scoreText = "Cash: " + to_string(int(dollarsClone));
+	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
+	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
+	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+
+	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
+
+	RenderTextOnScreen(meshList[GEO_SCORE], timeprint, Color(0, 0, 0), 2, 7, 19);
 
 	RenderMeshOnScreen(meshList[GEO_EXPLOSION], explosionx, explosiony, 90, 90);
 	
