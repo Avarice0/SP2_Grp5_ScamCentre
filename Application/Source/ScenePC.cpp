@@ -177,11 +177,8 @@ void ScenePC::Update(double dt)
 			gamenum = 4; //blackjack
 			//game start declarations
 			bettingvalue = 0;
-			OpenDeck.resetopen();
 		}
-
 		else {}
-
 		if (gamenum == 1) {
 
 			if ((posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) && boom == false)
@@ -286,18 +283,10 @@ void ScenePC::Update(double dt)
 		{
 			//display betting value regardless
 			if (BJstate == 0) {
-				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
-				{
-					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
-					OpenDeck.addcard(OpenDeck.dealerhand);
-					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
-					BJstate = 1;
-				}
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
-					//if (button press) {			//all in 
-						//bettingvalue = balance;
-					//}
+					//all in 
+					//bettingvalue = balance;
 				}
 				if ((posX > 52 && posX < 62) && (posY > 18 && posY < 23) && bettingvalue >= 100)
 				{
@@ -331,6 +320,14 @@ void ScenePC::Update(double dt)
 					bettingvalue += 100;
 				}
 				//}
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					OpenDeck.resetopen();
+					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
+					OpenDeck.addcard(OpenDeck.dealerhand);
+					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
+					BJstate = 1;
+				}
 			}
 			if (BJstate == 1) {
 				//display cards
@@ -395,16 +392,12 @@ void ScenePC::Update(double dt)
 					//gives back bet and extra value
 					//balance += bettingvalue * 2;
 				}
-				//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
-				//if (deck size smaller than x) {
-				OpenDeck.resetopen();
-				//}
 
-				if (gameended == true) {
+				/*if (gameended == true) {
 
-				Application::dollars += score * 2;
-				Application::dollars += textscore * 4;
-				Application::dollars += minescore * 2;
+					Application::dollars += score * 2;
+					Application::dollars += textscore * 4;
+					Application::dollars += minescore * 2;
 
 					dollarsClone += score * 2;
 					dollarsClone += textscore * 4;
@@ -413,27 +406,26 @@ void ScenePC::Update(double dt)
 					score = 0;
 					textscore = 0;
 					minescore = 0;
-				}
+				}*/
 			}
 		}
-
-		else if (bLButtonState && !Application::IsMousePressed(0))
-		{
-			bLButtonState = false;
-			mousestate = "";
-		}
-		static bool bRButtonState = false;
-		if (!bRButtonState && Application::IsMousePressed(1))
-		{
-			bRButtonState = true;
-			mousestate = "RBUTTON DOWN";
-		}
-		else if (bRButtonState && !Application::IsMousePressed(1))
-		{
-			bRButtonState = false;
-			mousestate = "";
-		}
-
+	}
+	else if (bLButtonState && !Application::IsMousePressed(0))
+	{
+		bLButtonState = false;
+		mousestate = "";
+	}
+	static bool bRButtonState = false;
+	if (!bRButtonState && Application::IsMousePressed(1))
+	{
+		bRButtonState = true;
+		mousestate = "RBUTTON DOWN";
+	}
+	else if (bRButtonState && !Application::IsMousePressed(1))
+	{
+		bRButtonState = false;
+		mousestate = "";
+	}
 	
 	int times = Application::GetTime(); // in seconds 
 	hours = times % 5;
@@ -450,7 +442,7 @@ void ScenePC::Update(double dt)
 			explosiony = 100;
 
 			boom = false;
-		}
+	}
 
 		timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
@@ -475,7 +467,6 @@ void ScenePC::Update(double dt)
 				seconds = 5;
 			}
 		}
-	}
 }
 
 void ScenePC::Render()
