@@ -178,7 +178,7 @@ void ScenePC::Update(double dt)
 			gamenum = 4; //blackjack
 			//game start declarations
 			bettingvalue = 0;
-
+			OpenDeck.resetopen();
 		}
 
 		else {}
@@ -287,7 +287,7 @@ void ScenePC::Update(double dt)
 		{
 			//display betting value regardless
 			if (BJstate == 0) {
-				//if (button press change state) {
+				//if (button press change state) {		//go to dealing state
 				OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
 				OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);				//give 2 cards per
 				OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
@@ -382,7 +382,7 @@ void ScenePC::Update(double dt)
 
 			}
 			if (BJstate == 1) {
-				//display cards  results: 1:lose     2:tie  3:Win
+				//display cards
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 					result = 2;
 				}
@@ -399,18 +399,19 @@ void ScenePC::Update(double dt)
 					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
 
 					if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
-						//if (button press) {
-						OpenDeck.addcard(OpenDeck.playerhand);
+						//if (button press) {			//hit
+							OpenDeck.addcard(OpenDeck.playerhand);
 						//}
-						//else if (button press) {
-						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-							OpenDeck.addcard(OpenDeck.dealerhand);
-						}
-						stand = true;
+						//else if (button press) {		//stand
+							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+								OpenDeck.addcard(OpenDeck.dealerhand);
+							}
+							stand = true;
 						//}
 					}
 				}
 				if (stand == true) {
+					//show covered dealer card		update dealer value
 					std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
 					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
 					if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
@@ -430,15 +431,15 @@ void ScenePC::Update(double dt)
 			}
 			else if (result == 2) {
 				std::cout << "Tie/Push" << std::endl;
-				//balance refunded
+				//balance += bettingvalue
 			}
 			else if (result == 3) {
 				std::cout << "Player won" << std::endl;
-				//balance += bettingvalue;
+				//balance += bettingvalue * 2;
 			}
 			//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
 			//if (deck size smaller than x) {
-				//OpenDeck.resetopen();
+				OpenDeck.resetopen();
 			//}
 
 			if (gameended == true) {
@@ -485,7 +486,6 @@ void ScenePC::Update(double dt)
 		bool dayUp = true;
 		SceneGame::daydivide++;
 		dollarsClone += SceneGame::profit;
-		std::cout << (SceneGame::profit);
 		//std::cout << "if is OK ";
 
 		explosionx = 100;
@@ -588,7 +588,7 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 4)
 	{
-	//	RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
+		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
 			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
 			string scoreText = "Cash: " + to_string(bettingvalue);
