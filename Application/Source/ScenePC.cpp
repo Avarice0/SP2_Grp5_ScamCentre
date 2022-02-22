@@ -198,6 +198,9 @@ void ScenePC::Update(double dt)
 
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
+
+				dollarsClone += 2;
+				Application::dollars += 2;
 				//	cout << "coin1 ok" << endl;
 				while ((coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5))
 				{
@@ -215,7 +218,7 @@ void ScenePC::Update(double dt)
 					coinbomby = rand() % 35 + 15;
 				}
 				//		cout << "coin3 ok" << endl;
-				score++;
+			
 
 				coinStarted = true;
 				//gameended = false;
@@ -224,7 +227,6 @@ void ScenePC::Update(double dt)
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
 				score--;
-
 			}
 			gameended = true;
 		}
@@ -320,6 +322,7 @@ void ScenePC::Update(double dt)
 					OpenDeck.addcard(OpenDeck.dealerhand);
 					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
 					BJstate = 1;
+					Application::dollars -= bettingvalue;
 				}
 			}
 			if (BJstate == 1) {
@@ -428,6 +431,7 @@ void ScenePC::Update(double dt)
 		bool dayUp = true;
 		Application::daydivide++;
 		dollarsClone += Application::profit;
+		Application::dollars += Application::profit;
 		//std::cout << "if is OK ";
 
 			explosionx = 100;
