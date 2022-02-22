@@ -84,7 +84,7 @@ double Application::GetTime()
 }
 void Application::SetTime(double time)
 {
-	glfwSetTime(time);
+    glfwSetTime(time);
 }
 void Application::Init()
 {
@@ -139,21 +139,14 @@ void Application::Init()
 	}
 }
 
-
 void Application::Run()
-{
-	//Main Loop
-    Scene* Scenelist[4];
+{  
+    Scene* Scenelist[4] = { nullptr, nullptr, nullptr, nullptr};
     Scene* scene1 = new SceneMainMenu(); Scenelist[0] = scene1;
-    Scene* scene2 = new SceneGame(); Scenelist[1] = scene2;
-    Scene* scene3 = new ScenePC(); Scenelist[2] = scene3;
-    Scene* scene4 = new SceneEnd(); Scenelist[3] = scene4;
-  // Scene* scene5 = new SceneCasinoBJ(); Scenelist[4] = scene5;    
-    scene1->Init();     scene2->Init();     scene3->Init();     scene4->Init(); //    scene5->Init();
-    //Scene* scene5 = new SceneCasinoBJ(); Scenelist[4] = scene5;
+    Scene* scene2; Scene* scene3; Scene* scene4;
+    Scenelist[0]->Init();
   
-    //scene5->Init();
-    Scene* scene = scene1;
+    Scene* scene = Scenelist[0];
 
     while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
     {
@@ -173,6 +166,18 @@ void Application::Run()
 
                 if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
                     scenenum = 2;
+                    for (size_t i = 1; i < size(Scenelist); i++) {
+                        if (Scenelist[i] != nullptr) {
+                            Scenelist[i]->Exit();
+                            delete Scenelist[i];
+                        }
+                    }
+                    scene2 = new SceneGame(); Scenelist[1] = scene2;
+                    scene3 = new ScenePC(); Scenelist[2] = scene3;
+                    scene4 = new SceneEnd(); Scenelist[3] = scene4;
+                    Scenelist[1]->Init();
+                    Scenelist[2]->Init();
+                    Scenelist[3]->Init();
                     Application::SetTime(0);
                 }
                 if ((posX > 5 && posX < 25) && (posY > 10 && posY < 20)) {
@@ -194,20 +199,17 @@ void Application::Run()
             }
         }
         if (scenenum == 1) {
-            scene = scene1;
+            scene = Scenelist[0];
         }
         else if (scenenum == 2) {
-            scene = scene2;
+            scene = Scenelist[1];
         }
         else if (scenenum == 3) {
-            scene = scene3;
+            scene = Scenelist[2];
         }
         else if (scenenum == 4) {
-       //     scene = scene4;
+            scene = Scenelist[3];
         }
-       /* else if (scenenum == 5) {
-            scene = scene5;
-        }*/
         else {}
         scene->Update(m_timer.getElapsedTime());
         scene->Render();
@@ -222,8 +224,10 @@ void Application::Run()
     } //Check if the ESC key had been pressed or if the window had been closed
 
     for (size_t i = 0; i < size(Scenelist); i++) {
-        Scenelist[i]->Exit();
-        delete Scenelist[i];
+        if (Scenelist[i] != nullptr) {
+            Scenelist[i]->Exit();
+            delete Scenelist[i];
+        }
     }
 }
 
