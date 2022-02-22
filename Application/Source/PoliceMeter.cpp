@@ -13,7 +13,7 @@ PoliceMeter::~PoliceMeter()
 {
 }
 
-void PoliceMeter::DailyIncreaseMP(float NoOfNoobWorkers, float NoOfExperiencedWorkers, float NoOfExpertWorkers, bool minus3boost)
+void PoliceMeter::DailyIncreaseMP(int NoOfNoobWorkers, int NoOfExperiencedWorkers, int NoOfExpertWorkers, bool minus3boost)
 {
 	// formula based on the google doc
 	int dailyIncrease = (NoOfNoobWorkers * 3) + (NoOfExperiencedWorkers * 2) + (NoOfExpertWorkers * 1);
@@ -72,7 +72,7 @@ float PoliceMeter::GetMP(void)
 	return MeterPercentage;
 }
 
-float PoliceMeter::GetBribeCost(void)
+int PoliceMeter::GetBribeCost(void)
 {
 	return BribeCost;
 }

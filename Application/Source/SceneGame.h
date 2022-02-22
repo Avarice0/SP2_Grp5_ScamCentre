@@ -159,10 +159,10 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
-	static float dollars;
-	static float totalearned;
+	static int dollars;
+	static int totalearned;
 	static int endtime;
-	static float profit;
+	static int profit;
 	static int daydivide;
 
 private:
@@ -230,7 +230,7 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
 	bool upgrades = false;
-	float dailyprofit;
+	int dailyprofit;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;

@@ -156,8 +156,13 @@ void ScenePC::Update(double dt)
 		}
 		else if ((posX > 25 && posX < 35) && (posY > 44.5 && posY < 52) && boom == false)
 		{
-			gamenum = 3; //clicker mining
+			gamenum = 3; //coin flip
 		}
+		else if ((posX > 17 && posX < 25) && (posY > 34 && posY < 42) && boom == false)
+		{
+			gamenum = 4; //blackjack
+		}
+
 		else {}
 
 		if (gamenum == 1) {
