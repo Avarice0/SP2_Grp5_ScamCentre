@@ -8,12 +8,7 @@ SceneGame::SceneGame()
 SceneGame::~SceneGame()
 {
 }
-//
-//int SceneGame::dollars = 500;
-//int SceneGame::totalearned = 0;
-//int SceneGame::profit = 0;
-//int SceneGame::endtime = 0;
-//int SceneGame::daydivide = 1;
+
 void SceneGame::Init()
 {
 	{

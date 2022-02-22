@@ -120,6 +120,16 @@ void ScenePC::Init()
 		meshList[GEO_CARDBLACK]->textureID = LoadTGA("Image//blackCard.tga");
 		meshList[GEO_CARDRED] = MeshBuilder::GenerateQuad("redcard", Color(1, 1, 1), 1.f);
 		meshList[GEO_CARDRED]->textureID = LoadTGA("Image//redCard.tga");
+
+
+		meshList[GEO_SUITH] = MeshBuilder::GenerateQuad("heart", 16, 16);
+		meshList[GEO_SUITH]->textureID = LoadTGA("Image//heart.tga");
+		meshList[GEO_SUITD] = MeshBuilder::GenerateQuad("diamond", 16, 16);
+		meshList[GEO_SUITD]->textureID = LoadTGA("Image//diamond.tga");
+		meshList[GEO_SUITC] = MeshBuilder::GenerateQuad("Clover", 16, 16);
+		meshList[GEO_SUITC]->textureID = LoadTGA("Image//clover.tga");
+		meshList[GEO_SUITS] = MeshBuilder::GenerateQuad("Spade", 16, 16);
+		meshList[GEO_SUITS]->textureID = LoadTGA("Image//spade.tga");
 		/*,
 		,
 		GEO_SUITH,
@@ -216,18 +226,12 @@ void ScenePC::Update(double dt)
 
 
 
-				dollarsClone += 2;
-				Application::dollars += 2;
+				dollarsClone += 5;
+				Application::dollars += 5;
 
 				coinStarted = true;
 
 			}
-
-			//else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
-			//{
-			//	score--;
-
-			//}
 		}
 
 		else if (gamenum == 2)
@@ -323,6 +327,7 @@ void ScenePC::Update(double dt)
 					OpenDeck.addcard(OpenDeck.dealerhand);
 					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
 					BJstate = 1;
+					Application::dollars -= bettingvalue;
 				}
 			}
 			if (BJstate == 1) {
@@ -344,7 +349,7 @@ void ScenePC::Update(double dt)
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 1;
 					}
-					else {}
+				//	else {}
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
@@ -530,9 +535,80 @@ void ScenePC::Render()
 		}
 		else if (BJstate == 1) {
 			//dealing phase
+			//H, D, C, S     3,4,5,6
 			string betvalue = "Bet:" + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 50, 29);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 5, 46, 29);
 
+			if ((OpenDeck.playerhand[0].getsuit() == 3) || (OpenDeck.playerhand[0].getsuit()==4))
+			{
+				
+				RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[0], 15, 10, 10);
+				string cardnumber = to_string(OpenDeck.playerhand[0].getvalue());
+				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[0]-1, 12);
+				if (OpenDeck.playerhand[0].getsuit() == 3)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[0]-2, 19, 1,1);
+
+				}
+				if (OpenDeck.playerhand[0].getsuit() == 4)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITD], cardCoordsX[0]-2, 19, 1,1);
+
+				}
+			
+
+			}
+
+			if ((OpenDeck.playerhand[0].getsuit() == 5) || (OpenDeck.playerhand[0].getsuit() == 6))
+			{
+			
+			
+				RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[0], 15, 10, 10);
+				string cardnumber = to_string(OpenDeck.playerhand[0].getvalue());
+				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0,0,0), 5, cardCoordsX[0]-1, 12);
+				if (OpenDeck.playerhand[0].getsuit() == 5)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[0]-2, 19, 1,1);
+
+				}
+				if (OpenDeck.playerhand[0].getsuit() == 6)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[0]-2, 19, 1,1);
+
+				}
+
+			}
+
+
+			if ((OpenDeck.playerhand[1].getsuit() == 3) || (OpenDeck.playerhand[1].getsuit() == 4))
+			{
+				RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[1], 15, 10, 10);
+				string cardnumber = to_string(OpenDeck.playerhand[1].getvalue());
+				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[1]-1, 12);
+				if (OpenDeck.playerhand[1].getsuit() == 3)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[1] - 2, 19, 1, 1);
+				}
+				if (OpenDeck.playerhand[1].getsuit() == 4)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITD], cardCoordsX[1] - 2, 19, 1, 1);
+				}
+			}
+
+			if ((OpenDeck.playerhand[1].getsuit() == 5) || (OpenDeck.playerhand[1].getsuit() == 6))
+			{
+				RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[1], 15, 10, 10);
+				string cardnumber = to_string(OpenDeck.playerhand[1].getvalue());
+				RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[1]-1, 12);
+				if (OpenDeck.playerhand[1].getsuit() == 5)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[1] - 2, 19, 1, 1);
+				}
+				if (OpenDeck.playerhand[1].getsuit() == 6)
+				{
+					RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[1] - 2, 19, 1, 1);
+				}
+			}
 		}
 		else {}
 	}
@@ -584,9 +660,9 @@ void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 	Mtx44 ortho;
 	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
-	projectionStack.PushMatrix();
-	projectionStack.LoadMatrix(ortho);
-	viewStack.PushMatrix(); viewStack.LoadIdentity(); //No need camera for ortho mode
+		projectionStack.PushMatrix();
+		projectionStack.LoadMatrix(ortho);
+		viewStack.PushMatrix(); viewStack.LoadIdentity(); //No need camera for ortho mode
 	modelStack.PushMatrix(); modelStack.LoadIdentity(); //Reset modelStack
 	modelStack.Translate(x, y, 0); modelStack.Scale(size, size, size);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
@@ -668,16 +744,16 @@ void ScenePC::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
 	ortho.SetToOrtho(0, 80, 0, 60, -10, 10);		//size of screen ui
-	projectionStack.PushMatrix();
-	projectionStack.LoadMatrix(ortho);
-	viewStack.PushMatrix();
-	viewStack.LoadIdentity();		//no need for camera for ortho mode
+		projectionStack.PushMatrix();
+		projectionStack.LoadMatrix(ortho);
+		viewStack.PushMatrix();
+		viewStack.LoadIdentity();		//no need for camera for ortho mode
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
 	modelStack.Translate(x, y, 0); modelStack.Scale(sizex, sizey, 0);
 	RenderMesh(mesh, false);
-	projectionStack.PopMatrix();
-	viewStack.PopMatrix();
+		projectionStack.PopMatrix();
+		viewStack.PopMatrix();
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
 }

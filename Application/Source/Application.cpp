@@ -166,7 +166,6 @@ void Application::Run()
 
         if (!bLButtonState && Application::IsMousePressed(0))
         {
-
             if (scenenum == 1) {
 
                 if ((posX > 5 && posX < 25) && (posY > 20 && posY < 30)) {
