@@ -27,7 +27,7 @@ public:
 	static unsigned m_width;
 	static unsigned m_height;
 
-	static void Replay(void);
+
 	static void changescene(int newscene);
 
 	
