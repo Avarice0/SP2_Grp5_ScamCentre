@@ -331,6 +331,15 @@ void ScenePC::Update(double dt)
 					bettingvalue += 100;
 				}
 				//}
+				
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					BJstate = 1;
+				}
+
+				//if (button press) {			//all in 
+					//bettingvalue = balance;
+				//}
 			}
 			if (BJstate == 1) {
 				//display cards
