@@ -139,7 +139,7 @@ void Application::Init()
 		//return -1;
 	}
 }
-int Application::dollars = 10000;
+int Application::dollars = 500;
 int Application::totalearned = 0;
 int Application::profit = 0;
 int Application::endtime = 0;

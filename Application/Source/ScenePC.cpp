@@ -157,12 +157,12 @@ void ScenePC::Update(double dt)
 	unsigned h = Application::GetWindowHeight();
 	posX = x / w * 80; //convert (0,800) to (0,80)
 	posY = 60 - y / h * 60; //convert (600,0) to (0,60)
-	
+
+	static bool bLButtonState = false;
 	if (Application::IsKeyPressed('E'))
 	{
 		dollarsClone = Application::dollars;
 	}
-	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
