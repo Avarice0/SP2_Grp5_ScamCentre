@@ -24,6 +24,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
+#include "Deck.h"
 
 using namespace std;
 
@@ -62,6 +63,18 @@ class ScenePC : public Scene
 		GEO_METREBARBG,
 		GEO_METREBARFG,
 		GEO_METREBARBGBG,
+
+		//cards
+		GEO_CARDBLACK,
+		GEO_CARDRED,
+		GEO_SUITH,
+		GEO_SUITD,
+		GEO_SUITS,
+		GEO_SUITC,
+		//card text
+		GEO_REDTEXT,
+		GEO_BLACKTEXT,		//also for betting phase
+
 
 
 		NUM_GEOMETRY,
@@ -217,6 +230,9 @@ private:
 
 	int RNGmsg = 5;
 	bool correctPos = 1;
+
+	int BJstate = 0;
+	//0 for betting, 1 for dealng
 };
 
 
