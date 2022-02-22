@@ -38,7 +38,11 @@ class ScenePC : public Scene
 		GEO_COIN,
 		GEO_COINBOMB,
 		GEO_EXPLOSION,
+
+
 		GEO_WALLPAPER,
+		GEO_CASINOBG,
+
 		GEO_HEADS,
 		GEO_TAILS,
 		GEO_HT,
@@ -58,6 +62,18 @@ class ScenePC : public Scene
 		GEO_METREBARBG,
 		GEO_METREBARFG,
 		GEO_METREBARBGBG,
+
+		//cards
+		GEO_CARDBLACK,
+		GEO_CARDRED,
+		GEO_SUITH,
+		GEO_SUITD,
+		GEO_SUITS,
+		GEO_SUITC,
+		//card text
+		GEO_REDTEXT,
+		GEO_BLACKTEXT,		//also for betting phase
+
 
 
 		NUM_GEOMETRY,
@@ -213,6 +229,8 @@ private:
 
 	int RNGmsg = 5;
 	bool correctPos = 1;
+
+	int BJstate = 0;
 };
 
 
