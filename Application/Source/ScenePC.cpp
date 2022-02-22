@@ -561,9 +561,9 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 4)
 	{
-		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
+	//	RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
-			//betting phase
+			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
 		}
 		else if (BJstate == 1) {
 			//dealing phase
