@@ -43,6 +43,7 @@ class ScenePC : public Scene
 
 		GEO_WALLPAPER,
 		GEO_CASINOBG,
+		GEO_CASINOBET,
 
 		GEO_HEADS,
 		GEO_TAILS,

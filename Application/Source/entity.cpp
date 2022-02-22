@@ -24,6 +24,17 @@ float entity::getprofit(void) {
     profit = (stationtier * 5) * (workertier * 5);
     return profit;
 }
+int entity::getWage()
+{
+    if (workertier == 1)
+        return Tier1Wage;
+    else if (workertier == 2)
+        return Tier2Wage;
+    else if (workertier == 3)
+        return Tier3Wage;
+    else
+        return 0;
+}
 //
 //void entity::setstationcost(float newcost) {
 //    stationcost = newcost;
