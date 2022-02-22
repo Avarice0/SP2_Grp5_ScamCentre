@@ -8,12 +8,12 @@ SceneGame::SceneGame()
 SceneGame::~SceneGame()
 {
 }
-
-int SceneGame::dollars = 500;
-int SceneGame::totalearned = 0;
-int SceneGame::profit = 0;
-int SceneGame::endtime = 0;
-int SceneGame::daydivide = 1;
+//
+//int SceneGame::dollars = 500;
+//int SceneGame::totalearned = 0;
+//int SceneGame::profit = 0;
+//int SceneGame::endtime = 0;
+//int SceneGame::daydivide = 1;
 void SceneGame::Init()
 {
 	{
@@ -524,32 +524,32 @@ void SceneGame::Update(double dt)
 	}
 
 	if (metre.GetMP() > 999) {
-		endtime = Application::GetTime();
+		Application::endtime = Application::GetTime();
 		SceneEnd::EndingScene(1);
 		Application::changescene(4);
 	}
-	if (dollars < 0) {
-		endtime = Application::GetTime();
+	if (Application::dollars < 0) {
+		Application::endtime = Application::GetTime();
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
 	}
 
 	if (dayweek == 5) {
 		for (int i = 0; i < size(entities); i++) {
-			dollars -= entities[i]->getWage();
+			Application::dollars -= entities[i]->getWage();
 			dayweek = 0;
 		}
 	}
 
-	if (dollars >= 2000)
+	if (Application::dollars >= 2000)
 		RenderPermItem1 = true;
 	else
 		RenderPermItem1 = false;
-	if (dollars >= 2500)
+	if (Application::dollars >= 2500)
 		RenderPermItem2 = true;
 	else
 		RenderPermItem2 = false;
-	if (dollars > metre.GetBribeCost())
+	if (Application::dollars > metre.GetBribeCost())
 		Canbribe = true;
 	else
 		Canbribe = false;
@@ -566,10 +566,10 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
-		if(dollars > metre.GetBribeCost()){
+		if(Application::dollars > metre.GetBribeCost()){
 			if ((posX > 2.3 && posX < 17.4) && (posY > 46.4 && posY < 53.6))
 			{
-				dollars -= metre.GetBribeCost();
+				Application::dollars -= metre.GetBribeCost();
 				metre.Bribe();
 			}
 		}
@@ -580,7 +580,7 @@ void SceneGame::Update(double dt)
 					coffee = true;
 					RenderPermItem1 = false;
 					mousestate = "Coffee Bought";
-					dollars -= 2000;
+					Application::dollars -= 2000;
 				}
 			}
 			if (RenderPermItem2 == true && policedeter == false) {
@@ -590,7 +590,7 @@ void SceneGame::Update(double dt)
 					policedeter = true;
 					RenderPermItem2 = false;
 					mousestate = "Police Deterrence Bought";
-					dollars -= 2500;
+					Application::dollars -= 2500;
 				}
 			}
 		}
@@ -598,8 +598,8 @@ void SceneGame::Update(double dt)
 			if ((posX > 2.4 && posX < 17.4) && (posY > 1.6 && posY < 8.5))
 			{
 				if (entities[entitynumber]->getworkertier() >= 0 && entities[entitynumber]->getworkertier() < 3) {
-					if(dollars > entities[entitynumber]->getworkercost()){
-						dollars -= entities[entitynumber]->getworkercost();
+					if(Application::dollars > entities[entitynumber]->getworkercost()){
+						Application::dollars -= entities[entitynumber]->getworkercost();
 						entities[entitynumber]->setworkertier(entities[entitynumber]->getworkertier() + 1);
 						std::cout << entitynumber << " worker tier upgrade" << std::endl;
 					}
@@ -608,8 +608,8 @@ void SceneGame::Update(double dt)
 			else if ((posX > 22.4 && posX < 37.4) && (posY > 1.6 && posY < 8.5))
 			{
 				if(entities[entitynumber]->getstationtier() >= 0 && entities[entitynumber]->getstationtier() < 3){
-					if (dollars > entities[entitynumber]->getstationcost()) {
-						dollars -= entities[entitynumber]->getstationcost();
+					if (Application::dollars > entities[entitynumber]->getstationcost()) {
+						Application::dollars -= entities[entitynumber]->getstationcost();
 						entities[entitynumber]->setstationtier(entities[entitynumber]->getstationtier() + 1);
 						std::cout  << entitynumber << " Station tier upgrade" << std::endl;
 					}
@@ -654,15 +654,15 @@ void SceneGame::Update(double dt)
 	
 	hours = times % 5;
 	day = times / 5;
-	if (day == SceneGame::daydivide && times != 0)
+	if (day == Application::daydivide && times != 0)
 	{
 		dayUp = true;
-		SceneGame::daydivide++;
+		Application::daydivide++;
 		
 	}
 	if (dayUp == true) {
 		dayweek++;
-		profit = 0;
+		Application::profit = 0;
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter); 
 		if (dailyprofit > 0){
 			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -670,14 +670,14 @@ void SceneGame::Update(double dt)
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
-				dollars += entities[i]->getprofit();
+				Application::dollars += entities[i]->getprofit();
 				/*profit += entities[i]->getprofit();*/
 				dailyprofit += entities[i]->getprofit();
-				profit = dailyprofit;
+			    Application::profit = dailyprofit;
 			}
 			else {
-				dollars += entities[i]->getprofit() * 1.1;
-				profit += entities[i]->getprofit() * 1.1;
+				Application::dollars += entities[i]->getprofit() * 1.1;
+				Application::profit += entities[i]->getprofit() * 1.1;
 				dailyprofit += entities[i]->getprofit() * 1.1;
 			}
 		}
@@ -790,11 +790,11 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(Application::dollars), Color(1,1,1), 2, 2, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 68, 58, 27, 6);
 		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 57, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 10, 58, 20, 5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1, 1, 0), 2, 1, 57.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(Application::dollars), Color(1, 1, 0), 2, 1, 57.5);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "+" + to_string(dailyprofit), Color(1, 1, 0), 2, 1, 55.5);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "Weekly Wage:" + to_string(Wages), Color(1, 0, 0), 2, 57, 55.5);
 
@@ -1780,7 +1780,7 @@ void SceneGame::RenderPermUpgrade() {
 
 void SceneGame::RenderUpgrade() {
 	RenderMeshOnScreen(meshList[GEO_UPGRADESHOPBG], 40, 5, 80, 10);
-	if (dollars > entities[entitynumber]->getworkercost() && entities[entitynumber]->getworkertier() < 3) {
+	if (Application::dollars > entities[entitynumber]->getworkercost() && entities[entitynumber]->getworkertier() < 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_WORKERUPGRADE], 10, 5, 7, 7);
 	}
@@ -1789,7 +1789,7 @@ void SceneGame::RenderUpgrade() {
 		RenderMeshOnScreen(meshList[GEO_LOCK], 10, 5, 15, 11);
 	}
 
-	if (dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 3) {
+	if (Application::dollars > entities[entitynumber]->getstationcost() && entities[entitynumber]->getstationtier() < 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 30, 5, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_COMPUTERUPGRADE], 30, 5, 7, 7);
 	}

@@ -27,6 +27,11 @@ public:
 
 	static void changescene(int newscene);
 
+	static int dollars;
+	static int totalearned;
+	static int endtime;
+	static int profit;
+	static int daydivide;
 	
 private:
 

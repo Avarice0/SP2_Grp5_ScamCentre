@@ -151,7 +151,7 @@ void ScenePC::Update(double dt)
 
 	if (Application::IsKeyPressed('E'))
 	{
-		dollarsClone = SceneGame::dollars;
+		dollarsClone = Application::dollars;
 	}
 
 	if (!bLButtonState && Application::IsMousePressed(0))
@@ -189,7 +189,7 @@ void ScenePC::Update(double dt)
 			{
 				explosionx = 55;
 				explosiony = 35;
-				SceneGame::dollars -= 500;
+				Application::dollars -= 500;
 				dollarsClone -= 500;
 				boom = true;
 			}
@@ -343,6 +343,11 @@ void ScenePC::Update(double dt)
 					bettingvalue += 100;
 				}
 				//}
+				
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					BJstate = 1;
+				}
 
 				//if (button press) {			//all in 
 					//bettingvalue = balance;
@@ -422,9 +427,9 @@ void ScenePC::Update(double dt)
 
 				if (gameended == true) {
 
-					SceneGame::dollars += score * 2;
-					SceneGame::dollars += textscore * 4;
-					SceneGame::dollars += minescore * 2;
+				Application::dollars += score * 2;
+				Application::dollars += textscore * 4;
+				Application::dollars += minescore * 2;
 
 					dollarsClone += score * 2;
 					dollarsClone += textscore * 4;
@@ -454,17 +459,17 @@ void ScenePC::Update(double dt)
 			mousestate = "";
 		}
 
+	
+	int times = Application::GetTime(); // in seconds 
+	hours = times % 5;
+	day = times / 5;
+	if (day == Application::daydivide && times != 0)
+	{
 
-		int times = Application::GetTime(); // in seconds 
-		hours = times % 5;
-		day = times / 5;
-		if (day == SceneGame::daydivide && times != 0)
-		{
-
-			bool dayUp = true;
-			SceneGame::daydivide++;
-			dollarsClone += SceneGame::profit;
-			//std::cout << "if is OK ";
+		bool dayUp = true;
+		Application::daydivide++;
+		dollarsClone += Application::profit;
+		//std::cout << "if is OK ";
 
 			explosionx = 100;
 			explosiony = 100;
@@ -570,8 +575,8 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
 			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
-			string betvalue = "Bet: " + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 3, 42, 29);
+			string betvalue = "Bet:" + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 42, 29);
 
 		}
 		else if (BJstate == 1) {
