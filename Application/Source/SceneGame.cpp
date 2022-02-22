@@ -388,27 +388,27 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('W'))
 	{
 		player.D = 0;
-		player.Z--;
+		player.Z --;
 	}
 	if (Application::IsKeyPressed('S'))
 	{
 		player.D = 1;
-		player.Z++;
+		player.Z ++;
 	}
 	if (Application::IsKeyPressed('A'))
 	{
 		player.D = 2;
-		player.X--;
+		player.X --;
 	}
 	if (Application::IsKeyPressed('D'))
 	{
 		player.D = 3;
-		player.X++;
+		player.X ++;
 	}
 	else {}
 	{
 		for (int i = 0; i < size(entities); i++) {
-			if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
+			if ((player.X > entities[i]->ECoords[0] - 9) && (player.X < entities[i]->ECoords[0] - 2)) {
 				if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 					/*if (player.D == 0) {
 						player.Z += 1;
@@ -427,13 +427,13 @@ void SceneGame::Update(double dt)
 					if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 						player.X += 1;
 					}
-					if ((player.X < entities[i]->ECoords[0] - 4) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+					if ((player.X < entities[i]->ECoords[0] - 2.4) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 						player.X -= 1;
 					}
-					if ((player.Z > entities[i]->ECoords[2] - 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+					if ((player.Z > entities[i]->ECoords[2] - 3) && (player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
 						player.Z += 1;
 					}
-					if ((player.Z < entities[i]->ECoords[2] + 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+					if ((player.Z < entities[i]->ECoords[2] + 3) && (player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
 						player.Z -= 1;
 					}
 					else {}

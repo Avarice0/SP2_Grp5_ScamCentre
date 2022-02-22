@@ -78,6 +78,7 @@ void Application::changescene(int newscene) {
 	scenenum = newscene;
 }
 
+
 double Application::GetTime()
 {
 	return glfwGetTime();
@@ -183,7 +184,7 @@ void Application::Run()
                 if ((posX >= 76 && posX <= 80) && (posY >= 56 && posY <= 60)) {
                     scenenum = 2;
                 }
-            }
+            }// hi
             else if (scenenum == 4) {
                 if ((posX > 13 && posY < 33) && (posY > 2 && posY < 12)) {
                     scenenum = 1;
@@ -226,6 +227,8 @@ void Application::Run()
         delete Scenelist[i];
     }
 }
+
+
 
 void Application::Exit()
 {

@@ -234,6 +234,11 @@ private:
 
 	int BJstate = 0;
 	//0 for betting, 1 for dealng
+	int bettingvalue = 0;
+	int result = 0;
+	Deck OpenDeck;
+	bool stand = false;
+
 };
 
 
