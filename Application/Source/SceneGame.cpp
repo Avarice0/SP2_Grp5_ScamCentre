@@ -663,6 +663,7 @@ void SceneGame::Update(double dt)
 	if (dayUp == true) {
 		dayweek++;
 		Application::profit = 0;
+	
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter); 
 		if (dailyprofit > 0){
 			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -670,10 +671,11 @@ void SceneGame::Update(double dt)
 		dailyprofit = 0;
 		for (int i = 0; i < size(entities); i++) {
 			if (coffee == false) {
-				Application::dollars += entities[i]->getprofit();
+				/*Application::dollars += entities[i]->getprofit();*/
 				/*profit += entities[i]->getprofit();*/
 				dailyprofit += entities[i]->getprofit();
 			    Application::profit = dailyprofit;
+				Application::dollars += entities[i]->getprofit();
 			}
 			else {
 				Application::dollars += entities[i]->getprofit() * 1.1;
