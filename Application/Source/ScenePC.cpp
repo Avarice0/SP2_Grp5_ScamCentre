@@ -344,6 +344,11 @@ void ScenePC::Update(double dt)
 				}
 				//}
 				
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				{
+					BJstate = 1;
+				}
+
 				//if (button press) {			//all in 
 					//bettingvalue = balance;
 				//}
@@ -562,8 +567,8 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
 			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
-			string betvalue = "Bet: " + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 3, 42, 29);
+			string betvalue = "Bet:" + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 42, 29);
 
 		}
 		else if (BJstate == 1) {
