@@ -9,9 +9,9 @@ SceneGame::~SceneGame()
 {
 }
 
-float SceneGame::dollars = 10000;
-float SceneGame::totalearned = 0;
-float SceneGame::profit = 0;
+int SceneGame::dollars = 10000;
+int SceneGame::totalearned = 0;
+int SceneGame::profit = 0;
 int SceneGame::endtime = 0;
 int SceneGame::daydivide = 1;
 void SceneGame::Init()
@@ -110,6 +110,7 @@ void SceneGame::Init()
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 		meshList[GEO_WORKERAREA] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 	}
+
 	{
 		meshList[GEO_UPGRADESHOPBG] = MeshBuilder::GenerateQuad("shopbg", Color(1, 1, 1), 1.f);
 		meshList[GEO_UPGRADESHOPFG] = MeshBuilder::GenerateQuad("shopfg", Color(1, 0, 0), 1.f);
@@ -134,13 +135,14 @@ void SceneGame::Init()
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 		meshList[GEO_BRIBE] = MeshBuilder::GenerateQuad("bribe", Color(1, 0.4, 0.4), 1.f);
 		meshList[GEO_BRIBE]->textureID = LoadTGA("Image//Bribe.tga");
-
 		meshList[GEO_QUAD_BG] = MeshBuilder::GenerateQuad("shopfg", Color(0, 0, 0), 1.f);
 	}
+
 	{
 		meshList[GEO_TEA] = MeshBuilder::GenerateOBJ("Tea", "OBJ//cupTea.obj");
 		meshList[GEO_PIZZA] = MeshBuilder::GenerateOBJ("Tea", "OBJ//pizzaBox.obj");
 	}
+
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 		meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
@@ -446,6 +448,7 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 	
+	//PC
 	if ((player.X > 47 && player.X < 73) && (player.Z > -66 && player.Z < -55)) {
 		if ((player.X < 49) && (player.Z > -66 && player.Z < -55)) {
 			player.X = 47;
@@ -461,6 +464,7 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	//Upgrade station
 	if ((player.X > 34 && player.X < 60) && (player.Z > 54 && player.Z < 67)) {
 		if ((player.X < 36) && (player.Z > 54 && player.Z < 67)) {
 			player.X = 34;
@@ -476,21 +480,23 @@ void SceneGame::Update(double dt)
 		}
 	}
 
-	if ((player.X > -46 && player.X < -35) && (player.Z > -49 && player.Z < -33)) {
+	//lounge table
+	if ((player.X > -46 && player.X < -33) && (player.Z > -49 && player.Z < -33)) {
 		if ((player.X < - 44) && (player.Z > -49 && player.Z < -33)) {
 			player.X = -46;
 		}
-		if ((player.X > -37) && (player.Z > -49 && player.Z < -33)) {
-			player.X = -35;
+		if ((player.X > -35) && (player.Z > -49 && player.Z < -33)) {
+			player.X = -33;
 		}
-		if ((player.Z < -47) && (player.X > -46 && player.X < -35)) {
+		if ((player.Z < -47) && (player.X > -46 && player.X < -33)) {
 			player.Z = -49;
 		}
-		if ((player.Z > -35) && (player.X > -46 && player.X < -35)) {
+		if ((player.Z > -35) && (player.X > -46 && player.X < -33)) {
 			player.Z = -33;
 		}
 	}
 
+	//vending machine
 	if ((player.X > -56 && player.X < -18) && (player.Z > -100 && player.Z < -65)) {
 		if ((player.X < -54) && (player.Z > -100 && player.Z < -65)) {
 			player.X = -56;
@@ -1791,7 +1797,7 @@ void SceneGame::RenderBribe()
 	if(Canbribe == true){
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 1, 48);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 5, 48);
 	}
 	else {
 		RenderMeshOnScreen(meshList[GEO_LOCKEDFG], 10, 50, 15, 7);

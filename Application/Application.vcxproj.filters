@@ -81,9 +81,6 @@
     <ClCompile Include="Source\Deck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneCasinoBJ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -150,9 +147,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneEnd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneCasinoBJ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Card.h">
