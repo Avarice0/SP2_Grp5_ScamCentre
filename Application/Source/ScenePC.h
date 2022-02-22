@@ -239,6 +239,12 @@ private:
 	Deck OpenDeck;
 	bool stand = false;
 
+	int test = 100;
+
+	int cardCoordsX[5] = {42,46,50,54,58};
+
+
+
 };
 
 
