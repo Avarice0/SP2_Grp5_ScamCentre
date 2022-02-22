@@ -139,7 +139,7 @@ void Application::Init()
 		//return -1;
 	}
 }
-int Application::dollars = 10000;
+int Application::dollars = 500;
 int Application::totalearned = 0;
 int Application::profit = 0;
 int Application::endtime = 0;
@@ -177,7 +177,7 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
-                    Application::dollars = 10000;
+                    Application::dollars = 500;
                     Application::totalearned = 0;
                     Application::profit = 0;
                     Application::endtime = 0;

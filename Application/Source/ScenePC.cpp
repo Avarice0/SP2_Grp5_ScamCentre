@@ -176,12 +176,9 @@ void ScenePC::Update(double dt)
 		{
 			gamenum = 4; //blackjack
 			//game start declarations
-			bettingvalue = 0;
-			OpenDeck.resetopen();
+			//bettingvalue = 0;
 		}
-
 		else {}
-
 		if (gamenum == 1) {
 
 			if ((posX > coinbombx - 2.5) && (posX < coinbombx + 2.5) && (posY > coinbomby - 2.5) && (posY < coinbomby + 2.5) && boom == false)
@@ -201,50 +198,51 @@ void ScenePC::Update(double dt)
 
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
-				//	cout << "coin1 ok" << endl;
+
 				while ((coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5))
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
-
 				}
-				//cout << "coin2 ok" << endl;
+
+
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
-
 				while ((coinbombx > coin1x - 5) && (coinbombx < coin1x + 5) && (coinbomby > coin1y - 5) && (coinbomby < coin1y + 5) && (coinbombx > coin2x - 5) && (coinbombx < coin2x + 5) && (coinbomby > coin2y - 5) && (coinbomby < coin2y + 5))
 				{
 					coinbombx = rand() % 25 + 45;
 					coinbomby = rand() % 35 + 15;
 				}
-				//		cout << "coin3 ok" << endl;
-				score++;
+
+
+
+				dollarsClone += 2;
+				Application::dollars += 2;
 
 				coinStarted = true;
-				gameended = true;
-			}
-
-			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
-			{
-				score--;
 
 			}
-			gameended = true;
+
+			//else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
+			//{
+			//	score--;
+
+			//}
 		}
+
 		else if (gamenum == 2)
 		{
-			gameended = true;
-			coin1x = 100; coin1y = 100;
-			coin2x = 100; coin2y = 100;
-			coinbombx = 100; coinbomby = 100;
+			
 			if ((posX > 38 && posX < 56) && (posY > 8 && posY < 21))
 			{
 				if (correctPos == true) {
-					textscore++;
+					dollarsClone += 4;
+					Application::dollars += 4;
 				}
 				else
 				{
-					textscore--;
+					dollarsClone -= 4;
+					Application::dollars -= 4;
 				}
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
@@ -252,11 +250,13 @@ void ScenePC::Update(double dt)
 			if ((posX > 56 && posX < 74) && (posY > 8 && posY < 22))
 			{
 				if (correctPos == true) {
-					textscore--;
+					dollarsClone += 4;
+					Application::dollars += 4;
 				}
 				else
 				{
-					textscore++;
+					dollarsClone -= 4;
+					Application::dollars -= 4;
 				}
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
@@ -286,18 +286,10 @@ void ScenePC::Update(double dt)
 		{
 			//display betting value regardless
 			if (BJstate == 0) {
-				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
-				{
-					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
-					OpenDeck.addcard(OpenDeck.dealerhand);
-					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
-					BJstate = 1;
-				}
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
-					//if (button press) {			//all in 
-						//bettingvalue = balance;
-					//}
+					//all in 
+					bettingvalue = Application::dollars;
 				}
 				if ((posX > 52 && posX < 62) && (posY > 18 && posY < 23) && bettingvalue >= 100)
 				{
@@ -311,40 +303,32 @@ void ScenePC::Update(double dt)
 				{
 					bettingvalue -= 10;
 				}
-				//if (button press && bettingvalue + 10 <= balance) {
-				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40))
+				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40) && bettingvalue + 10 <= Application::dollars)
 				{
 					bettingvalue += 10;
 				}
-				//}
-
-				//if (button press && bettingvalue + 50 <= balance) {
-				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46))
+				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46) && bettingvalue + 50 <= Application::dollars)
 				{
 					bettingvalue += 50;
 				}
-				//}
-
-				//if (button press && bettingvalue + 100 <= balance) {
-				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43))
+				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43) && bettingvalue + 100 <= Application::dollars)
 				{
 					bettingvalue += 100;
 				}
-				//}
 				
 				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
 				{
+					OpenDeck.resetopen();
+					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
+					OpenDeck.addcard(OpenDeck.dealerhand);
+					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
 					BJstate = 1;
 				}
-
-				//if (button press) {			//all in 
-					//bettingvalue = balance;
-				//}
 			}
 			if (BJstate == 1) {
-				//display cards
+				//render both hands
+
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-					//render both hands
 					if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
@@ -397,70 +381,51 @@ void ScenePC::Update(double dt)
 				else if (result == 2) {
 					std::cout << "Tie/Push" << std::endl;
 					//refunds bet
-					//balance += bettingvalue
+					Application::dollars += bettingvalue;
 				}
 				else if (result == 3) {
 					std::cout << "Player won" << std::endl;
 					//gives back bet and extra value
-					//balance += bettingvalue * 2;
+					Application::dollars += bettingvalue * 2;
 				}
-				//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
-				//if (deck size smaller than x) {
-				OpenDeck.resetopen();
-				//}
-
-				if (gameended == true) {
-
-				Application::dollars += score * 2;
-				Application::dollars += textscore * 4;
-				Application::dollars += minescore * 2;
-
-					dollarsClone += score * 2;
-					dollarsClone += textscore * 4;
-					dollarsClone += minescore * 2;
-
-				score = 0;
-				textscore = 0;
-				minescore = 0;
 
 			}
 		}
 	}
-		
-	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
-		{
+	{
 		bLButtonState = false;
 		mousestate = "";
-		}
-		static bool bRButtonState = false;
-		if (!bRButtonState && Application::IsMousePressed(1))
-		{
-			bRButtonState = true;
-			mousestate = "RBUTTON DOWN";
-		}
-		else if (bRButtonState && !Application::IsMousePressed(1))
-		{
-			bRButtonState = false;
-			mousestate = "";
-		}
+	}
+	static bool bRButtonState = false;
+	if (!bRButtonState && Application::IsMousePressed(1))
+	{
+		bRButtonState = true;
+		mousestate = "RBUTTON DOWN";
+	}
+	else if (bRButtonState && !Application::IsMousePressed(1))
+	{
+		bRButtonState = false;
+		mousestate = "";
+	}
+	
+	int times = Application::GetTime(); // in seconds 
+	hours = times % 5;
+	day = times / 5;
+	if (day == Application::daydivide && times != 0)
+	{
 
-
-		int times = Application::GetTime(); // in seconds 
-		hours = times % 5;
-		day = times / 5;
-		if (day == Application::daydivide && times != 0) {
-
-			bool dayUp = true;
-			Application::daydivide++;
-			dollarsClone += Application::profit;
-			//std::cout << "if is OK ";
+		bool dayUp = true;
+		Application::daydivide++;
+		dollarsClone += Application::profit;
+		Application::dollars += Application::profit;
+		//std::cout << "if is OK ";
 
 			explosionx = 100;
 			explosiony = 100;
 
 			boom = false;
-		}
+	}
 
 		timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
@@ -565,6 +530,9 @@ void ScenePC::Render()
 		}
 		else if (BJstate == 1) {
 			//dealing phase
+			string betvalue = "Bet:" + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2.5, 50, 29);
+
 		}
 		else {}
 	}

@@ -72,6 +72,7 @@ class SceneGame : public Scene
 		GEO_COMPUTERUPGRADE,
 		GEO_PUPGRADE,
 		GEO_WUPGRADE,
+		GEO_TUTORIAL,
 
 		GEO_QUAD_BG,
 
@@ -211,6 +212,7 @@ private:
 	void RenderChair();
 	void RenderLoungeTable();
 	void RenderVendingMachine();
+	void RenderTutorial(int number);
 	
 	//mouse input
 	double x, y;
@@ -230,7 +232,7 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
 	bool upgrades = false;
-	int dailyprofit, dayweek = 0, Wages = 0;
+	int dailyprofit, dayweek = 0, Wages = 0, Tutorialmode = 0;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;

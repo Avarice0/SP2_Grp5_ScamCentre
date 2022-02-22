@@ -230,7 +230,7 @@ private:
 	};
 
 	int RNGmsg = 5;
-	bool correctPos = 1;
+	bool correctPos = rand() % 2;
 
 	int BJstate = 0;
 	//0 for betting, 1 for dealng
