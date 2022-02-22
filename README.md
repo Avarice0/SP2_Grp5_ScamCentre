@@ -29,3 +29,6 @@ https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fimage-v
 
 Quote:
 https://www.google.com/url?sa=i&url=https%3A%2F%2Fquotesgram.com%2Fscammers-quotes%2F&psig=AOvVaw1r6fjwU-Tr1kKytfF6dy2n&ust=1645259542978000&source=images&cd=vfe&ved=0CAsQjRxqGAoTCNiAwM3riPYCFQAAAAAdAAAAABCaAg
+
+Vending Machine:
+https://www.google.com/search?q=vending+machine+texture&tbm=isch&ved=2ahUKEwiD16ONqZD2AhVR_DgGHby1CQ8Q2-cCegQIABAA&oq=vending+machine+texture&gs_lcp=CgNpbWcQAzIFCAAQgAQyBggAEAUQHjIGCAAQBRAeMgYIABAFEB4yBggAEAUQHjIGCAAQBRAeOgcIIxDvAxAnOgQIABBDOgYIABAIEB46BAgAEBhQ4wNYlxVgjRZoAHAAeACAATGIAYUDkgEBOZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=qEUTYoPjKNH44-EPvOumeA&bih=722&biw=1536#imgrc=MYgnhvg-b86A_M

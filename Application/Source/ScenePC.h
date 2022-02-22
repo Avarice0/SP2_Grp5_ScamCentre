@@ -24,6 +24,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
+#include "Deck.h"
 
 using namespace std;
 
@@ -42,6 +43,7 @@ class ScenePC : public Scene
 
 		GEO_WALLPAPER,
 		GEO_CASINOBG,
+		GEO_CASINOBET,
 
 		GEO_HEADS,
 		GEO_TAILS,
@@ -231,6 +233,7 @@ private:
 	bool correctPos = 1;
 
 	int BJstate = 0;
+	//0 for betting, 1 for dealng
 };
 
 

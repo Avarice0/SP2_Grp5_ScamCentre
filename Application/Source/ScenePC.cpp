@@ -1,8 +1,6 @@
 #include "ScenePC.h"
 #include "SceneGame.h"
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-#include <iostream>
+
 
 ScenePC::ScenePC()
 {
@@ -76,6 +74,8 @@ void ScenePC::Init()
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_CASINOBG] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_CASINOBG]->textureID = LoadTGA("Image//casinoBG.tga");
+		meshList[GEO_CASINOBET] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
+		meshList[GEO_CASINOBET]->textureID = LoadTGA("Image//casinoBet.tga");
 
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
@@ -116,10 +116,12 @@ void ScenePC::Init()
 		meshList[GEO_METREBARBGBG] = MeshBuilder::GenerateQuad("quad", Color(0.4, 0.4, 0.4), 1.f);
 	}
 	{
-		//meshList[GEO_CARDBLACK] = MeshBuilder::GenerateQuad("blackcard", Color(1, 1, 1), 1.f);
-		//meshList[GEO_CARDBLACK]->textureID = LoadTGA("Image//Metrebar.tga");
-		/*GEO_CARDBLACK,
-		GEO_CARDRED,
+		meshList[GEO_CARDBLACK] = MeshBuilder::GenerateQuad("blackcard", Color(1, 1, 1), 1.f);
+		meshList[GEO_CARDBLACK]->textureID = LoadTGA("Image//blackCard.tga");
+		meshList[GEO_CARDRED] = MeshBuilder::GenerateQuad("redcard", Color(1, 1, 1), 1.f);
+		meshList[GEO_CARDRED]->textureID = LoadTGA("Image//redCard.tga");
+		/*,
+		,
 		GEO_SUITH,
 		GEO_SUITD,
 		GEO_SUITS,
@@ -286,14 +288,7 @@ void ScenePC::Update(double dt)
 			if (BJstate == 1) {
 
 			}
-		//#include <iostream>
-//#include <string>
-//#include <conio.h>
-//
-//#include "Deck.h"
-//using namespace std;
-//
-//int main(void) {
+			//int main(void) {
 //	int balance = 1000;
 //	int bettingvalue = 0;
 //	int playerinput; bool pass;
@@ -395,7 +390,6 @@ void ScenePC::Update(double dt)
 //			std::cout << "Player won" << std::endl;
 //			balance += bettingvalue;
 //		}
-//
 //		std::cout << "Do you want to play again?: Q for yes, W for no";
 //		int playagain = 0;
 //		do {
@@ -567,9 +561,9 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 4)
 	{
-		RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
+	//	RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
-			//betting phase
+			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
 		}
 		else if (BJstate == 1) {
 			//dealing phase
