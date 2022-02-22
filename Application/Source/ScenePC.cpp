@@ -174,6 +174,9 @@ void ScenePC::Update(double dt)
 		else if ((posX > 8 && posX < 15) && (posY > 34 && posY < 42) && boom == false)
 		{
 			gamenum = 4; //blackjack
+			//game start declarations
+			bettingvalue = 0;
+
 		}
 
 		else {}
@@ -189,41 +192,41 @@ void ScenePC::Update(double dt)
 				boom = true;
 			}
 
-			if ( ( (posX > coin1x - 2.5) && (posX < coin1x + 2.5) && (posY > coin1y - 2.5) && (posY < coin1y + 2.5) && boom == false)   || 
-		       ( (posX > coin2x - 2.5) && (posX < coin2x + 2.5) && (posY > coin2y - 2.5) && (posY < coin2y + 2.5) &&boom==false) )
+			if (((posX > coin1x - 2.5) && (posX < coin1x + 2.5) && (posY > coin1y - 2.5) && (posY < coin1y + 2.5) && boom == false) ||
+				((posX > coin2x - 2.5) && (posX < coin2x + 2.5) && (posY > coin2y - 2.5) && (posY < coin2y + 2.5) && boom == false))
 			{
 				coin1x = rand() % 25 + 45;
 				coin1y = rand() % 35 + 15;
 
 				coin2x = rand() % 25 + 45;
 				coin2y = rand() % 35 + 15;
-			//	cout << "coin1 ok" << endl;
-				while ( (coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5) )
+				//	cout << "coin1 ok" << endl;
+				while ((coin2x > coin1x - 5) && (coin2x < coin1x + 5) && (coin2y > coin1y - 5) && (coin2y < coin1y + 5))
 				{
 					coin2x = rand() % 25 + 45;
 					coin2y = rand() % 35 + 15;
-					
+
 				}
 				//cout << "coin2 ok" << endl;
 				coinbombx = rand() % 25 + 45;
 				coinbomby = rand() % 35 + 15;
-				
-				while ( (coinbombx > coin1x - 5) && (coinbombx < coin1x + 5) && (coinbomby > coin1y - 5) && (coinbomby < coin1y + 5) && (coinbombx > coin2x - 5) && (coinbombx < coin2x + 5) && (coinbomby > coin2y - 5) && (coinbomby < coin2y + 5) )
-				{					
-						coinbombx = rand() % 25 + 45;
-						coinbomby = rand() % 35 + 15;
+
+				while ((coinbombx > coin1x - 5) && (coinbombx < coin1x + 5) && (coinbomby > coin1y - 5) && (coinbomby < coin1y + 5) && (coinbombx > coin2x - 5) && (coinbombx < coin2x + 5) && (coinbomby > coin2y - 5) && (coinbomby < coin2y + 5))
+				{
+					coinbombx = rand() % 25 + 45;
+					coinbomby = rand() % 35 + 15;
 				}
-		//		cout << "coin3 ok" << endl;
+				//		cout << "coin3 ok" << endl;
 				score++;
 
 				coinStarted = true;
 				//gameended = false;
 			}
-		
+
 			else if ((posX > 32 && posX < 75) && (posY > 8 && posY < 53 && gameended == false))
 			{
 				score--;
-				
+
 			}
 			gameended = true;
 		}
@@ -257,13 +260,13 @@ void ScenePC::Update(double dt)
 				RNGmsg = rand() % 8;
 				correctPos = rand() % 2;
 			}
-			
+
 		}
 		else if (gamenum == 3)
 		{
 			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
 
-				if (rand() % 2 == true) 
+				if (rand() % 2 == true)
 				{
 					cout << "heads" << endl;
 					heady = 30;
@@ -280,152 +283,110 @@ void ScenePC::Update(double dt)
 		}
 		else if (gamenum == 4)
 		{
+			//display betting value regardless
 			if (BJstate == 0) {
-
+				//if (button press change state) {
+				OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);			//clean hand
+				OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);				//give 2 cards per
+				OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
+				BJstate = 1;
+				//}
+				//if (button press && bettingvalue >= 100) {
+				bettingvalue -= 100;
+				//}
+				//if (button press && bettingvalue >= 50) {
+				bettingvalue -= 50;
+				//}
+				//if (button press && bettingvalue >= 10) {
+				bettingvalue -= 10;
+				//}
+				//if (button press && bettingvalue + 10 <= balance) {
+				bettingvalue += 10;
+				//}
+				//if (button press && bettingvalue + 50 <= balance) {
+				bettingvalue += 50;
+				//}
+				//if (button press && bettingvalue + 100 <= balance) {
+				bettingvalue += 100;
+				//}
+				//if (button press) {			//all in 
+					//bettingvalue = balance;
+				//}
 			}
 			if (BJstate == 1) {
+				//display cards
+				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+					result = 2;
+				}
+				else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+					result = 3;
+				}
+				else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+					result = 1;
+				}
 
+				if (stand == false) {
+					//cover 1 dealer card
+					std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
+					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
+
+					if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
+						//if (button press) {
+						OpenDeck.addcard(OpenDeck.playerhand);
+						//}
+						//else if (button press) {
+						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+							OpenDeck.addcard(OpenDeck.dealerhand);
+						}
+						stand = true;
+						//}
+					}
+				}
+				if (stand == true) {
+					std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
+					std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
+					if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+						result = 1;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+						result = 2;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+						result = 3;
+					}
+				}
 			}
-			//int main(void) {
-//	int balance = 1000;
-//	int bettingvalue = 0;
-//	int playerinput; bool pass;
-//	Deck OpenDeck;
-//	OpenDeck.resetopen();
-//	while (balance > 0) {
-//		do {
-//			system("CLS");
-//			std::cout << "Welcome to BlackJack!" << std::endl;
-//			std::cout << "Press buttons to change bets." << std::endl;
-//			std::cout << "You have $" << balance << " in your account." << std::endl;
-//			std::cout << "You are betting $" << bettingvalue << std::endl;
-//			std::cout << "Q for -100, W for -50, E for -10, R to start the game, T for +10, Y for +50, U for +100" << std::endl;
-//			pass = false;
-//			playerinput = _getch();
-//			if (playerinput == 114) {		//A to continue next phase
-//				pass = true;
-//			}
-//			else {
-//				//reduce bet value
-//				if (playerinput == 113 && bettingvalue >= 100) {
-//					bettingvalue -= 100;
-//				}
-//				if (playerinput == 119 && bettingvalue >= 50) {
-//					bettingvalue -= 50;
-//				}
-//				if (playerinput == 101 && bettingvalue >= 10) {
-//					bettingvalue -= 10;
-//				}
-//				if (playerinput == 116 && bettingvalue + 10 <= balance) {
-//					bettingvalue += 10;
-//				}
-//				if (playerinput == 121 && bettingvalue + 50 <= balance) {
-//					bettingvalue += 50;
-//				}
-//				if (playerinput == 117 && bettingvalue + 100 <= balance) {
-//					bettingvalue += 100;
-//				}
-//			}
-//		} while (pass == false);
-//
-//		OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
-//		int result = 0;			//0 is no result, 1 is lose, 2 is tie, 3 is win
-//		OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);
-//		OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);
-//		bool stand = false;
-//		do {
-//			system("CLS");
-//			std::cout << "You have $" << balance << " in your account." << std::endl;
-//			std::cout << "You are betting $" << bettingvalue << std::endl;
-//			std::cout << "dealer hand:" << OpenDeck.valuecount(OpenDeck.dealerhand) << std::endl; OpenDeck.printdeck(OpenDeck.dealerhand);
-//			std::cout << "player hand:" << OpenDeck.valuecount(OpenDeck.playerhand) << std::endl; OpenDeck.printdeck(OpenDeck.playerhand);
-//			if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-//				result = 2;
-//			}
-//			else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
-//				result = 3;
-//			}
-//			else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
-//				result = 1;
-//			}
-//			else if (stand == true) {
-//				if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
-//					result = 1;
-//				}
-//				else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
-//					result = 2;
-//				}
-//				else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
-//					result = 3;
-//				}
-//			}
-//			else if (stand == false) {
-//				if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
-//					std::cout << "Q to Hit, W to stand" << std::endl;
-//					playerinput = _getch();
-//					if (playerinput == 113) {
-//						OpenDeck.addcard(OpenDeck.playerhand);
-//					}
-//					else if (playerinput == 119) {
-//						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-//							OpenDeck.addcard(OpenDeck.dealerhand);
-//						}
-//						stand = true;
-//					}
-//				}
-//			}
-//
-//		} while (result == 0);
-//
-//		if (result == 1) {
-//			std::cout << "Player lost" << std::endl;
-//			balance -= bettingvalue;
-//		}
-//		else if (result == 2) {
-//			std::cout << "Tie/Push" << std::endl;
-//		}
-//		else if (result == 3) {
-//			std::cout << "Player won" << std::endl;
-//			balance += bettingvalue;
-//		}
-//		std::cout << "Do you want to play again?: Q for yes, W for no";
-//		int playagain = 0;
-//		do {
-//			playerinput = _getch();
-//			if (playerinput == 113) {
-//				playagain = 1;
-//			}
-//			else if (playerinput == 119) {
-//				playagain = 2;
-//			}
-//		} while (playagain == 0);
-//		if (playagain == 2) {
-//			std::cout << "You left with $" << balance << std::endl;
-//			break;
-//		}
-//	}
-//	if (balance <= 0) {
-//		std::cout << "You ran out of money!" << std::endl;
-//	}
-//
-//
-//	return 0;
-//}
-		}
+			if (result == 1) {
+				std::cout << "Player lost" << std::endl;
+				//balance -= bettingvalue;
+			}
+			else if (result == 2) {
+				std::cout << "Tie/Push" << std::endl;
+				//balance refunded
+			}
+			else if (result == 3) {
+				std::cout << "Player won" << std::endl;
+				//balance += bettingvalue;
+			}
+			//when number of cards in deck is smaller than certain value, reset card deck, only done when game resets
+			//if (deck size smaller than x) {
+				//OpenDeck.resetopen();
+			//}
 
-		if (gameended == true) {
+			if (gameended == true) {
 
-			SceneGame::dollars += score * 2;
-			SceneGame::dollars += textscore * 4;
-			SceneGame::dollars += minescore * 2;
-			
-			dollarsClone += score * 2;
-			dollarsClone += textscore * 4;
-			dollarsClone += minescore * 2;
+				SceneGame::dollars += score * 2;
+				SceneGame::dollars += textscore * 4;
+				SceneGame::dollars += minescore * 2;
 
-			score = 0;
-			textscore = 0;
-			minescore = 0;
+				dollarsClone += score * 2;
+				dollarsClone += textscore * 4;
+				dollarsClone += minescore * 2;
+
+				score = 0;
+				textscore = 0;
+				minescore = 0;
+			}
 		}
 	}
 
@@ -568,6 +529,8 @@ void ScenePC::Render()
 		}
 		else {}
 	}
+		
+	
 	string scoreText = "Cash: " + to_string(int(dollarsClone));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);

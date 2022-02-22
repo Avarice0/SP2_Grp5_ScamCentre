@@ -402,19 +402,33 @@ void SceneGame::Update(double dt)
 	}
 	else {}
 	for (int i = 0; i < size(entities); i++) {
-		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0])) {
+		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
 			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-				if (player.D == 0) {
-					player.Z++;
+				/*if (player.D == 0) {
+					player.Z += 1;
 				}
 				if (player.D == 1) {
-					player.Z--;
+					player.Z -= 1;
 				}
 				if (player.D == 2) {
-					player.X++;
+					player.X += 1;
 				}
 				if (player.D == 3) {
-					player.X--;
+					player.X -= 1;
+				}
+				else {}*/
+
+				if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+					player.X += 1;
+				}
+				if ((player.X < entities[i]->ECoords[0] - 4) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+					player.X -= 1;
+				}
+				if ((player.Z > entities[i]->ECoords[2] - 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+					player.Z += 1;
+				}
+				if ((player.Z < entities[i]->ECoords[2] + 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+					player.Z -= 1;
 				}
 				else {}
 			}
@@ -434,6 +448,7 @@ void SceneGame::Update(double dt)
 	}
 	else{}
 	
+	//PC
 	if ((player.X > 47 && player.X < 73) && (player.Z > -66 && player.Z < -55)) {
 		if ((player.X < 49) && (player.Z > -66 && player.Z < -55)) {
 			player.X = 47;
@@ -449,6 +464,7 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	//Upgrade station
 	if ((player.X > 34 && player.X < 60) && (player.Z > 54 && player.Z < 67)) {
 		if ((player.X < 36) && (player.Z > 54 && player.Z < 67)) {
 			player.X = 34;
@@ -464,18 +480,32 @@ void SceneGame::Update(double dt)
 		}
 	}
 
-	if ((player.X > -46 && player.X < -35) && (player.Z > -49 && player.Z < -33)) {
+	//lounge table
+	if ((player.X > -46 && player.X < -33) && (player.Z > -49 && player.Z < -33)) {
 		if ((player.X < - 44) && (player.Z > -49 && player.Z < -33)) {
 			player.X = -46;
 		}
-		if ((player.X > -37) && (player.Z > -49 && player.Z < -33)) {
-			player.X = -35;
+		if ((player.X > -35) && (player.Z > -49 && player.Z < -33)) {
+			player.X = -33;
 		}
-		if ((player.Z < -47) && (player.X > -46 && player.X < -35)) {
+		if ((player.Z < -47) && (player.X > -46 && player.X < -33)) {
 			player.Z = -49;
 		}
-		if ((player.Z > -35) && (player.X > -46 && player.X < -35)) {
+		if ((player.Z > -35) && (player.X > -46 && player.X < -33)) {
 			player.Z = -33;
+		}
+	}
+
+	//vending machine
+	if ((player.X > -56 && player.X < -18) && (player.Z > -100 && player.Z < -65)) {
+		if ((player.X < -54) && (player.Z > -100 && player.Z < -65)) {
+			player.X = -56;
+		}
+		if ((player.X > -20) && (player.Z > -100 && player.Z < -65)) {
+			player.X = -18;
+		}
+		if ((player.Z > -67) && (player.X > -56 && player.X < -18)) {
+			player.Z = -65;
 		}
 	}
 
@@ -1080,6 +1110,12 @@ void SceneGame::RenderRoom(void)
 	modelStack.Scale(8, 8, 8);
 	RenderVendingMachine();
 	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-22, 1, -67);
+	modelStack.Scale(3, 3, 3);
+	RenderPlant();
+	modelStack.PopMatrix();
 }
 
 void SceneGame::RenderTable(int x, int y, int z, int tier)
@@ -1109,7 +1145,7 @@ void SceneGame::RenderTable(int x, int y, int z, int tier)
 
 	// tabletop
 	modelStack.PushMatrix();
-	modelStack.Translate(x, y, z);
+	modelStack.Translate(x, y , z);
 	modelStack.Scale(5, 0.2, 5);
 	RenderMesh(meshList[GEO_TABLE], true);
 	modelStack.Scale(0.1, 15, 0.1);
@@ -1127,7 +1163,7 @@ void SceneGame::RenderTable(int x, int y, int z, int tier)
 	RenderMesh(meshList[GEO_TABLE], true);
 
 	modelStack.PushMatrix();
-	modelStack.Translate(7, 0, -1);
+	modelStack.Translate(7, -0.3, -1);
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(20, 10, 17);
 	RenderMesh(meshList[GEO_UPGRADEAREA], true);
