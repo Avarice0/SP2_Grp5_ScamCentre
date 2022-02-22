@@ -74,6 +74,8 @@ void ScenePC::Init()
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
 		meshList[GEO_CASINOBG] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_CASINOBG]->textureID = LoadTGA("Image//casinoBG.tga");
+		meshList[GEO_CASINOBET] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
+		meshList[GEO_CASINOBET]->textureID = LoadTGA("Image//casinoBet.tga");
 
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
