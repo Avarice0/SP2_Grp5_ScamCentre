@@ -139,7 +139,11 @@ void Application::Init()
 		//return -1;
 	}
 }
-
+int Application::dollars = 10000;
+int Application::totalearned = 0;
+int Application::profit = 0;
+int Application::endtime = 0;
+int Application::daydivide = 1;
 void Application::Run()
 {  
     Scene* Scenelist[4] = { nullptr, nullptr, nullptr, nullptr};
@@ -173,7 +177,11 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
-                    SceneGame::dollars = 10000;
+                    Application::dollars = 10000;
+                    Application::totalearned = 0;
+                    Application::profit = 0;
+                    Application::endtime = 0;
+                    Application::daydivide = 1;
                     scene2 = new SceneGame(); Scenelist[1] = scene2;
                     scene3 = new ScenePC(); Scenelist[2] = scene3;
                     scene4 = new SceneEnd(); Scenelist[3] = scene4;

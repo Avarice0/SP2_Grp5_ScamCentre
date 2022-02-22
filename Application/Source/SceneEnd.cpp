@@ -208,7 +208,7 @@ void SceneEnd::Render()
 		RenderMeshOnScreen(meshList[GEO_SCENE2], 40, 30, 80, 60);
 	}
 
-	string lifetimeEarnings = to_string(SceneGame::totalearned);
+	string lifetimeEarnings = to_string(Application::totalearned);
 	RenderMeshOnScreen(meshList[GEO_STATSBG], 68, 33, 20, 35);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Lifetime", Color(1, 1, 1), 2, 63, 48);
 	RenderTextOnScreen(meshList[GEO_TEXT], "earnings", Color(1, 1, 1), 2, 63, 46);

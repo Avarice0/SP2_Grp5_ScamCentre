@@ -158,12 +158,12 @@ public:
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();
-	virtual void Exit();
+	virtual void Exit();/*
 	static int dollars;
 	static int totalearned;
 	static int endtime;
 	static int profit;
-	static int daydivide;
+	static int daydivide;*/
 
 private:
 	unsigned m_vertexArrayID;
