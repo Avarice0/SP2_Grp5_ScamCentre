@@ -230,7 +230,7 @@ private:
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
 	int entitynumber;
 	bool upgrades = false;
-	int dailyprofit;
+	int dailyprofit, dayweek = 0, Wages = 0;
 
 	//Upgrade
 	bool coffee = false, policedeter = false, RenderPermItem1 = false, RenderPermItem2 = false, Gameplay = true;

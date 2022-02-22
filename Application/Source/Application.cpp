@@ -203,7 +203,7 @@ void Application::Run()
             scene = scene3;
         }
         else if (scenenum == 4) {
-       //     scene = scene4;
+            scene = scene4;
         }
        /* else if (scenenum == 5) {
             scene = scene5;

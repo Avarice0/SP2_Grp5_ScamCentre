@@ -378,6 +378,11 @@ void SceneGame::Update(double dt)
 {
 	camera.Update(dt);
 
+	Wages = 0;
+	for (int i = 0; i < size(entities); i++) {
+		Wages += entities[i]->getWage();
+	}
+
 	//player update code
 	player.D = -1;
 	if (Application::IsKeyPressed('W'))
@@ -401,121 +406,122 @@ void SceneGame::Update(double dt)
 		player.X++;
 	}
 	else {}
-	for (int i = 0; i < size(entities); i++) {
-		if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
-			if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-				/*if (player.D == 0) {
-					player.Z += 1;
-				}
-				if (player.D == 1) {
-					player.Z -= 1;
-				}
-				if (player.D == 2) {
-					player.X += 1;
-				}
-				if (player.D == 3) {
-					player.X -= 1;
-				}
-				else {}*/
+	{
+		for (int i = 0; i < size(entities); i++) {
+			if ((player.X > entities[i]->ECoords[0] - 10) && (player.X < entities[i]->ECoords[0] - 2)) {
+				if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+					/*if (player.D == 0) {
+						player.Z += 1;
+					}
+					if (player.D == 1) {
+						player.Z -= 1;
+					}
+					if (player.D == 2) {
+						player.X += 1;
+					}
+					if (player.D == 3) {
+						player.X -= 1;
+					}
+					else {}*/
 
-				if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-					player.X += 1;
+					if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+						player.X += 1;
+					}
+					if ((player.X < entities[i]->ECoords[0] - 4) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
+						player.X -= 1;
+					}
+					if ((player.Z > entities[i]->ECoords[2] - 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+						player.Z += 1;
+					}
+					if ((player.Z < entities[i]->ECoords[2] + 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
+						player.Z -= 1;
+					}
+					else {}
 				}
-				if ((player.X < entities[i]->ECoords[0] - 4) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-					player.X -= 1;
-				}
-				if ((player.Z > entities[i]->ECoords[2] - 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
-					player.Z += 1;
-				}
-				if ((player.Z < entities[i]->ECoords[2] + 3) && (player.X > entities[i]->ECoords[0] - 11) && (player.X < entities[i]->ECoords[0] - 3)) {
-					player.Z -= 1;
-				}
-				else {}
 			}
 		}
-	}
-	if (player.X > 100) {
-		player.X = 100;
-	}
-	if (player.X < -100) {
-		player.X = -100;
-	}
-	if (player.Z > 75) {
-		player.Z = 75;
-	}
-	if (player.Z < -75) {
-		player.Z = -75;
-	}
-	else{}
-	
-	//PC
-	if ((player.X > 47 && player.X < 73) && (player.Z > -66 && player.Z < -55)) {
-		if ((player.X < 49) && (player.Z > -66 && player.Z < -55)) {
-			player.X = 47;
+		if (player.X > 100) {
+			player.X = 100;
 		}
-		if ((player.X > 71) && (player.Z > -66 && player.Z < -55)) {
-			player.X = 73;
+		if (player.X < -100) {
+			player.X = -100;
 		}
-		if ((player.Z < -64) && (player.X > 47 && player.X < 73)) {
-			player.Z = -66;
+		if (player.Z > 75) {
+			player.Z = 75;
 		}
-		if ((player.Z > -57) && (player.X > 47 && player.X < 73)) {
-			player.Z = -55;
+		if (player.Z < -75) {
+			player.Z = -75;
 		}
-	}
+		else {}
 
-	//Upgrade station
-	if ((player.X > 34 && player.X < 60) && (player.Z > 54 && player.Z < 67)) {
-		if ((player.X < 36) && (player.Z > 54 && player.Z < 67)) {
-			player.X = 34;
+		//PC
+		if ((player.X > 46 && player.X < 73) && (player.Z > -66 && player.Z < -54)) {
+			if ((player.X < 49) && (player.Z > -66 && player.Z < -54)) {
+				player.X = 46;
+			}
+			if ((player.X > 71) && (player.Z > -66 && player.Z < -54)) {
+				player.X = 73;
+			}
+			if ((player.Z < -64) && (player.X > 46 && player.X < 73)) {
+				player.Z = -66;
+			}
+			if ((player.Z > -57) && (player.X > 46 && player.X < 73)) {
+				player.Z = -54;
+			}
 		}
-		if ((player.X > 58) && (player.Z > 54 && player.Z < 67)) {
-			player.X = 60;
-		}
-		if ((player.Z < 56) && (player.X > 34 && player.X < 60)) {
-			player.Z =  54;
-		}
-		if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
-			player.Z = 67;
-		}
-	}
 
-	//lounge table
-	if ((player.X > -46 && player.X < -33) && (player.Z > -49 && player.Z < -33)) {
-		if ((player.X < - 44) && (player.Z > -49 && player.Z < -33)) {
-			player.X = -46;
+		//Upgrade station
+		if ((player.X > 34 && player.X < 60) && (player.Z > 53 && player.Z < 67)) {
+			if ((player.X < 36) && (player.Z > 53 && player.Z < 67)) {
+				player.X = 34;
+			}
+			if ((player.X > 58) && (player.Z > 53 && player.Z < 67)) {
+				player.X = 60;
+			}
+			if ((player.Z < 55) && (player.X > 34 && player.X < 60)) {
+				player.Z = 53;
+			}
+			if ((player.Z > 65) && (player.X > 34 && player.X < 60)) {
+				player.Z = 67;
+			}
 		}
-		if ((player.X > -35) && (player.Z > -49 && player.Z < -33)) {
-			player.X = -33;
-		}
-		if ((player.Z < -47) && (player.X > -46 && player.X < -33)) {
-			player.Z = -49;
-		}
-		if ((player.Z > -35) && (player.X > -46 && player.X < -33)) {
-			player.Z = -33;
-		}
-	}
 
-	//vending machine
-	if ((player.X > -56 && player.X < -18) && (player.Z > -100 && player.Z < -65)) {
-		if ((player.X < -54) && (player.Z > -100 && player.Z < -65)) {
-			player.X = -56;
+		//lounge table
+		if ((player.X > -46 && player.X < -33.8) && (player.Z > -49 && player.Z < -33)) {
+			if ((player.X < -44) && (player.Z > -49 && player.Z < -33)) {
+				player.X = -46;
+			}
+			if ((player.X > -35) && (player.Z > -49 && player.Z < -33)) {
+				player.X = -33.8;
+			}
+			if ((player.Z < -47) && (player.X > -46 && player.X < -33.8)) {
+				player.Z = -49;
+			}
+			if ((player.Z > -35) && (player.X > -46 && player.X < -33.8)) {
+				player.Z = -33;
+			}
 		}
-		if ((player.X > -20) && (player.Z > -100 && player.Z < -65)) {
-			player.X = -18;
-		}
-		if ((player.Z > -67) && (player.X > -56 && player.X < -18)) {
-			player.Z = -65;
-		}
-	}
 
-	if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36))
-		changetoPC = true;
-	else
-	{
-		changetoPC = false;
+		//vending machine
+		if ((player.X > -56 && player.X < -18) && (player.Z > -100 && player.Z < -65)) {
+			if ((player.X < -54) && (player.Z > -100 && player.Z < -65)) {
+				player.X = -56;
+			}
+			if ((player.X > -20) && (player.Z > -100 && player.Z < -65)) {
+				player.X = -18;
+			}
+			if ((player.Z > -67) && (player.X > -56 && player.X < -18)) {
+				player.Z = -65;
+			}
+		}
+
+		if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36))
+			changetoPC = true;
+		else
+		{
+			changetoPC = false;
+		}
 	}
-	
 
 	if (metre.GetMP() > 999) {
 		endtime = Application::GetTime();
@@ -528,11 +534,18 @@ void SceneGame::Update(double dt)
 		Application::changescene(4);
 	}
 
-	if (dollars >= 600)
+	if (dayweek == 5) {
+		for (int i = 0; i < size(entities); i++) {
+			dollars -= entities[i]->getWage();
+			dayweek = 0;
+		}
+	}
+
+	if (dollars >= 2000)
 		RenderPermItem1 = true;
 	else
 		RenderPermItem1 = false;
-	if (dollars >= 600)
+	if (dollars >= 2500)
 		RenderPermItem2 = true;
 	else
 		RenderPermItem2 = false;
@@ -567,7 +580,7 @@ void SceneGame::Update(double dt)
 					coffee = true;
 					RenderPermItem1 = false;
 					mousestate = "Coffee Bought";
-					dollars -= 600;
+					dollars -= 2000;
 				}
 			}
 			if (RenderPermItem2 == true && policedeter == false) {
@@ -577,7 +590,7 @@ void SceneGame::Update(double dt)
 					policedeter = true;
 					RenderPermItem2 = false;
 					mousestate = "Police Deterrence Bought";
-					dollars -= 600;
+					dollars -= 2500;
 				}
 			}
 		}
@@ -647,10 +660,10 @@ void SceneGame::Update(double dt)
 		SceneGame::daydivide++;
 		
 	}
-
 	if (dayUp == true) {
+		dayweek++;
 		profit = 0;
-		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
+		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter); 
 		if (dailyprofit > 0){
 			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
 		}
@@ -669,6 +682,8 @@ void SceneGame::Update(double dt)
 			}
 		}
 		dayUp = false;
+	}
+	else {
 	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
@@ -776,11 +791,12 @@ void SceneGame::Render()
 		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1,1,1), 2, 2, 57.5);
-		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 70, 58, 20, 5);
-		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 60, 57.5);
+		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 68, 58, 27, 6);
+		RenderTextOnScreen(meshList[GEO_TIME], time, Color(0.5, 1, 0.5), 2, 57, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 10, 58, 20, 5);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(dollars), Color(1, 1, 0), 2, 1, 57.5);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "+" + to_string(dailyprofit), Color(1, 1, 0), 2, 1, 55.5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "Weekly Wage:" + to_string(Wages), Color(1, 0, 0), 2, 57, 55.5);
 
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
 			RenderPermUpgrade();

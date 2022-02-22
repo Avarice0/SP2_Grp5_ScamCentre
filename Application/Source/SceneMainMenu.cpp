@@ -143,6 +143,8 @@ void SceneMainMenu::Update(double dt)
 {
 	camera.TitleScreenUpdate(dt);
 
+
+
 	//mouse inputs
 	Application::GetCursorPos(&x, &y);
 	unsigned w = Application::GetWindowWidth();
