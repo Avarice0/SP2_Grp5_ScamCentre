@@ -78,6 +78,7 @@ void Application::changescene(int newscene) {
 	scenenum = newscene;
 }
 
+
 double Application::GetTime()
 {
 	return glfwGetTime();
@@ -172,6 +173,7 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
+                    SceneGame::dollars = 10000;
                     scene2 = new SceneGame(); Scenelist[1] = scene2;
                     scene3 = new ScenePC(); Scenelist[2] = scene3;
                     scene4 = new SceneEnd(); Scenelist[3] = scene4;
@@ -188,7 +190,7 @@ void Application::Run()
                 if ((posX >= 76 && posX <= 80) && (posY >= 56 && posY <= 60)) {
                     scenenum = 2;
                 }
-            }
+            }// hi
             else if (scenenum == 4) {
                 if ((posX > 13 && posY < 33) && (posY > 2 && posY < 12)) {
                     scenenum = 1;
@@ -230,6 +232,8 @@ void Application::Run()
         }
     }
 }
+
+
 
 void Application::Exit()
 {

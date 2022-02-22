@@ -12,9 +12,6 @@ public:
 	void Run();
 	void Exit();
 
-	static int scenenum;
-
-
 	//input
 	static bool IsKeyPressed(unsigned short key);
 	static bool IsMousePressed(unsigned short key);
@@ -27,7 +24,7 @@ public:
 	static unsigned m_width;
 	static unsigned m_height;
 
-	static void Replay(void);
+
 	static void changescene(int newscene);
 
 	
@@ -36,6 +33,7 @@ private:
 	//Declare a window object
 	StopWatch m_timer;
 	/*	int time=0;*/
+	static int scenenum;
 };
 
 #endif
