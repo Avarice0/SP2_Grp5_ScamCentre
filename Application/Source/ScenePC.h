@@ -38,7 +38,11 @@ class ScenePC : public Scene
 		GEO_COIN,
 		GEO_COINBOMB,
 		GEO_EXPLOSION,
+
+
 		GEO_WALLPAPER,
+		GEO_CASINOBG,
+
 		GEO_HEADS,
 		GEO_TAILS,
 		GEO_HT,

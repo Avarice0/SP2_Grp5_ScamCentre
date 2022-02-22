@@ -74,6 +74,9 @@ void ScenePC::Init()
 		meshList[GEO_EXPLOSION]->textureID = LoadTGA("Image//explosion.tga");
 		meshList[GEO_WALLPAPER] = MeshBuilder::GenerateQuad("wallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_WALLPAPER]->textureID = LoadTGA("Image//wallpaper.tga");
+		meshList[GEO_CASINOBG] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
+		meshList[GEO_CASINOBG]->textureID = LoadTGA("Image//casinobg.tga");
+
 
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
@@ -105,6 +108,8 @@ void ScenePC::Init()
 		meshList[GEO_MOUSESTATE]->textureID = LoadTGA("Image//calibri.tga");
 		meshList[GEO_SCORE] = MeshBuilder::GenerateText("score", 16, 16);
 		meshList[GEO_SCORE]->textureID = LoadTGA("Image//calibri.tga");
+
+
 		
 	}
 
@@ -426,6 +431,9 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
+	}
+	else if (gamenum == 4)
+	{
 
 	}
 
