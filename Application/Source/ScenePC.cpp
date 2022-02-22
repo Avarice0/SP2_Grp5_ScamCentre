@@ -292,31 +292,97 @@ void ScenePC::Update(double dt)
 				OpenDeck.addcard(OpenDeck.dealerhand); OpenDeck.addcard(OpenDeck.dealerhand);				//give 2 cards per
 				OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);				//called once only
 				BJstate = 1;
+			/*	
+				x, y
+
+					57, 52
+					74, 45
+
+
+					40, 46
+					50, 41
+
+					52.43
+					62, 38
+
+					40, 40
+					50, 35
+
+
+					61, 34
+					73, 27
+
+
+					40, 26
+					51, 21
+
+					52, 23
+					62, 18
+
+					40, 20
+					51, 15*/
+
 				//}
+				// 
+				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
+				{
+				//all in
+				}
+
 				//if (button press && bettingvalue >= 100) {
-				bettingvalue -= 100;
+				if ((posX > 52 && posX < 62) && (posY >18 && posY < 23))
+				{
+					bettingvalue -= 100;
+				}
+				
 				//}
+				
 				//if (button press && bettingvalue >= 50) {
-				bettingvalue -= 50;
+				if ((posX > 40 && posX < 51) && (posY > 15 && posY < 20))
+				{
+					bettingvalue -= 50;
+				}
 				//}
+				
 				//if (button press && bettingvalue >= 10) {
-				bettingvalue -= 10;
+				if ((posX > 40 && posX < 51) && (posY > 21 && posY < 26))
+				{
+					bettingvalue -= 10;
+				}
 				//}
+				
+
+
 				//if (button press && bettingvalue + 10 <= balance) {
-				bettingvalue += 10;
+				if ((posX > 40 && posX < 50) && (posY > 35 && posY < 40))
+				{
+					bettingvalue += 10;
+				}
 				//}
+				
 				//if (button press && bettingvalue + 50 <= balance) {
-				bettingvalue += 50;
+				if ((posX > 40 && posX < 50) && (posY > 41 && posY < 46))
+				{
+					bettingvalue += 50;
+				}
 				//}
+				
 				//if (button press && bettingvalue + 100 <= balance) {
-				bettingvalue += 100;
+				if ((posX > 52 && posX < 62) && (posY > 38 && posY < 43))
+				{
+					bettingvalue += 100;
+				}
 				//}
+				
 				//if (button press) {			//all in 
 					//bettingvalue = balance;
 				//}
+
+
+
 			}
 			if (BJstate == 1) {
-				//display cards
+				//display cards  results: 1:lose     2:tie  3:Win
 				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 					result = 2;
 				}
@@ -525,6 +591,9 @@ void ScenePC::Render()
 	//	RenderMeshOnScreen(meshList[GEO_CASINOBG], 40, 30, 80, 60);
 		if (BJstate == 0) {
 			RenderMeshOnScreen(meshList[GEO_CASINOBET], 40, 30, 80, 60);
+			string scoreText = "Cash: " + to_string(bettingvalue);
+			RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
+
 		}
 		else if (BJstate == 1) {
 			//dealing phase
