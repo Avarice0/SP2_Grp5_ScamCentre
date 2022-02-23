@@ -381,6 +381,10 @@ void SceneGame::Update(double dt)
 
 	camera.Update(dt);
 
+	if (Application::GetTime() >= (failstart)) {
+		metre.setPoliceFail(false);
+	}
+
 	Wages = 0;
 	for (int i = 0; i < size(entities); i++) {
 		Wages += entities[i]->getWage();
@@ -569,9 +573,11 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		//bribe
 		if (Application::dollars > metre.GetBribeCost()) {
 			if ((posX > 2.3 && posX < 17.4) && (posY > 46.4 && posY < 53.6))
 			{
+				failstart = Application::GetTime() + 2;
 				Application::dollars -= metre.GetBribeCost();
 				metre.Bribe();
 			}
@@ -670,7 +676,6 @@ void SceneGame::Update(double dt)
 	if (dayUp == true) {
 		dayweek++;
 		Application::profit = 0;
-
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		if (dailyprofit > 0) {
 			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -802,6 +807,10 @@ void SceneGame::Render()
 			if (entities[i]->getworkertier() > 0) {
 				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
 			}
+		}
+
+		if (metre.getPoliceFail() == true) {
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "BRIBE FAILED!!!", Color(1, 0, 0), 3, 25, 40);
 		}
 
 		//text render

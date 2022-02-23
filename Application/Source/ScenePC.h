@@ -48,6 +48,9 @@ class ScenePC : public Scene
 		GEO_HEADS,
 		GEO_TAILS,
 		GEO_HT,
+
+		GEO_TUTORIALBG,
+		GEO_TUTORIALTEXT,
 	
 		//text
 		GEO_TEXT,			//debug for text

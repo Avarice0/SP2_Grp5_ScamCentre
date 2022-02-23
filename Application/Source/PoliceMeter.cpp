@@ -41,10 +41,12 @@ void PoliceMeter::Bribe(void)
 		if (BribeSuccess >= 40) {
 			BribeSuccess -= 10;
 		}
+		policefail = false;
 	}
 	else
 	{
 		MeterPercentage = MeterPercentage + 50;
+		policefail = true;
 	}
 }
 
@@ -81,4 +83,14 @@ int PoliceMeter::GetBribeCost(void)
 bool PoliceMeter::IsMeterFull(void)
 {
 	return (MeterPercentage >= 100);
+}
+
+bool PoliceMeter::getPoliceFail(void)
+{
+	return policefail;
+}
+
+void PoliceMeter::setPoliceFail(bool condition)
+{
+	policefail = condition;
 }
