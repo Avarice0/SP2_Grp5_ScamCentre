@@ -232,7 +232,7 @@ private:
 	entity* entities[20];
 	float policemeter = 0;		//0-100% 
 	int NoobCount = 0, ExperiencedCount = 0, ExpertCount = 0;
-	int entitynumber;
+	int entitynumber = 0;
 	bool upgrades = false;
 	int dailyprofit, dayweek = 0, Wages = 0, Tutorialmode = 0;
 
@@ -244,11 +244,10 @@ private:
 
 	bool playerMoving = false;
 	bool legBack = false;
-	float debugRot;
+	float debugRot = 0;
 
 	bool dayUp = false;
-	//int daydivide = 1;
-	Mesh* shirtrarity[3];			//increases with number of shirts
+	Mesh* shirtrarity[3];
 
 	float vehiclex = 250;
 	int vehiclemodel = 0;
