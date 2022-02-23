@@ -51,6 +51,7 @@ class ScenePC : public Scene
 
 		GEO_TUTORIALBG,
 		GEO_TUTORIALTEXT,
+		GEO_QUESTIONMARK,
 	
 		//text
 		GEO_TEXT,			//debug for text
@@ -127,14 +128,15 @@ private:
 
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+	void RenderTutorial();
 
 	//mouse input
-	double x, y;
-	float posX, posY;
+	double x = 0, y = 0;
+	float posX = 0, posY = 0;
 	string mousestate;
 
 	string timeprint;
-	int day;
+	int day = 0;
 	int hours=0;
 
 
@@ -246,7 +248,7 @@ private:
 
 	int cardCoordsX[5] = {42,46,50,54,58};
 
-
+	int tutorial = 0;
 
 };
 
