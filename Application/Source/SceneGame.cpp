@@ -77,9 +77,9 @@ void SceneGame::Init()
 	// camera.position.x, camera.position.y, camera.position.z
 	{
 		light[0].type = Light::LIGHT_DIRECTIONAL;
-		light[0].position.Set(0, 50, 0);
+		light[0].position.Set(0, 1000, 0);
 		light[0].color.Set(1, 1, 1);
-		light[0].power = 1.f;
+		light[0].power = 0.2f;
 		light[0].kC = 1.f;
 		light[0].kL = 0.1;
 		light[0].kQ = 0.01f;
@@ -354,8 +354,20 @@ void SceneGame::Init()
 	
 	{
 		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_VAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kShininess = 1.f;
 		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
+		meshList[GEO_POLICECAR]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kShininess = 1.f;
 		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
+		meshList[GEO_SEDAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kShininess = 1.f;
 
 		vehicletype[0] = meshList[GEO_VAN];
 		vehicletype[1] = meshList[GEO_POLICECAR];
@@ -381,6 +393,10 @@ void SceneGame::Update(double dt)
 {
 
 	camera.Update(dt);
+
+	if (Application::GetTime() >= (failstart)) {
+		metre.setPoliceFail(false);
+	}
 
 	Wages = 0;
 	for (int i = 0; i < size(entities); i++) {
@@ -570,9 +586,11 @@ void SceneGame::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		//bribe
 		if (Application::dollars > metre.GetBribeCost()) {
 			if ((posX > 2.3 && posX < 17.4) && (posY > 46.4 && posY < 53.6))
 			{
+				failstart = Application::GetTime() + 2;
 				Application::dollars -= metre.GetBribeCost();
 				metre.Bribe();
 			}
@@ -671,7 +689,6 @@ void SceneGame::Update(double dt)
 	if (dayUp == true) {
 		dayweek++;
 		Application::profit = 0;
-
 		metre.DailyIncreaseMP(NoobCount, ExperiencedCount, ExpertCount, policedeter);
 		if (dailyprofit > 0) {
 			PlaySound(TEXT("money.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -775,10 +792,13 @@ void SceneGame::Render()
 			modelStack.LoadIdentity();
 		}
 		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+			Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
+			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightDirection_cameraspace.x);
+			/*Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 			Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
-			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
+			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);*/
 		}
 		//----------------------------------------
 		modelStack.PushMatrix();
@@ -803,6 +823,10 @@ void SceneGame::Render()
 			if (entities[i]->getworkertier() > 0) {
 				renderworker(entities[i]->ECoords[0], entities[i]->ECoords[1], entities[i]->ECoords[2], entities[i]->getworkertier());
 			}
+		}
+
+		if (metre.getPoliceFail() == true) {
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "BRIBE FAILED!!!", Color(1, 0, 0), 3, 25, 40);
 		}
 
 		//text render
@@ -857,7 +881,7 @@ void SceneGame::Render()
 		RenderPoliceMetre();
 		RenderBribe();
 		if (changetoPC == true) {
-			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 5);
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
 		}
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -1822,7 +1846,7 @@ void SceneGame::RenderTutorial(int number)
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "Police Metre ->", Color(1, 1, 1), 2, 45, 35);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "Lose when full", Color(1, 1, 1), 2, 45, 33);
 	}
-	RenderTextOnScreen(meshList[GEO_DOLLARS], "Press Enter to continue", Color(1, 0.5, 0.5), 2, 25, 5);
+	RenderTextOnScreen(meshList[GEO_DOLLARS], "Press Enter to continue", Color(1, 0.5, 0.5), 2, 25, 7);
 }
 
 void SceneGame::RenderPermUpgrade() {
@@ -1872,7 +1896,7 @@ void SceneGame::RenderUpgrade() {
 //enderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 void SceneGame::RenderPoliceMetre()
 {
-	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
+	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 21);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);

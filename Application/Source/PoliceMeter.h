@@ -30,8 +30,12 @@ public:
 	// returns true when meter reaches 100% and can be used to check when game should end
 	bool IsMeterFull(void);
 
+	bool getPoliceFail(void);
+	void setPoliceFail(bool condition);
+
 private:
 	float MeterPercentage = 0;			// the police-meter "score"
 	float BribeSuccess = 100;			// global variable
 	int BribeCost = 1000;				// cost of activating bribe function
+	bool policefail = false;
 };
