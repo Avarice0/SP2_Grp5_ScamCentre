@@ -356,17 +356,17 @@ void SceneGame::Init()
 		meshList[GEO_VAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
 		meshList[GEO_VAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
 		meshList[GEO_VAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
-		meshList[GEO_VAN]->material.kShininess = 1.f;
+		meshList[GEO_VAN]->material.kShininess = 0.f;
 		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
 		meshList[GEO_POLICECAR]->material.kAmbient.Set(1.f, 1.f, 1.f);
 		meshList[GEO_POLICECAR]->material.kDiffuse.Set(1.f, 1.f, 1.f);
 		meshList[GEO_POLICECAR]->material.kSpecular.Set(1.f, 1.f, 1.f);
-		meshList[GEO_POLICECAR]->material.kShininess = 1.f;
+		meshList[GEO_POLICECAR]->material.kShininess = 0.f;
 		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
 		meshList[GEO_SEDAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
 		meshList[GEO_SEDAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
 		meshList[GEO_SEDAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
-		meshList[GEO_SEDAN]->material.kShininess = 1.f;
+		meshList[GEO_SEDAN]->material.kShininess = 0.f;
 
 		vehicletype[0] = meshList[GEO_VAN];
 		vehicletype[1] = meshList[GEO_POLICECAR];
