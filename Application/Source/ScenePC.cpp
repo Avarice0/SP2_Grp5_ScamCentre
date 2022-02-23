@@ -535,6 +535,7 @@ void ScenePC::Render()
 		else if (BJstate == 1) {
 			//dealing phase
 			//H, D, C, S     3,4,5,6
+			//render player hand
 			for (size_t i = 0; i < size(OpenDeck.playerhand); i++) {
 				if ((OpenDeck.playerhand[i].getsuit() == 3) || (OpenDeck.playerhand[i].getsuit() == 4)) {
 					RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[i], 15, 10, 10);
@@ -556,6 +557,31 @@ void ScenePC::Render()
 					}
 					if (OpenDeck.playerhand[i].getsuit() == 6){
 						RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[i] - 2, 19, 1, 1);
+					}
+				}
+			}
+			//render dealer hand
+			for (size_t i = 0; i < size(OpenDeck.dealerhand); i++) {
+				if ((OpenDeck.dealerhand[i].getsuit() == 3) || (OpenDeck.dealerhand[i].getsuit() == 4)) {
+					RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[i], 45, 10, 10);
+					string cardnumber = to_string(OpenDeck.dealerhand[i].getvalue());
+					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					if (OpenDeck.dealerhand[i].getsuit() == 3) {
+						RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[i] - 2, 49, 1, 1);
+					}
+					if (OpenDeck.dealerhand[i].getsuit() == 4) {
+						RenderMeshOnScreen(meshList[GEO_SUITD], cardCoordsX[i] - 2, 49, 1, 1);
+					}
+				}
+				else if ((OpenDeck.dealerhand[i].getsuit() == 5) || (OpenDeck.dealerhand[i].getsuit() == 6)) {
+					RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[i], 45, 10, 10);
+					string cardnumber = to_string(OpenDeck.dealerhand[i].getvalue());
+					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					if (OpenDeck.dealerhand[i].getsuit() == 5) {
+						RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[i] - 2, 49, 1, 1);
+					}
+					if (OpenDeck.dealerhand[i].getsuit() == 6) {
+						RenderMeshOnScreen(meshList[GEO_SUITS], cardCoordsX[i] - 2, 49, 1, 1);
 					}
 				}
 			}
