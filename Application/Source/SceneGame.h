@@ -180,7 +180,7 @@ private:
 
 	MS modelStack, viewStack, projectionStack;
 
-	Light light[1];	
+	Light light[2];	
 
 	PoliceMeter metre;
 
