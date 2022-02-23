@@ -13,7 +13,6 @@ ScenePC::~ScenePC()
 void ScenePC::Init()
 {
 	{
-
 		glClearColor(1.f, 1.0f, 1.0f, 0.0f);
 
 		//Enable depth buffer and depth testing
@@ -77,7 +76,6 @@ void ScenePC::Init()
 		meshList[GEO_CASINOBET] = MeshBuilder::GenerateQuad("cwallpaper", Color(0, 0, 0), 1.f);
 		meshList[GEO_CASINOBET]->textureID = LoadTGA("Image//casinoBet.tga");
 
-
 		meshList[GEO_GREENTEXT] = MeshBuilder::GenerateQuad("greentext", 16, 16);
 		meshList[GEO_GREENTEXT]->textureID = LoadTGA("Image//greenTextBubble.tga");
 		meshList[GEO_BLUETEXT] = MeshBuilder::GenerateQuad("bluetext", 16, 16);
@@ -94,8 +92,6 @@ void ScenePC::Init()
 		meshList[GEO_HT] = MeshBuilder::GenerateQuad("HT", 16, 16);
 		meshList[GEO_HT]->textureID = LoadTGA("Image//headtailsbutton.tga");
 
-
-		
 		meshList[GEO_EXIT] = MeshBuilder::GenerateQuad("x", Color(0, 0, 0), 1.f);
 		meshList[GEO_EXIT]->textureID = LoadTGA("Image//Redx.tga");
 	}
@@ -121,7 +117,6 @@ void ScenePC::Init()
 		meshList[GEO_CARDRED] = MeshBuilder::GenerateQuad("redcard", Color(1, 1, 1), 1.f);
 		meshList[GEO_CARDRED]->textureID = LoadTGA("Image//redCard.tga");
 
-
 		meshList[GEO_SUITH] = MeshBuilder::GenerateQuad("heart", 16, 16);
 		meshList[GEO_SUITH]->textureID = LoadTGA("Image//heart.tga");
 		meshList[GEO_SUITD] = MeshBuilder::GenerateQuad("diamond", 16, 16);
@@ -130,15 +125,6 @@ void ScenePC::Init()
 		meshList[GEO_SUITC]->textureID = LoadTGA("Image//clover.tga");
 		meshList[GEO_SUITS] = MeshBuilder::GenerateQuad("Spade", 16, 16);
 		meshList[GEO_SUITS]->textureID = LoadTGA("Image//spade.tga");
-		/*,
-		,
-		GEO_SUITH,
-		GEO_SUITD,
-		GEO_SUITS,
-		GEO_SUITC,
-
-		GEO_REDTEXT,
-		GEO_BLACKTEXT,*/
 	}
 
 	Mtx44 projection;
@@ -349,29 +335,19 @@ void ScenePC::Update(double dt)
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 1;
 					}
-					/*38, 27
-						48.5, 34
-
-						63, 27
-						74, 34*/
-
-					if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34) )
-					{
-						//hit
-					}
-					if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
-					{
-						//stand
-					}
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
-							//if (button press) {			//hit
-							OpenDeck.addcard(OpenDeck.playerhand);
-							//}
-							//else if (button press) {		//stand
-							stand = true;
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {					
+							if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
+							{
+								OpenDeck.addcard(OpenDeck.playerhand);  //hit
+							}			
+							else if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
+							{
+								stand = true;  //stand
+							}
+
 							OpenDeck.addcard(OpenDeck.dealerhand);
 							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
 								OpenDeck.addcard(OpenDeck.dealerhand);						//add 2nd dealer card
@@ -379,6 +355,7 @@ void ScenePC::Update(double dt)
 							//}
 						}
 					}
+
 					if (stand == true) {
 						//stop render of empty card
 						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {

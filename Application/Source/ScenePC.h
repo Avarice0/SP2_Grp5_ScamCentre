@@ -126,12 +126,12 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 
 	//mouse input
-	double x, y;
-	float posX, posY;
+	double x = 0, y = 0;
+	float posX = 0, posY = 0;
 	string mousestate;
 
 	string timeprint;
-	int day;
+	int day = 0;
 	int hours=0;
 
 
