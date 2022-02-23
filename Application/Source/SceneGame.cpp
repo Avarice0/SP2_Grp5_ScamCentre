@@ -136,6 +136,11 @@ void SceneGame::Init()
 	{
 		meshList[GEO_TEA] = MeshBuilder::GenerateOBJ("Tea", "OBJ//cupTea.obj");
 		meshList[GEO_PIZZA] = MeshBuilder::GenerateOBJ("Tea", "OBJ//pizzaBox.obj");
+
+		meshList[GEO_PUPGRADEAREA] = MeshBuilder::GenerateQuad("UpgradeArea image", Color(1, 0.4, 0.4), 1.f);
+		meshList[GEO_PUPGRADEAREA]->textureID = LoadTGA("Image//PUpgradeArea.tga");
+		meshList[GEO_PCAREA] = MeshBuilder::GenerateQuad("PCArea image", Color(1, 0.4, 0.4), 1.f);
+		meshList[GEO_PCAREA]->textureID = LoadTGA("Image//PCArea.tga");
 	}
 
 	{
@@ -1110,6 +1115,14 @@ void SceneGame::RenderRoom(void)
 		modelStack.Scale(7, 3.5, 1);
 		RenderMesh(meshList[GEO_OFFICE], true);
 		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.04, -5.5);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(5, 2, 1);
+		RenderMesh(meshList[GEO_PCAREA], true);
+		modelStack.PopMatrix();
+
 		modelStack.PushMatrix();
 		modelStack.Translate(6.25, 0.03, -6);
 		modelStack.Scale(0.4, 0.4, 0.4);
@@ -1123,6 +1136,14 @@ void SceneGame::RenderRoom(void)
 		modelStack.Scale(7, 5, 1);
 		RenderMesh(meshList[GEO_UPGRADEAREA], true);
 		modelStack.PopMatrix();
+
+		modelStack.PushMatrix();
+		modelStack.Translate(6.25, 0.04, 4);
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(6, 2, 1);
+		RenderMesh(meshList[GEO_PUPGRADEAREA], true);
+		modelStack.PopMatrix();
+
 		modelStack.PushMatrix();
 		modelStack.Translate(4.7, 0.03, 6);
 		modelStack.Rotate(180, 0, 1, 0);
