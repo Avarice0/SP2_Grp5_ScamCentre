@@ -865,7 +865,7 @@ void SceneGame::Render()
 		RenderPoliceMetre();
 		RenderBribe();
 		if (changetoPC == true) {
-			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 5);
+			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
 		}
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
@@ -1830,7 +1830,7 @@ void SceneGame::RenderTutorial(int number)
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "Police Metre ->", Color(1, 1, 1), 2, 45, 35);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "Lose when full", Color(1, 1, 1), 2, 45, 33);
 	}
-	RenderTextOnScreen(meshList[GEO_DOLLARS], "Press Enter to continue", Color(1, 0.5, 0.5), 2, 25, 5);
+	RenderTextOnScreen(meshList[GEO_DOLLARS], "Press Enter to continue", Color(1, 0.5, 0.5), 2, 25, 7);
 }
 
 void SceneGame::RenderPermUpgrade() {
@@ -1880,7 +1880,7 @@ void SceneGame::RenderUpgrade() {
 //enderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 void SceneGame::RenderPoliceMetre()
 {
-	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 20);
+	RenderMeshOnScreen(meshList[GEO_METREBARBGBG], 73, 33, 5, 21);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 20, 7, 7);
 	RenderMeshOnScreen(meshList[GEO_METREBARFG], 73, 22 + metre.GetMP() * 11 / 1000, 5, metre.GetMP()/ 50); 
 	RenderMeshOnScreen(meshList[GEO_METREBARBG], 73, 30, 28, 30);
