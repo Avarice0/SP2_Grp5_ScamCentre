@@ -103,7 +103,7 @@ void SceneMainMenu::Init()
 	}
 	{
 		meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
-		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0.25, 0.75, 0.25), 1.f);
+		meshList[GEO_FLOOR] = MeshBuilder::GenerateQuad("floor", Color(0, 0, 0), 1.f);
 		meshList[GEO_QUAD] = MeshBuilder::GenerateQuad("quad", Color(1, 1, 1), 1.f);
 		meshList[GEO_TITLESCREEN] = MeshBuilder::GenerateQuad("titlescreen", Color(0, 0, 0), 1.f);
 		meshList[GEO_TITLESCREEN]->textureID = LoadTGA("Image//Title.tga");

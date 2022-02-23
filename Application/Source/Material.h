@@ -21,16 +21,14 @@ struct Component
 };
 struct Material
 {
-	Component kAmbient;
-	Component kDiffuse;
-	Component kSpecular;
+	Component kAmbient; Component kDiffuse; Component kSpecular;
 	float kShininess;
 	unsigned size = 0;
 	Material() {
-		kAmbient.Set(0.25f, 0.25f, 0.25f);
-		kDiffuse.Set(.5f, .5f, .5f);
-		kSpecular.Set(.5f, .5f, .5f);
-		kShininess = .5f;
+		kAmbient.Set(0.2f, 0.2f, 0.2f);
+		kDiffuse.Set(.1f, .1f, .1f);
+		kSpecular.Set(.1f, .1f, .1f);
+		kShininess = .1f;
 	}
 	Material& operator=(const Material& rhs)
 	{

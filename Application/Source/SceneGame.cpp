@@ -81,8 +81,8 @@ void SceneGame::Init()
 		light[0].color.Set(1, 1, 1);
 		light[0].power = 0.2f;
 		light[0].kC = 1.f;
-		light[0].kL = 0.1;
-		light[0].kQ = 0.01f;
+		light[0].kL = 0.01;
+		light[0].kQ = 0.001f;
 		light[0].cosCutoff = cos(Math::DegreeToRadian(12.5));
 		light[0].cosInner = cos(Math::DegreeToRadian(10));
 		light[0].exponent = 1.f;
@@ -217,7 +217,7 @@ void SceneGame::Init()
 		meshList[GEO_FLOORTILES] = MeshBuilder::GenerateQuad("roomtiles", Color(1, 1, 1), 1);
 		meshList[GEO_FLOORTILES]->textureID = LoadTGA("Image//floor tiles.tga");
 
-		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("playeroffice", Color(0.3, 0.3, 0.3), 1);
+		meshList[GEO_OFFICE] = MeshBuilder::GenerateQuad("playeroffice", Color(0.2, 0.2, 0.2), 1);
 		//meshList[GEO_OFFICE]->textureID = LoadTGA("Image//color.tga");
 		meshList[GEO_OFFICE]->material.kAmbient.Set(0.6f, 0.6f, 0.6f);
 		meshList[GEO_OFFICE]->material.kDiffuse.Set(0.2f, 0.2f, 0.2f);
@@ -815,7 +815,7 @@ void SceneGame::Render()
 		vehiclex++;
 		modelStack.PushMatrix();
 		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(vehicletype[vehiclemodel], false);
+		RenderMesh(vehicletype[vehiclemodel], true);
 		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
