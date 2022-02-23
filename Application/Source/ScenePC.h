@@ -40,7 +40,6 @@ class ScenePC : public Scene
 		GEO_COINBOMB,
 		GEO_EXPLOSION,
 
-
 		GEO_WALLPAPER,
 		GEO_CASINOBG,
 		GEO_CASINOBET,
@@ -75,8 +74,6 @@ class ScenePC : public Scene
 		//card text
 		GEO_REDTEXT,
 		GEO_BLACKTEXT,		//also for betting phase
-
-
 
 		NUM_GEOMETRY,
 	};

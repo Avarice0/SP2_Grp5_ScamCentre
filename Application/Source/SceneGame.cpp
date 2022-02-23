@@ -74,18 +74,19 @@ void SceneGame::Init()
 	camera.Init(Vector3(0, 120, 160), Vector3(0, 0, 25), Vector3(0, 1, 0));
 
 	// Init VBO
+	// camera.position.x, camera.position.y, camera.position.z
 	{
 		light[0].type = Light::LIGHT_DIRECTIONAL;
-		light[0].position.Set(0, 0, -90);
+		light[0].position.Set(0, 50, 0);
 		light[0].color.Set(1, 1, 1);
-		light[0].power = 1.0f;
+		light[0].power = 1.f;
 		light[0].kC = 1.f;
-		light[0].kL = 0.01;
-		light[0].kQ = 0.001f;
+		light[0].kL = 0.1;
+		light[0].kQ = 0.01f;
 		light[0].cosCutoff = cos(Math::DegreeToRadian(12.5));
 		light[0].cosInner = cos(Math::DegreeToRadian(10));
 		light[0].exponent = 1.f;
-		light[0].spotDirection.Set(camera.target.x, camera.target.y, camera.target.z);
+		light[0].spotDirection.Set(0, 0, 0);
 
 		glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
 		glUniform3fv(m_parameters[U_LIGHT0_COLOR], 1, &light[0].color.r);
@@ -794,7 +795,7 @@ void SceneGame::Render()
 		vehiclex++;
 		modelStack.PushMatrix();
 		modelStack.Translate(vehiclex, 0, 90); modelStack.Rotate(90, 0, 1, 0); modelStack.Scale(10, 10, 10);
-		RenderMesh(vehicletype[vehiclemodel], true);
+		RenderMesh(vehicletype[vehiclemodel], false);
 		modelStack.PopMatrix();
 
 		for (int i = 0; i < size(entities); i++) {
