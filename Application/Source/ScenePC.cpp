@@ -349,6 +349,20 @@ void ScenePC::Update(double dt)
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 1;
 					}
+					/*38, 27
+						48.5, 34
+
+						63, 27
+						74, 34*/
+
+					if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34) )
+					{
+						//hit
+					}
+					if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
+					{
+						//stand
+					}
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
