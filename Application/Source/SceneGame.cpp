@@ -77,9 +77,9 @@ void SceneGame::Init()
 	// camera.position.x, camera.position.y, camera.position.z
 	{
 		light[0].type = Light::LIGHT_DIRECTIONAL;
-		light[0].position.Set(0, 10, 0);
+		light[0].position.Set(0, 1000, 0);
 		light[0].color.Set(1, 1, 1);
-		light[0].power = 1.f;
+		light[0].power = 0.2f;
 		light[0].kC = 1.f;
 		light[0].kL = 0.01;
 		light[0].kQ = 0.001f;
