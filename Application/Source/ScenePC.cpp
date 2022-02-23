@@ -352,7 +352,8 @@ void ScenePC::Update(double dt)
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {					
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {		
+
 							if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
 							{
 								OpenDeck.addcard(OpenDeck.playerhand);  //hit
@@ -591,7 +592,7 @@ void ScenePC::Render()
 				}
 			}
 			string betvalue = "Bet:" + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 5, 46, 29);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2, 50, 29);
 		}
 		else {}
 	}
