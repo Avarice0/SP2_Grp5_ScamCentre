@@ -126,6 +126,13 @@ void ScenePC::Init()
 		meshList[GEO_SUITS] = MeshBuilder::GenerateQuad("Spade", 16, 16);
 		meshList[GEO_SUITS]->textureID = LoadTGA("Image//spade.tga");
 	}
+	{
+		meshList[GEO_TUTORIALTEXT] = MeshBuilder::GenerateText("tutorial", 16, 16);
+		meshList[GEO_TUTORIALTEXT]->textureID = LoadTGA("Image//calibri.tga");
+		meshList[GEO_TUTORIALBG] = MeshBuilder::GenerateQuad("tutorialbg", Color(1, 0, 0), 1.f);
+		meshList[GEO_QUESTIONMARK] = MeshBuilder::GenerateQuad("tutorialqnmrk", Color(1, 1, 1), 1);
+		meshList[GEO_QUESTIONMARK]->textureID = LoadTGA("Image//QuestionMark.tga");
+	}
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -153,6 +160,9 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = true;
 		mousestate = "LBUTTON DOWN";
+		if ((posX < 6) && (posY > 54)) {
+			tutorial = 1;
+		}
 		if ((posX > 8 && posX < 15) && (posY > 44.5 && posY < 52))
 		{
 			gamenum = 1; //coins
@@ -338,7 +348,8 @@ void ScenePC::Update(double dt)
 
 					if (stand == false) {
 						//render 1 empty covered dealer card
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {					
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {		
+
 							if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
 							{
 								OpenDeck.addcard(OpenDeck.playerhand);  //hit
@@ -443,6 +454,20 @@ void ScenePC::Update(double dt)
 				coinbombx = 100;
 				coinbomby = 100;
 				seconds = 5;
+			}
+		}
+		static bool bEnter = false;
+		if (tutorial > 0) {
+			if (!bEnter && Application::IsKeyPressed(VK_RETURN)) {
+				bEnter = true;
+				if (tutorial < 4) {
+					tutorial++;
+				}
+				else
+					tutorial = 0;
+			}
+			if (bEnter && !Application::IsKeyPressed(VK_RETURN)) {
+				bEnter = false;
 			}
 		}
 }
@@ -577,11 +602,14 @@ void ScenePC::Render()
 				}
 			}
 			string betvalue = "Bet:" + to_string(bettingvalue);
-			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 5, 46, 29);
+			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2, 50, 29);
 		}
 		else {}
 	}
-		
+	RenderMeshOnScreen(meshList[GEO_QUESTIONMARK], 3, 57, 6, 6);
+	if(tutorial > 0){
+		RenderTutorial();
+	}
 	
 	string scoreText = "Cash: " + to_string(int(dollarsClone));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
@@ -655,6 +683,7 @@ void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
+
 void ScenePC::Exit()
 {
 	// Cleanup VBO here
@@ -725,4 +754,25 @@ void ScenePC::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
 		viewStack.PopMatrix();
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
+}
+
+void ScenePC::RenderTutorial()
+{
+	if (tutorial == 1) {
+		RenderMeshOnScreen(meshList[GEO_TUTORIALBG], 18, 56, 20, 4);
+		RenderTextOnScreen(meshList[GEO_TUTORIALTEXT], "1: Aim Labs", Color(1, 1, 1), 2, 10, 55);
+	}
+	else if (tutorial == 2) {
+		RenderMeshOnScreen(meshList[GEO_TUTORIALBG], 22, 56, 22, 4);
+		RenderTextOnScreen(meshList[GEO_TUTORIALTEXT], "2: Text Fraud", Color(1, 1, 1), 2, 13, 55);
+	}
+	else if (tutorial == 3){
+		RenderMeshOnScreen(meshList[GEO_TUTORIALBG], 30, 56, 22, 4);
+		RenderTextOnScreen(meshList[GEO_TUTORIALTEXT], "3: Coin Flip", Color(1, 1, 1), 2, 21, 55);
+	}
+	else if (tutorial == 4) {
+		RenderMeshOnScreen(meshList[GEO_TUTORIALBG], 18, 30, 20, 4);
+		RenderTextOnScreen(meshList[GEO_TUTORIALTEXT], "4: Black Jack", Color(1, 1, 1), 2, 9, 29);
+	}
+	RenderTextOnScreen(meshList[GEO_TUTORIALTEXT], "Press Enter to continue", Color(1, 0.5, 0.5), 2, 23, 26);
 }
