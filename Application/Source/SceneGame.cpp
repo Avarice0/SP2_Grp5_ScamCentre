@@ -76,16 +76,16 @@ void SceneGame::Init()
 	// Init VBO
 	{
 		light[0].type = Light::LIGHT_DIRECTIONAL;
-		light[0].position.Set(0, 0, -90);
+		light[0].position.Set(0, 1000, 0);
 		light[0].color.Set(1, 1, 1);
-		light[0].power = 1.0f;
+		light[0].power = 0.2f;
 		light[0].kC = 1.f;
 		light[0].kL = 0.01;
 		light[0].kQ = 0.001f;
 		light[0].cosCutoff = cos(Math::DegreeToRadian(12.5));
 		light[0].cosInner = cos(Math::DegreeToRadian(10));
 		light[0].exponent = 1.f;
-		light[0].spotDirection.Set(camera.target.x, camera.target.y, camera.target.z);
+		light[0].spotDirection.Set(0, 0, 0);
 
 		glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
 		glUniform3fv(m_parameters[U_LIGHT0_COLOR], 1, &light[0].color.r);
@@ -353,8 +353,20 @@ void SceneGame::Init()
 	
 	{
 		meshList[GEO_VAN] = MeshBuilder::GenerateOBJMTL("van", "OBJ//van.obj", "OBJ//van.mtl");
+		meshList[GEO_VAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_VAN]->material.kShininess = 1.f;
 		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
+		meshList[GEO_POLICECAR]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_POLICECAR]->material.kShininess = 1.f;
 		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
+		meshList[GEO_SEDAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
+		meshList[GEO_SEDAN]->material.kShininess = 1.f;
 
 		vehicletype[0] = meshList[GEO_VAN];
 		vehicletype[1] = meshList[GEO_POLICECAR];
@@ -779,10 +791,13 @@ void SceneGame::Render()
 			modelStack.LoadIdentity();
 		}
 		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+			Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
+			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightDirection_cameraspace.x);
+			/*Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 			Vector3 spotDirection_cameraspace = viewStack.Top() * light[0].spotDirection;
-			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
+			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);*/
 		}
 		//----------------------------------------
 		modelStack.PushMatrix();
