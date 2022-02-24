@@ -335,14 +335,14 @@ void ScenePC::Update(double dt)
 					if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 2;
 					}
+					if (OpenDeck.valuecount(OpenDeck.playerhand) > 21 && OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+						result = 2;
+					}
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
 					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
 						result = 1;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-						result = 2;
 					}
 					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
 						result = 3;
@@ -365,7 +365,6 @@ void ScenePC::Update(double dt)
 							}
 						}
 					}
-
 					else if (stand == true) {
 						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
 							result = 1;
@@ -378,22 +377,24 @@ void ScenePC::Update(double dt)
 						}
 					}
 				}
-				
-				if (result == 1) {
-					std::cout << "Player lost" << std::endl;
-					//loses bet
+				else {
+					if (result == 1) {
+						std::cout << "Player lost" << std::endl;
+						//loses bet
+					}
+					else if (result == 2) {
+						std::cout << "Tie/Push" << std::endl;
+						//refunds bet
+						Application::dollars += bettingvalue;
+					}
+					else if (result == 3) {
+						std::cout << "Player won" << std::endl;
+						//gives back bet and extra value
+						Application::dollars += bettingvalue * 2;
+					}
+					result = 0;
+					BJstate = 0;
 				}
-				else if (result == 2) {
-					std::cout << "Tie/Push" << std::endl;
-					//refunds bet
-					Application::dollars += bettingvalue;
-				}
-				else if (result == 3) {
-					std::cout << "Player won" << std::endl;
-					//gives back bet and extra value
-					Application::dollars += bettingvalue * 2;
-				}
-
 			}
 		}
 	}
