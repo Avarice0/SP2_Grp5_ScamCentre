@@ -235,17 +235,16 @@ private:
 	bool correctPos = rand() % 2;
 
 	int BJstate = 0;
-	//0 for betting, 1 for dealng
 	int bettingvalue = 0;
 	int result = 0;
 	Deck OpenDeck;
 	bool stand = false;
 
-	int test = 100;
-
 	int cardCoordsX[5] = {42,46,50,54,58};
 
 	int tutorial = 0;
+
+	string BJmsg = " ";
 
 };
 

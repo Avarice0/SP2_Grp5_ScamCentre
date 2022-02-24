@@ -115,7 +115,6 @@ class SceneGame : public Scene
 		
 		//objs
 		GEO_VAN,
-		GEO_POLICECAR,
 		GEO_SEDAN,
 
 
@@ -251,7 +250,7 @@ private:
 
 	float vehiclex = 250;
 	int vehiclemodel = 0;
-	Mesh* vehicletype[3];
+	Mesh* vehicletype[2];
 
 };
 
