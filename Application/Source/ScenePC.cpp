@@ -438,10 +438,9 @@ void ScenePC::Update(double dt)
 		Application::totalearned += Application::profit;
 		//std::cout << "if is OK ";
 
-			explosionx = 100;
-			explosiony = 100;
-
-			boom = false;
+		explosionx = 100;
+		explosiony = 100;
+		boom = false;
 	}
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
