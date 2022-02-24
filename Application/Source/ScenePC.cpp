@@ -538,8 +538,8 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 3)
 	{
-		RenderTextOnScreen(meshList[GEO_SCORE], "Player will be Tails", Color(0, 0, 0), 2, 42, 16);
-		RenderTextOnScreen(meshList[GEO_SCORE], "Bet: 10 dollars", Color(0, 0, 0), 2, 42, 14);
+		RenderTextOnScreen(meshList[GEO_SCORE], "Player will be Tails", Color(0, 0, 0), 2, 41, 14);
+		RenderTextOnScreen(meshList[GEO_SCORE], "Bet: 10 dollars", Color(0, 0, 0), 2, 41, 12);
 		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
 		//RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
