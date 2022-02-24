@@ -143,7 +143,10 @@ void SceneGame::Init()
 		meshList[GEO_PCAREA] = MeshBuilder::GenerateQuad("PCArea image", Color(1, 0.4, 0.4), 1.f);
 		meshList[GEO_PCAREA]->textureID = LoadTGA("Image//PCArea.tga");
 	}
-
+	{
+		meshList[GEO_ASPHALT] = MeshBuilder::GenerateQuad("road", Color(0.3, 0.3, 0.3), 1.f);
+		meshList[GEO_PAINT] = MeshBuilder::GenerateQuad("road paint", Color(1, 1, 1), 1.f);
+	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 		meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
@@ -424,20 +427,6 @@ void SceneGame::Update(double dt)
 		for (int i = 0; i < size(entities); i++) {
 			if ((player.X > entities[i]->ECoords[0] - 9) && (player.X < entities[i]->ECoords[0] - 2)) {
 				if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-					/*if (player.D == 0) {
-						player.Z += 1;
-					}
-					if (player.D == 1) {
-						player.Z -= 1;
-					}
-					if (player.D == 2) {
-						player.X += 1;
-					}
-					if (player.D == 3) {
-						player.X -= 1;
-					}
-					else {}*/
-
 					if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 						player.X += 1;
 					}
@@ -843,6 +832,9 @@ void SceneGame::Render()
 		if(Tutorialmode > 0){
 			RenderTutorial(Tutorialmode);
 		}
+		else if (changetoPC == true) {
+				RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
+		}
 
 		RenderMeshOnScreen(meshList[GEO_TUTORIAL], 6, 40, 8, 8);
 		if ((player.X < 98 && player.X > 27) && (player.Z < 74 && player.Z > 20)) {
@@ -871,12 +863,20 @@ void SceneGame::Render()
 		modelStack.Translate(-40, 0, -40);
 		RenderLoungeTable();
 		modelStack.PopMatrix();
+		
+		//Render Road
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 0.1, 90);
+			modelStack.Rotate(90, 0, 1, 0);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(20, 1000, 1);
+			RenderMesh(meshList[GEO_ASPHALT], true);
+			modelStack.PopMatrix();
+		}
 
 		RenderPoliceMetre();
 		RenderBribe();
-		if (changetoPC == true) {
-			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
-		}
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
@@ -1826,9 +1826,9 @@ void SceneGame::RenderTutorial(int number)
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Income", Color(1, 1, 1), 1, 13, 56);
 	}
 	else if (number == 2) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 34, 50, 32, 5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Chance to Decrease", Color(1, 1, 1), 2, 18, 50);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], "    Police Gauge", Color(1, 1, 1), 2, 18, 48);
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 40, 50, 32, 5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Chance to Decrease", Color(1, 1, 1), 2, 25, 50);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "    Police Gauge", Color(1, 1, 1), 2, 25, 48);
 	}
 	else if (number == 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 54, 35, 24, 5);
