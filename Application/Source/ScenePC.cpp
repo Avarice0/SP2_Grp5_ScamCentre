@@ -372,6 +372,8 @@ void ScenePC::Update(double dt)
 					}
 
 					if (stand == true) {
+						/**/
+
 						//stop render of empty card
 						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
 							result = 1;

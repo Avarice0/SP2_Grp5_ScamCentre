@@ -33,6 +33,8 @@ public:
 	bool getPoliceFail(void);
 	void setPoliceFail(bool condition);
 
+    int getSuccessChance(void);
+
 private:
 	float MeterPercentage = 0;			// the police-meter "score"
 	float BribeSuccess = 100;			// global variable
