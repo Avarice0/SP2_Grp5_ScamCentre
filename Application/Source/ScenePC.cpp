@@ -341,6 +341,10 @@ void ScenePC::Update(double dt)
 					}
 				}
 			}
+			if (result == 4) {
+				BJstate = 0;
+				result = 0;
+			}
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -405,9 +409,11 @@ void ScenePC::Update(double dt)
 				//gives back bet and extra value
 				Application::dollars += bettingvalue * 2;
 			}
-			result = 0;
+
+			result = 4;
 			stand = false;
-			BJstate = 0;
+
+			
 		}
 	}
 
