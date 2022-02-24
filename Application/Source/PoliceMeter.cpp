@@ -94,3 +94,12 @@ void PoliceMeter::setPoliceFail(bool condition)
 {
 	policefail = condition;
 }
+
+int PoliceMeter::getSuccessChance(void)
+{
+	if (BribeSuccess >= 100)
+		return 100;
+	else
+		return BribeSuccess;
+
+}

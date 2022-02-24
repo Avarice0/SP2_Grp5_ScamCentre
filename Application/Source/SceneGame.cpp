@@ -358,11 +358,6 @@ void SceneGame::Init()
 		meshList[GEO_VAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
 		meshList[GEO_VAN]->material.kSpecular.Set(1.f, 1.f, 1.f);
 		meshList[GEO_VAN]->material.kShininess = 0.f;
-		meshList[GEO_POLICECAR] = MeshBuilder::GenerateOBJMTL("policecar", "OBJ//police.obj", "OBJ//police.mtl");
-		meshList[GEO_POLICECAR]->material.kAmbient.Set(1.f, 1.f, 1.f);
-		meshList[GEO_POLICECAR]->material.kDiffuse.Set(1.f, 1.f, 1.f);
-		meshList[GEO_POLICECAR]->material.kSpecular.Set(1.f, 1.f, 1.f);
-		meshList[GEO_POLICECAR]->material.kShininess = 0.f;
 		meshList[GEO_SEDAN] = MeshBuilder::GenerateOBJMTL("sedan", "OBJ//sedan.obj", "OBJ//sedan.mtl");
 		meshList[GEO_SEDAN]->material.kAmbient.Set(1.f, 1.f, 1.f);
 		meshList[GEO_SEDAN]->material.kDiffuse.Set(1.f, 1.f, 1.f);
@@ -370,8 +365,7 @@ void SceneGame::Init()
 		meshList[GEO_SEDAN]->material.kShininess = 0.f;
 
 		vehicletype[0] = meshList[GEO_VAN];
-		vehicletype[1] = meshList[GEO_POLICECAR];
-		vehicletype[2] = meshList[GEO_SEDAN];
+		vehicletype[1] = meshList[GEO_SEDAN];
 	}
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -430,20 +424,6 @@ void SceneGame::Update(double dt)
 		for (int i = 0; i < size(entities); i++) {
 			if ((player.X > entities[i]->ECoords[0] - 9) && (player.X < entities[i]->ECoords[0] - 2)) {
 				if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-					/*if (player.D == 0) {
-						player.Z += 1;
-					}
-					if (player.D == 1) {
-						player.Z -= 1;
-					}
-					if (player.D == 2) {
-						player.X += 1;
-					}
-					if (player.D == 3) {
-						player.X -= 1;
-					}
-					else {}*/
-
 					if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 						player.X += 1;
 					}
@@ -552,13 +532,6 @@ void SceneGame::Update(double dt)
 		Application::endtime = Application::GetTime();
 		SceneEnd::EndingScene(2);
 		Application::changescene(4);
-	}
-
-	if (dayweek == 5) {
-		for (int i = 0; i < size(entities); i++) {
-			Application::dollars -= entities[i]->getWage();
-			dayweek = 0;
-		}
 	}
 
 	if (Application::dollars >= 2000)
@@ -713,6 +686,13 @@ void SceneGame::Update(double dt)
 	}
 	else {
 	}
+
+	if (dayweek == 5) {
+		for (int i = 0; i < size(entities); i++) {
+			Application::dollars -= entities[i]->getWage();
+			dayweek = 0;
+		}
+	}
 	time = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
 	if (playerMoving == true)
@@ -810,7 +790,7 @@ void SceneGame::Render()
 
 		if (vehiclex > 200) {
 			vehiclex = -200;
-			vehiclemodel = rand() % 3;
+			vehiclemodel = rand() % 2;
 		}
 		vehiclex++;
 		modelStack.PushMatrix();
@@ -1904,6 +1884,9 @@ void SceneGame::RenderPoliceMetre()
 
 void SceneGame::RenderBribe()
 {
+	RenderMeshOnScreen(meshList[GEO_QUAD_BG], 17, 50, 15, 7);
+	RenderTextOnScreen(meshList[GEO_DOLLARS], "Success:", Color(1, 1, 0), 1, 18, 51);
+	RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.getSuccessChance()) + "%", Color(1, 1, 0), 1, 18, 48);
 	if(Canbribe == true){
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);

@@ -292,7 +292,9 @@ void ScenePC::Update(double dt)
 				if ((posX > 57 && posX < 74) && (posY > 45 && posY < 52))
 				{
 					//all in 
-					bettingvalue = Application::dollars;
+					if (Application::dollars > 0) {
+						bettingvalue = Application::dollars;
+					}
 				}
 				if ((posX > 52 && posX < 62) && (posY > 18 && posY < 23) && bettingvalue >= 100)
 				{
