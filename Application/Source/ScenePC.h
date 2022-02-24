@@ -125,6 +125,7 @@ private:
 
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+	void RenderSmallTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderTutorial();
 
 	//mouse input
@@ -231,7 +232,7 @@ private:
 		"  ",
 	};
 
-	int RNGmsg = 5;
+	int RNGmsg = rand() % 8;
 	bool correctPos = rand() % 2;
 
 	int BJstate = 0;
