@@ -319,7 +319,7 @@ void ScenePC::Update(double dt)
 				{
 					bettingvalue += 100;
 				}
-				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34) && bettingvalue != 0)
+				if ((posX > 61 && posX < 74) && (posY > 8 && posY < 16) && bettingvalue != 0)
 				{
 					OpenDeck.resetopen();
 					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
