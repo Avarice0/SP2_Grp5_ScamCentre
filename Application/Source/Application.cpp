@@ -176,7 +176,7 @@ void Application::Run()
                             delete Scenelist[i];
                         }
                     }
-                    Application::dollars = 100000;
+                    Application::dollars = 0;
                     Application::totalearned = 0;
                     Application::profit = 0;
                     Application::endtime = 0;

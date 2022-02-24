@@ -422,6 +422,14 @@ void SceneGame::Update(double dt)
 		player.D = 3;
 		player.X++;
 	}
+	if (Application::IsKeyPressed('0'))
+	{
+		metre.CustomIncreaseMP(100);
+	}
+	if (Application::IsKeyPressed('9'))
+	{
+		Application::dollars = -1;
+	}
 	else {}
 	{
 		for (int i = 0; i < size(entities); i++) {
@@ -784,6 +792,17 @@ void SceneGame::Render()
 			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);*/
 		}
 		//----------------------------------------
+		//Render Road
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 0.1, 90);
+			modelStack.Rotate(90, 0, 1, 0);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(20, 1000, 1);
+			RenderMesh(meshList[GEO_ASPHALT], true);
+			modelStack.PopMatrix();
+		}
+
 		modelStack.PushMatrix();
 		modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 		RenderMesh(meshList[GEO_FLOOR], true);
@@ -864,16 +883,6 @@ void SceneGame::Render()
 		RenderLoungeTable();
 		modelStack.PopMatrix();
 		
-		//Render Road
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(0, 0.1, 90);
-			modelStack.Rotate(90, 0, 1, 0);
-			modelStack.Rotate(-90, 1, 0, 0);
-			modelStack.Scale(20, 1000, 1);
-			RenderMesh(meshList[GEO_ASPHALT], true);
-			modelStack.PopMatrix();
-		}
 
 		RenderPoliceMetre();
 		RenderBribe();
