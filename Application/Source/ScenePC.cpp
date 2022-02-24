@@ -319,7 +319,7 @@ void ScenePC::Update(double dt)
 				{
 					bettingvalue += 100;
 				}
-				
+
 				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34) && bettingvalue != 0)
 				{
 					OpenDeck.resetopen();
@@ -329,76 +329,150 @@ void ScenePC::Update(double dt)
 					Application::dollars -= bettingvalue;
 					dollarsClone -= bettingvalue;
 					BJstate = 1;
-				
+
 				}
 			}
-			else if (BJstate == 1) {
-				if (result == 0) {
-					if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-						result = 2;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
-						result = 3;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
-						result = 1;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-						result = 2;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
-						result = 3;
-					}
-					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
-						result = 1;
-					}
-					else if (stand == false) {
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
-							if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
-							{
-								OpenDeck.addcard(OpenDeck.playerhand);  //hit
-							}
-							else if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
-							{
-								stand = true;  //stand
-							}
-							
-						}
-					}
+			//else if (BJstate == 1) {
+			//	if (result == 0) {
+			//		if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+			//			result = 2;
+			//		}
+			//		else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+			//			result = 3;
+			//		}
+			//		else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+			//			result = 1;
+			//		}
+			//		else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+			//			result = 2;
+			//		}
+			//		else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
+			//			result = 3;
+			//		}
+			//		else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+			//			result = 1;
+			//		}
+			//		else if (stand == false) {
+			//			if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
+			//				if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
+			//				{
+			//					OpenDeck.addcard(OpenDeck.playerhand);  //hit
+			//				}
+			//				else if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
+			//				{
+			//					stand = true;  //stand
+			//				}
+			//				
+			//			}
+			//		}
 
-					else if (stand == true) {
+			//		else if (stand == true) {
 
-						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-							OpenDeck.addcard(OpenDeck.dealerhand);
-						}
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
-							result = 1;
-						}
-						else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
-							result = 2;
-						}
-						else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
-							result = 3;
-						}
-					}
-				}
-				
-				if (result == 1) {
-					std::cout << "Player lost" << std::endl;
-					//loses bet
-				}
-				else if (result == 2) {
-					std::cout << "Tie/Push" << std::endl;
-					//refunds bet
-					Application::dollars += bettingvalue;
-				}
-				else if (result == 3) {
-					std::cout << "Player won" << std::endl;
-					//gives back bet and extra value
-					Application::dollars += bettingvalue * 2;
-				}
+			//			while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+			//				OpenDeck.addcard(OpenDeck.dealerhand);
+			//			}
+			//			if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+			//				result = 1;
+			//			}
+			//			else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+			//				result = 2;
+			//			}
+			//			else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+			//				result = 3;
+			//			}
+			//		}
+			//	}
+			//	
+			//	if (result == 1) {
+			//		std::cout << "Player lost" << std::endl;
+			//		//loses bet
+			//	}
+			//	else if (result == 2) {
+			//		std::cout << "Tie/Push" << std::endl;
+			//		//refunds bet
+			//		Application::dollars += bettingvalue;
+			//	}
+			//	else if (result == 3) {
+			//		std::cout << "Player won" << std::endl;
+			//		//gives back bet and extra value
+			//		Application::dollars += bettingvalue * 2;
+			//	}
+			//
+			//}
+		
+		}
+	}
 
+	if (BJstate == 1) {
+		if (result == 0) {
+			if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+				result = 2;
 			}
+			else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+				result = 3;
+			}
+			else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+				result = 1;
+			}
+			else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+				result = 2;
+			}
+			else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
+				result = 3;
+			}
+			else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+				result = 1;
+			}
+			else if (stand == false) {
+				if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
+					if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
+					{
+						OpenDeck.addcard(OpenDeck.playerhand);  //hit
+					}
+					else if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
+					{
+						stand = true;  //stand
+					}
+
+				}
+			}
+
+			else if (stand == true) {
+
+				while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+					OpenDeck.addcard(OpenDeck.dealerhand);
+				}
+				if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+					result = 1;
+				}
+				else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+					result = 2;
+				}
+				else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+					result = 3;
+				}
+			}
+		}
+
+		if (result == 1) {
+			std::cout << "Player lost" << std::endl;
+			//loses bet
+			stand = false;
+			BJstate = 0;
+		}
+		else if (result == 2) {
+			std::cout << "Tie/Push" << std::endl;
+			//refunds bet
+			Application::dollars += bettingvalue;
+			stand = false;
+			BJstate = 0;
+		}
+		else if (result == 3) {
+			std::cout << "Player won" << std::endl;
+			//gives back bet and extra value
+			Application::dollars += bettingvalue * 2;
+			stand = false;
+			BJstate = 0;
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -561,8 +635,8 @@ void ScenePC::Render()
 					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
 					if (OpenDeck.playerhand[i].getvalue() == 10)
 					{
-						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(1, 0, 0), 2, cardCoordsX[i]- 4, 12);
-						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(1, 0, 0), 2, cardCoordsX[i]-3, 12);
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(1, 0, 0), 4, cardCoordsX[i]- 3, 13);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(1, 0, 0), 4, cardCoordsX[i]-1, 13);
 					}
 					else {
 						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 12);						
@@ -579,8 +653,8 @@ void ScenePC::Render()
 					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
 					if (OpenDeck.playerhand[i].getvalue() == 10)
 					{
-						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(0, 0, 0), 2, cardCoordsX[i] - 4, 12);
-						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(0, 0, 0), 2, cardCoordsX[i] - 3, 12);
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(0, 0, 0), 4, cardCoordsX[i] - 3, 13);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(0, 0, 0), 4, cardCoordsX[i] - 1, 13);
 					}
 					else {
 						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 12);
@@ -598,7 +672,14 @@ void ScenePC::Render()
 				if ((OpenDeck.dealerhand[i].getsuit() == 3) || (OpenDeck.dealerhand[i].getsuit() == 4)) {
 					RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[i], 45, 10, 10);
 					string cardnumber = to_string(OpenDeck.dealerhand[i].getvalue());
-					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					if (OpenDeck.dealerhand[i].getvalue() == 10)
+					{
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(1, 0, 0), 4, cardCoordsX[i] - 3, 42);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(1, 0, 0), 4, cardCoordsX[i] - 1, 42);
+					}
+					else {
+						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					}
 					if (OpenDeck.dealerhand[i].getsuit() == 3) {
 						RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[i] - 2, 49, 1, 1);
 					}
@@ -609,7 +690,14 @@ void ScenePC::Render()
 				else if ((OpenDeck.dealerhand[i].getsuit() == 5) || (OpenDeck.dealerhand[i].getsuit() == 6)) {
 					RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[i], 45, 10, 10);
 					string cardnumber = to_string(OpenDeck.dealerhand[i].getvalue());
-					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					if (OpenDeck.dealerhand[i].getvalue() == 10)
+					{
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(0, 0, 0), 4, cardCoordsX[i] - 3, 42);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(0, 0, 0), 4, cardCoordsX[i] - 1, 42);
+					}
+					else {
+						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 42);
+					}
 					if (OpenDeck.dealerhand[i].getsuit() == 5) {
 						RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[i] - 2, 49, 1, 1);
 					}
