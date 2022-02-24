@@ -215,9 +215,12 @@ void SceneEnd::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], lifetimeEarnings, Color(1, 1, 1), 2, 64, 42);
 
 	timeSec = Application::endtime;
+	days = timeSec / 5;
+	hours = timeSec - days * 5;
 	RenderTextOnScreen(meshList[GEO_TEXT], "Time", Color(1, 1, 1), 2, 62, 39);
 	RenderTextOnScreen(meshList[GEO_TEXT], "played", Color(1, 1, 1), 2, 62, 37);
-	RenderTextOnScreen(meshList[GEO_TEXT], to_string(timeSec), Color(1, 1, 1), 2, 64, 34);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Days:" + to_string(days), Color(1, 1, 1), 2, 60, 32);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Hours:" + to_string(hours), Color(1, 1, 1), 2, 60, 30);
 
 
 	RenderMeshOnScreen(meshList[GEO_BUTTONBG], 23, 7, 20, 10);

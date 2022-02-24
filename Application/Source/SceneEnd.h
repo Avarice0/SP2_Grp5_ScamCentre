@@ -116,6 +116,7 @@ private:
 	string mousestate;
 
 	int timeSec = 0;
+	int hours = 0, days = 0;
 	
 };
 
