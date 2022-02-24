@@ -13,12 +13,10 @@ public:
 	void setsuit(char newsuit);
 	int getvalue(void);
 	void setvalue(int newvalue);
-
-	char Suit;		//H, D, C, S
-	int Value;
 	
 private:
 	//char into int works as both unicode char and int comparison
-
+	char Suit;		//H, D, C, S
+	int Value;
 };
 
