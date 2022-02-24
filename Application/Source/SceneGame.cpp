@@ -424,20 +424,6 @@ void SceneGame::Update(double dt)
 		for (int i = 0; i < size(entities); i++) {
 			if ((player.X > entities[i]->ECoords[0] - 9) && (player.X < entities[i]->ECoords[0] - 2)) {
 				if ((player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
-					/*if (player.D == 0) {
-						player.Z += 1;
-					}
-					if (player.D == 1) {
-						player.Z -= 1;
-					}
-					if (player.D == 2) {
-						player.X += 1;
-					}
-					if (player.D == 3) {
-						player.X -= 1;
-					}
-					else {}*/
-
 					if ((player.X > entities[i]->ECoords[0] - 8) && (player.Z > entities[i]->ECoords[2] - 5) && (player.Z < entities[i]->ECoords[2] + 5)) {
 						player.X += 1;
 					}
