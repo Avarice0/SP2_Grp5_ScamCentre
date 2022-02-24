@@ -247,6 +247,8 @@ private:
 
 	int tutorial = 0;
 
+	string BJmsg = " ";
+
 };
 
 

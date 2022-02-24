@@ -224,6 +224,7 @@ void ScenePC::Update(double dt)
 
 				dollarsClone += 5;
 				Application::dollars += 5;
+				Application::totalearned += 5;
 
 				coinStarted = true;
 
@@ -238,6 +239,7 @@ void ScenePC::Update(double dt)
 				if (correctPos == true) {
 					dollarsClone += 4;
 					Application::dollars += 4;
+					Application::totalearned += 4;
 				}
 				else
 				{
@@ -252,6 +254,7 @@ void ScenePC::Update(double dt)
 				if (correctPos == true) {
 					dollarsClone += 4;
 					Application::dollars += 4;
+					Application::totalearned += 4;
 				}
 				else
 				{
@@ -282,6 +285,7 @@ void ScenePC::Update(double dt)
 					heady = 100;
 					dollarsClone += 10;
 					Application::dollars += 10;
+					Application::totalearned += 10;
 				}
 			}
 			gameended = true;
@@ -344,6 +348,8 @@ void ScenePC::Update(double dt)
 			if (result == 4) {
 				BJstate = 0;
 				result = 0;
+				stand = false;
+				BJmsg = " ";
 			}
 		}
 	}
@@ -397,21 +403,26 @@ void ScenePC::Update(double dt)
 		else {
 			if (result == 1) {
 				std::cout << "Player lost" << std::endl;
+				BJmsg = "Player Lost";
 				//loses bet
 			}
 			else if (result == 2) {
 				std::cout << "Tie/Push" << std::endl;
+				BJmsg = "Tied";
 				//refunds bet
 				Application::dollars += bettingvalue;
+				Application::totalearned += bettingvalue;
 			}
 			else if (result == 3) {
 				std::cout << "Player won" << std::endl;
+				BJmsg = "Player Wins";
 				//gives back bet and extra value
 				Application::dollars += bettingvalue * 2;
+				Application::totalearned += bettingvalue * 2;
 			}
-			result = 0;
-			stand = false;
-			BJstate = 0;
+			
+			result = 4;
+			
 		}
 	}
 
@@ -424,6 +435,7 @@ void ScenePC::Update(double dt)
 		Application::daydivide++;
 		dollarsClone += Application::profit;
 		Application::dollars += Application::profit;
+		Application::totalearned += Application::profit;
 		//std::cout << "if is OK ";
 
 			explosionx = 100;
@@ -628,6 +640,7 @@ void ScenePC::Render()
 			}
 			string betvalue = "Bet:" + to_string(bettingvalue);
 			RenderTextOnScreen(meshList[GEO_SCORE], betvalue, Color(1, 1, 1), 2, 50, 29);
+			RenderTextOnScreen(meshList[GEO_SCORE], BJmsg, Color(0, 0, 0), 3, 10, 29);
 		}
 		else {}
 	}
