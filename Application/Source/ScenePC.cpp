@@ -233,7 +233,6 @@ void ScenePC::Update(double dt)
 
 		else if (gamenum == 2)
 		{
-			
 			if ((posX > 38 && posX < 56) && (posY > 8 && posY < 21))
 			{
 				if (correctPos == true) {
@@ -246,8 +245,6 @@ void ScenePC::Update(double dt)
 					dollarsClone -= 4;
 					Application::dollars -= 4;
 				}
-				RNGmsg = rand() % 8;
-				correctPos = rand() % 2;
 			}
 			if ((posX > 56 && posX < 74) && (posY > 8 && posY < 22))
 			{
@@ -261,10 +258,9 @@ void ScenePC::Update(double dt)
 					dollarsClone -= 4;
 					Application::dollars -= 4;
 				}
-				RNGmsg = rand() % 8;
-				correctPos = rand() % 2;
 			}
-
+			RNGmsg = rand() % 8;
+			correctPos = rand() % 2;
 		}
 		else if (gamenum == 3)
 		{
