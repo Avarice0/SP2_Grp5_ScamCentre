@@ -160,6 +160,7 @@ private:
 
 	int heady = 30;
 	int taily = 100;
+	float CFscale = 1;
 
 	int dollarsClone=0;
 
