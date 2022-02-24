@@ -266,7 +266,7 @@ void ScenePC::Update(double dt)
 		}
 		else if (gamenum == 3)
 		{
-			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
+			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53) && Application::dollars > 10) {
 
 				if (rand() % 2 == true)
 				{
@@ -285,6 +285,7 @@ void ScenePC::Update(double dt)
 					Application::dollars += 10;
 					Application::totalearned += 10;
 				}
+				CFscale = 2;
 			}
 			gameended = true;
 		}
@@ -358,6 +359,7 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = false;
 		mousestate = "";
+		CFscale = 1;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
@@ -544,8 +546,8 @@ void ScenePC::Render()
 	{
 		RenderTextOnScreen(meshList[GEO_SCORE], "Player will be Tails", Color(0, 0, 0), 2, 41, 14);
 		RenderTextOnScreen(meshList[GEO_SCORE], "Bet: 10 dollars", Color(0, 0, 0), 2, 41, 12);
-		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, CFscale, CFscale);
+		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, CFscale,CFscale);
 		//RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
 	}
 	else if (gamenum == 4)
@@ -651,9 +653,9 @@ void ScenePC::Render()
 	
 	string scoreText = "Cash: " + to_string(int(Application::dollars));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
-	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+	/*string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);*/
 
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
