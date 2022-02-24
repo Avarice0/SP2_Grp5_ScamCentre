@@ -409,11 +409,9 @@ void ScenePC::Update(double dt)
 				//gives back bet and extra value
 				Application::dollars += bettingvalue * 2;
 			}
-
-			result = 4;
+			result = 0;
 			stand = false;
-
-			
+			BJstate = 0;
 		}
 	}
 
