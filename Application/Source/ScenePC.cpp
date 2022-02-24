@@ -272,12 +272,16 @@ void ScenePC::Update(double dt)
 					cout << "heads" << endl;
 					heady = 30;
 					taily = 100;
+					dollarsClone -= 10;
+					Application::dollars -= 10;
 				}
 				else
 				{
 					cout << "tails" << endl;
 					taily = 30;
 					heady = 100;
+					dollarsClone += 10;
+					Application::dollars += 10;
 				}
 			}
 			gameended = true;
@@ -316,7 +320,7 @@ void ScenePC::Update(double dt)
 					bettingvalue += 100;
 				}
 				
-				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34))
+				if ((posX > 61 && posX < 73) && (posY > 27 && posY < 34) && bettingvalue != 0)
 				{
 					OpenDeck.resetopen();
 					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
@@ -533,11 +537,11 @@ void ScenePC::Render()
 	}
 	else if (gamenum == 3)
 	{
-		string scoreText = "Cash: " + to_string(int(dollarsClone));
-		RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
+		RenderTextOnScreen(meshList[GEO_SCORE], "Player will be Tails", Color(0, 0, 0), 2, 42, 16);
+		RenderTextOnScreen(meshList[GEO_SCORE], "Bet: 10 dollars", Color(0, 0, 0), 2, 42, 14);
 		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
 		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
+		//RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
 	}
 	else if (gamenum == 4)
 	{
