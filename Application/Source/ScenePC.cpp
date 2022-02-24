@@ -409,11 +409,9 @@ void ScenePC::Update(double dt)
 				//gives back bet and extra value
 				Application::dollars += bettingvalue * 2;
 			}
-
-			result = 4;
+			result = 0;
 			stand = false;
-
-			
+			BJstate = 0;
 		}
 	}
 
@@ -426,12 +424,10 @@ void ScenePC::Update(double dt)
 		Application::daydivide++;
 		dollarsClone += Application::profit;
 		Application::dollars += Application::profit;
-		//std::cout << "if is OK ";
 
-			explosionx = 100;
-			explosiony = 100;
-
-			boom = false;
+		explosionx = 100;
+		explosiony = 100;
+		boom = false;
 	}
 
 	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
