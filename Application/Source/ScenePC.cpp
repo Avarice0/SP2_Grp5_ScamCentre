@@ -416,7 +416,6 @@ void ScenePC::Update(double dt)
 	day = times / 5;
 	if (day == Application::daydivide && times != 0)
 	{
-
 		bool dayUp = true;
 		Application::daydivide++;
 		dollarsClone += Application::profit;
@@ -429,43 +428,41 @@ void ScenePC::Update(double dt)
 			boom = false;
 	}
 
-		timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
+	timeprint = "Day:" + to_string(day) + ",Hour:" + to_string(hours);
 
-		if (coinStarted == true) {
-			totalframe++;
-			if (totalframe >= 60)
-			{
-				totalframe = 0;
-				seconds--;
-			}
-			if (seconds < 0) {
-				seconds = 0;
-				coinStarted = false;
-				coin1x = rand() % 25 + 45;
-				coin1y = rand() % 35 + 15;
-
-
-				coin2x = 100;
-				coin2y = 100;
-				coinbombx = 100;
-				coinbomby = 100;
-				seconds = 5;
-			}
+	if (coinStarted == true) {
+		totalframe++;
+		if (totalframe >= 60)
+		{
+			totalframe = 0;
+			seconds--;
 		}
-		static bool bEnter = false;
-		if (tutorial > 0) {
-			if (!bEnter && Application::IsKeyPressed(VK_RETURN)) {
-				bEnter = true;
-				if (tutorial < 4) {
-					tutorial++;
-				}
-				else
-					tutorial = 0;
-			}
-			if (bEnter && !Application::IsKeyPressed(VK_RETURN)) {
-				bEnter = false;
-			}
+		if (seconds < 0) {
+			seconds = 0;
+			coinStarted = false;
+			coin1x = rand() % 25 + 45;
+			coin1y = rand() % 35 + 15;
+			coin2x = 100;
+			coin2y = 100;
+			coinbombx = 100;
+			coinbomby = 100;
+			seconds = 5;
 		}
+	}
+	static bool bEnter = false;
+	if (tutorial > 0) {
+		if (!bEnter && Application::IsKeyPressed(VK_RETURN)) {
+			bEnter = true;
+			if (tutorial < 4) {
+				tutorial++;
+			}
+			else
+				tutorial = 0;
+		}
+		if (bEnter && !Application::IsKeyPressed(VK_RETURN)) {
+			bEnter = false;
+		}
+	}
 }
 
 void ScenePC::Render()
