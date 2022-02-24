@@ -346,6 +346,7 @@ void ScenePC::Update(double dt)
 				result = 0;
 				stand = false;
 				BJmsg = " ";
+				bettingvalue = 0;
 			}
 		}
 	}
