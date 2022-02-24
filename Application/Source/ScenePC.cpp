@@ -324,7 +324,7 @@ void ScenePC::Update(double dt)
 				{
 					OpenDeck.resetopen();
 					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
-					OpenDeck.addcard(OpenDeck.dealerhand);		//add blank card
+					OpenDeck.addcard(OpenDeck.dealerhand);
 					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);
 					Application::dollars -= bettingvalue;
 					dollarsClone -= bettingvalue;
@@ -332,11 +332,12 @@ void ScenePC::Update(double dt)
 				
 				}
 			}
-			if (BJstate == 1) {
-				//render both hands
-
-				if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
-					if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+			else if (BJstate == 1) {
+				if (result == 0) {
+					if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+						result = 2;
+					}
+					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
 					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
@@ -351,30 +352,23 @@ void ScenePC::Update(double dt)
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 1;
 					}
-
-					if (stand == false) {
-						//render 1 empty covered dealer card
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {		
-
+					else if (stand == false) {
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) <= 21 && OpenDeck.valuecount(OpenDeck.playerhand) <= 21) {
 							if ((posX > 38 && posX < 48.5) && (posY > 27 && posY < 34))
 							{
 								OpenDeck.addcard(OpenDeck.playerhand);  //hit
-							}			
+							}
 							else if ((posX > 63 && posX < 74) && (posY > 27 && posY < 34))
 							{
 								stand = true;  //stand
 							}
-
-							OpenDeck.addcard(OpenDeck.dealerhand);
 							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-								OpenDeck.addcard(OpenDeck.dealerhand);						//add 2nd dealer card
+								OpenDeck.addcard(OpenDeck.dealerhand);
 							}
-							//}
 						}
 					}
 
-					if (stand == true) {
-						//stop render of empty card
+					else if (stand == true) {
 						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
 							result = 1;
 						}
@@ -386,6 +380,7 @@ void ScenePC::Update(double dt)
 						}
 					}
 				}
+				
 				if (result == 1) {
 					std::cout << "Player lost" << std::endl;
 					//loses bet
