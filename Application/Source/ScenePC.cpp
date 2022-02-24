@@ -326,8 +326,10 @@ void ScenePC::Update(double dt)
 					OpenDeck.resethand(OpenDeck.dealerhand); OpenDeck.resethand(OpenDeck.playerhand);
 					OpenDeck.addcard(OpenDeck.dealerhand);
 					OpenDeck.addcard(OpenDeck.playerhand); OpenDeck.addcard(OpenDeck.playerhand);
-					BJstate = 1;
 					Application::dollars -= bettingvalue;
+					dollarsClone -= bettingvalue;
+					BJstate = 1;
+				
 				}
 			}
 			else if (BJstate == 1) {
@@ -335,16 +337,16 @@ void ScenePC::Update(double dt)
 					if (OpenDeck.valuecount(OpenDeck.playerhand) == 21 && OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
 						result = 2;
 					}
-					if (OpenDeck.valuecount(OpenDeck.playerhand) > 21 && OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21 && OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 2;
 					}
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
 						result = 3;
 					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
 						result = 1;
 					}
-					else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
+					else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
 						result = 3;
 					}
 					else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
@@ -360,19 +362,34 @@ void ScenePC::Update(double dt)
 							{
 								stand = true;  //stand
 							}
-							while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
-								OpenDeck.addcard(OpenDeck.dealerhand);
-							}
 						}
 					}
 					else if (stand == true) {
-						if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
-							result = 1;
+						while (OpenDeck.valuecount(OpenDeck.dealerhand) <= 17) {
+							OpenDeck.addcard(OpenDeck.dealerhand);
 						}
-						else if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
+						if (OpenDeck.valuecount(OpenDeck.dealerhand) == OpenDeck.valuecount(OpenDeck.playerhand)) {
 							result = 2;
 						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21 && OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+							result = 2;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) > 21) {
+							result = 3;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.playerhand) > 21) {
+							result = 1;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) > OpenDeck.valuecount(OpenDeck.playerhand)) {
+							result = 1;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.dealerhand) == 21) {
+							result = 1;
+						}
 						else if (OpenDeck.valuecount(OpenDeck.dealerhand) < OpenDeck.valuecount(OpenDeck.playerhand)) {
+							result = 3;
+						}
+						else if (OpenDeck.valuecount(OpenDeck.playerhand) == 21) {
 							result = 3;
 						}
 					}
@@ -516,14 +533,14 @@ void ScenePC::Render()
 		RenderMeshOnScreen(meshList[GEO_LINE], 50, 22, 3, 2);
 	
 
-		if (correctPos == true) {
+		if (correctPos == 1) {
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
 			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
 
 			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
 			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
 		}
-		if (correctPos == false) {
+		if (correctPos == 0) {
 			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
 			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
 
@@ -556,7 +573,14 @@ void ScenePC::Render()
 				if ((OpenDeck.playerhand[i].getsuit() == 3) || (OpenDeck.playerhand[i].getsuit() == 4)) {
 					RenderMeshOnScreen(meshList[GEO_CARDRED], cardCoordsX[i], 15, 10, 10);
 					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
-					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 12);
+					if (OpenDeck.playerhand[i].getvalue() == 10)
+					{
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(1, 0, 0), 2, cardCoordsX[i]- 4, 12);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(1, 0, 0), 2, cardCoordsX[i]-3, 12);
+					}
+					else {
+						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(1, 0, 0), 5, cardCoordsX[i] - 1, 12);						
+					}
 					if (OpenDeck.playerhand[i].getsuit() == 3) {
 						RenderMeshOnScreen(meshList[GEO_SUITH], cardCoordsX[i] - 2, 19, 1, 1); 
 					}
@@ -567,7 +591,14 @@ void ScenePC::Render()
 				else if ((OpenDeck.playerhand[i].getsuit() == 5) || (OpenDeck.playerhand[i].getsuit() == 6)) {
 					RenderMeshOnScreen(meshList[GEO_CARDBLACK], cardCoordsX[i], 15, 10, 10);
 					string cardnumber = to_string(OpenDeck.playerhand[i].getvalue());
-					RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 12);
+					if (OpenDeck.playerhand[i].getvalue() == 10)
+					{
+						RenderTextOnScreen(meshList[GEO_SCORE], "1", Color(0, 0, 0), 2, cardCoordsX[i] - 4, 12);
+						RenderTextOnScreen(meshList[GEO_SCORE], "0", Color(0, 0, 0), 2, cardCoordsX[i] - 3, 12);
+					}
+					else {
+						RenderTextOnScreen(meshList[GEO_SCORE], cardnumber, Color(0, 0, 0), 5, cardCoordsX[i] - 1, 12);
+					}
 					if (OpenDeck.playerhand[i].getsuit() == 5){
 						RenderMeshOnScreen(meshList[GEO_SUITC], cardCoordsX[i] - 2, 19, 1, 1);
 					}
@@ -611,7 +642,7 @@ void ScenePC::Render()
 		RenderTutorial();
 	}
 	
-	string scoreText = "Cash: " + to_string(int(dollarsClone));
+	string scoreText = "Cash: " + to_string(int(Application::dollars));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
 	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
