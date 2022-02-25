@@ -143,7 +143,10 @@ void SceneGame::Init()
 		meshList[GEO_PCAREA] = MeshBuilder::GenerateQuad("PCArea image", Color(1, 0.4, 0.4), 1.f);
 		meshList[GEO_PCAREA]->textureID = LoadTGA("Image//PCArea.tga");
 	}
-
+	{
+		meshList[GEO_ASPHALT] = MeshBuilder::GenerateQuad("road", Color(0.3, 0.3, 0.3), 1.f);
+		meshList[GEO_PAINT] = MeshBuilder::GenerateQuad("road paint", Color(1, 1, 1), 1.f);
+	}
 	{
 		meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 		meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
@@ -418,6 +421,14 @@ void SceneGame::Update(double dt)
 	{
 		player.D = 3;
 		player.X++;
+	}
+	if (Application::IsKeyPressed('0'))
+	{
+		metre.CustomIncreaseMP(100);
+	}
+	if (Application::IsKeyPressed('9'))
+	{
+		Application::dollars = -1;
 	}
 	else {}
 	{
@@ -774,6 +785,17 @@ void SceneGame::Render()
 			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);*/
 		}
 		//----------------------------------------
+		//Render Road
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 0.1, 90);
+			modelStack.Rotate(90, 0, 1, 0);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(20, 1000, 1);
+			RenderMesh(meshList[GEO_ASPHALT], true);
+			modelStack.PopMatrix();
+		}
+
 		modelStack.PushMatrix();
 		modelStack.Translate(0, 0, 0); modelStack.Rotate(-90, 1, 0, 0); modelStack.Scale(1000, 1000, 1000);
 		RenderMesh(meshList[GEO_FLOOR], true);
@@ -802,14 +824,14 @@ void SceneGame::Render()
 			RenderTextOnScreen(meshList[GEO_DOLLARS], "BRIBE FAILED!!!", Color(1, 0, 0), 3, 25, 40);
 		}
 
-		//text render
-		string coord = to_string(player.X) + "," + to_string(player.Z);
-		RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
+		////text render
+		//string coord = to_string(player.X) + "," + to_string(player.Z);
+		//RenderTextOnScreen(meshList[GEO_COORDS], coord, Color(0.5, 0.5, 1), 2, 0, 22.5);
 		
-		//UI buttons test
-		string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
-		RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
-		RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
+		////UI buttons test
+		//string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+		//RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 20);
+		//RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 30.5);
 
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(Application::dollars), Color(1,1,1), 2, 2, 57.5);
 		RenderMeshOnScreen(meshList[GEO_QUAD_BG], 68, 58, 27, 6);
@@ -821,6 +843,9 @@ void SceneGame::Render()
 
 		if(Tutorialmode > 0){
 			RenderTutorial(Tutorialmode);
+		}
+		else if (changetoPC == true) {
+				RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
 		}
 
 		RenderMeshOnScreen(meshList[GEO_TUTORIAL], 6, 40, 8, 8);
@@ -850,12 +875,10 @@ void SceneGame::Render()
 		modelStack.Translate(-40, 0, -40);
 		RenderLoungeTable();
 		modelStack.PopMatrix();
+		
 
 		RenderPoliceMetre();
 		RenderBribe();
-		if (changetoPC == true) {
-			RenderTextOnScreen(meshList[GEO_DOLLARS], "Press E to go to PC", Color(1, 0.5, 0.5), 2, 25, 7);
-		}
 		//---------------------------------------------------------
 		Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
@@ -1805,9 +1828,9 @@ void SceneGame::RenderTutorial(int number)
 		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Income", Color(1, 1, 1), 1, 13, 56);
 	}
 	else if (number == 2) {
-		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 34, 50, 32, 5);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Chance to Decrease", Color(1, 1, 1), 2, 18, 50);
-		RenderTextOnScreen(meshList[GEO_DOLLARS], "    Police Gauge", Color(1, 1, 1), 2, 18, 48);
+		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 40, 50, 32, 5);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "<- Chance to Decrease", Color(1, 1, 1), 2, 25, 50);
+		RenderTextOnScreen(meshList[GEO_DOLLARS], "    Police Gauge", Color(1, 1, 1), 2, 25, 48);
 	}
 	else if (number == 3) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 54, 35, 24, 5);

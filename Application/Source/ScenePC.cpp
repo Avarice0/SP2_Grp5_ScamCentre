@@ -235,7 +235,7 @@ void ScenePC::Update(double dt)
 		{
 			if ((posX > 38 && posX < 56) && (posY > 8 && posY < 21))
 			{
-				if (correctPos == true) {
+				if (correctPos == 1) {
 					dollarsClone += 4;
 					Application::dollars += 4;
 					Application::totalearned += 4;
@@ -245,10 +245,12 @@ void ScenePC::Update(double dt)
 					dollarsClone -= 4;
 					Application::dollars -= 4;
 				}
+				RNGmsg = rand() % 8;
+				correctPos = rand() % 2;
 			}
 			if ((posX > 56 && posX < 74) && (posY > 8 && posY < 22))
 			{
-				if (correctPos == true) {
+				if (correctPos == 0) {
 					dollarsClone += 4;
 					Application::dollars += 4;
 					Application::totalearned += 4;
@@ -258,13 +260,13 @@ void ScenePC::Update(double dt)
 					dollarsClone -= 4;
 					Application::dollars -= 4;
 				}
+				RNGmsg = rand() % 8;
+				correctPos = rand() % 2;
 			}
-			RNGmsg = rand() % 8;
-			correctPos = rand() % 2;
 		}
 		else if (gamenum == 3)
 		{
-			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53)) {
+			if ((posX > 38 && posX < 74) && (posY > 8.5 && posY < 53) && Application::dollars > 10) {
 
 				if (rand() % 2 == true)
 				{
@@ -283,6 +285,7 @@ void ScenePC::Update(double dt)
 					Application::dollars += 10;
 					Application::totalearned += 10;
 				}
+				CFscale = 2;
 			}
 			gameended = true;
 		}
@@ -356,6 +359,7 @@ void ScenePC::Update(double dt)
 	{
 		bLButtonState = false;
 		mousestate = "";
+		CFscale = 1;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
@@ -524,26 +528,26 @@ void ScenePC::Render()
 	
 
 		if (correctPos == 1) {
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 40, 16);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 40, 14);
 
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 60, 16);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 60, 14);
 		}
 		if (correctPos == 0) {
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 38, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 38, 14);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], wrongAns[RNGmsg], Color(0, 0, 0), 2, 40, 16);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], wrongAns2[RNGmsg], Color(0, 0, 0), 2, 40, 14);
 
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 59, 16);
-			RenderTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 59, 14);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], correctAns[RNGmsg], Color(0, 0, 0), 2, 60, 16);
+			RenderSmallTextOnScreen(meshList[GEO_SCORE], correctAns2[RNGmsg], Color(0, 0, 0), 2, 60, 14);
 		}
 	}
 	else if (gamenum == 3)
 	{
 		RenderTextOnScreen(meshList[GEO_SCORE], "Player will be Tails", Color(0, 0, 0), 2, 41, 14);
 		RenderTextOnScreen(meshList[GEO_SCORE], "Bet: 10 dollars", Color(0, 0, 0), 2, 41, 12);
-		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, 1, 1);
-		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, 1, 1);
+		RenderMeshOnScreen(meshList[GEO_HEADS], 56, heady, CFscale, CFscale);
+		RenderMeshOnScreen(meshList[GEO_TAILS], 56, taily, CFscale,CFscale);
 		//RenderMeshOnScreen(meshList[GEO_HT], 56, 25, 2, 2);
 	}
 	else if (gamenum == 4)
@@ -649,9 +653,9 @@ void ScenePC::Render()
 	
 	string scoreText = "Cash: " + to_string(int(Application::dollars));
 	RenderTextOnScreen(meshList[GEO_SCORE], scoreText, Color(0.5, 0.5, 1), 3, 7, 10);
-	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+	/*string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
 	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);*/
 
 	RenderMeshOnScreen(meshList[GEO_EXIT], 78, 58, 4, 4);
 
@@ -719,6 +723,37 @@ void ScenePC::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, floa
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
 
+void ScenePC::RenderSmallTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y) {
+	if (!mesh || mesh->textureID <= 0) //Proper error check
+		return;
+	glDisable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix(); viewStack.LoadIdentity(); //No need camera for ortho mode
+	modelStack.PushMatrix(); modelStack.LoadIdentity(); //Reset modelStack
+	modelStack.Translate(x, y, 0); modelStack.Scale(size, size, size);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 1);
+	glUniform3fv(m_parameters[U_TEXT_COLOR], 1, &color.r);
+	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->textureID);
+	glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	for (unsigned i = 0; i < text.length(); ++i)
+	{
+		Mtx44 characterSpacing;
+		characterSpacing.SetToTranslation(0.5f + i * .5f, 0.5f, 0); //1.0f is the spacing of each character, you may change this value
+		Mtx44 MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top() * characterSpacing;
+		glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+		mesh->Render((unsigned)text[i] * 6, 6);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
+	projectionStack.PopMatrix(); viewStack.PopMatrix(); modelStack.PopMatrix();
+	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
+}
 
 void ScenePC::Exit()
 {

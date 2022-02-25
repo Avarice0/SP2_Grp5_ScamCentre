@@ -112,6 +112,10 @@ class SceneGame : public Scene
 		
 		GEO_VENDINGMACHINE,
 		GEO_VENDINGMACHINEFRONT,
+
+		//road
+		GEO_ASPHALT,
+		GEO_PAINT,
 		
 		//objs
 		GEO_VAN,

@@ -229,10 +229,10 @@ void SceneEnd::Render()
 	RenderMeshOnScreen(meshList[GEO_QUIT], 57, 7, 25, 14);
 
 
-	//UI buttons test
-	string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
-	RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
-	RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
+	////UI buttons test
+	//string mousepos = "posX:" + to_string(posX) + ",posY:" + to_string(posY);
+	//RenderTextOnScreen(meshList[GEO_MOUSEPOS], mousepos, Color(0.5, 0.5, 1), 2, 0, 2);
+	//RenderTextOnScreen(meshList[GEO_MOUSESTATE], mousestate, Color(0.5, 0.5, 1), 2, 0, 3.5);
 	//---------------------------------------------------------
 	Mtx44 mvp = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 }
