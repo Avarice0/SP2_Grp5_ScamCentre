@@ -719,13 +719,6 @@ void SceneGame::Update(double dt)
 		debugRot += (float)(-40 * dt);
 	}
 
-	if (Application::IsKeyPressed('9')) {
-		cameranumber = 2;
-	}
-	else if (Application::IsKeyPressed('8')) {
-		cameranumber = 1;
-	}
-
 	if (Application::IsKeyPressed('E')) {
 		if ((player.X > 27 && player.X < 97) && (player.Z > -74 && player.Z < -36)) {
 			Application::changescene(3);
@@ -1887,7 +1880,7 @@ void SceneGame::RenderBribe()
 	RenderMeshOnScreen(meshList[GEO_QUAD_BG], 17, 50, 15, 7);
 	RenderTextOnScreen(meshList[GEO_DOLLARS], "Success:", Color(1, 1, 0), 1, 18, 51);
 	RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.getSuccessChance()) + "%", Color(1, 1, 0), 1, 18, 48);
-	if(Canbribe == true){
+	if(Canbribe == true) {
 		RenderMeshOnScreen(meshList[GEO_UPGRADESHOPFG], 10, 50, 15, 7);
 		RenderMeshOnScreen(meshList[GEO_BRIBE], 10, 52, 10, 3);
 		RenderTextOnScreen(meshList[GEO_DOLLARS], to_string(metre.GetBribeCost()), Color(1, 1, 0), 2, 5, 48);

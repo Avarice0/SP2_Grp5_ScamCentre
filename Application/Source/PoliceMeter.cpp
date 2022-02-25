@@ -101,5 +101,4 @@ int PoliceMeter::getSuccessChance(void)
 		return 100;
 	else
 		return BribeSuccess;
-
 }
